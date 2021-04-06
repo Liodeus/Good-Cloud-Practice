@@ -1,6 +1,6 @@
 authentication - being able to change GCP project
 make requirement file
-make markdown file for git
+make markdown file for github
 
 add more security check
 	gcloud app describe -> if not europe -> gae_location

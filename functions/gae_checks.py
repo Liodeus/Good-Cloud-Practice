@@ -121,3 +121,24 @@ def gae_max_version(cmd_list, report="False", severity="Critical", mitigation_na
 	else:
 		print("GAE max version check : ✓\n")
 
+
+def gae_location(cmd_list, report="False", severity="Major", mitigation_name="gae_location_mitigation.json"):
+	"""
+		Test for AppEngine location compliance to GDPR
+
+	"""
+	yaml_datas = yaml.load(exec_cmd(cmd_list[0]), Loader=yaml.FullLoader)
+	location_id = yaml_datas["locationId"]
+	location_id = "test"
+	if "europe" not in location_id:
+		print("GAE location check : x")
+		print("\tInformation :")
+		print(f"\t\tGoogle AppEngine location :")
+		print(f"\t\t\t{location_id}")
+
+		# Print report for gae_max_version
+		if report:
+			mitigation = read_mitigation(mitigation_name)
+			pretty_print_mitigation(mitigation)
+	else:
+		print("GAE location check : ✓\n")

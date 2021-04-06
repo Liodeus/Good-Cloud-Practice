@@ -21,17 +21,20 @@ command_lines = {
 		],
 		"MAX_VERSION": [
 			"gcloud app versions list"
+		],
+		"LOCATION": [
+			"gcloud app describe"
 		]
 	}
 }
 
 
 def main(REPORT):
-	dnssec(command_lines["DNS"]["DNSSEC"], report=REPORT)
-	rsasha1(command_lines["DNS"]["RSASHA1"], report=REPORT)
-	gae_env_secret(command_lines["GAE"]["ENV_SECRET"], report=REPORT)
-	gae_max_version(command_lines["GAE"]["MAX_VERSION"], report=REPORT)
-
+	# dnssec(command_lines["DNS"]["DNSSEC"], report=REPORT)
+	# rsasha1(command_lines["DNS"]["RSASHA1"], report=REPORT)
+	# gae_env_secret(command_lines["GAE"]["ENV_SECRET"], report=REPORT)
+	# gae_max_version(command_lines["GAE"]["MAX_VERSION"], report=REPORT)
+	gae_location(command_lines["GAE"]["LOCATION"], report=REPORT)
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
