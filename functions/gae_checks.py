@@ -93,11 +93,11 @@ def gae_env_secret(cmd_list, report="False", severity="Critical", mitigation_nam
 					str_tmp += f"\t\t\t\t{secret} -> {secret_value}\n"
 			print(f"{str_tmp}")
 
-		if report:
-			mitigation = read_mitigation(mitigation_name)
-			pretty_print_mitigation(mitigation)
+		print_report(report, mitigation_name)
+
 	else:
 		print("GAE env variable check : ✓\n")
+		print("*************************\n")
 
 
 def gae_max_version(cmd_list, report="False", severity="Critical", mitigation_name="gae_max_version_mitigation.json"):
@@ -115,11 +115,11 @@ def gae_max_version(cmd_list, report="False", severity="Critical", mitigation_na
 		print(f"\t\t\t{tmp_str}")
 
 		# Print report for gae_max_version
-		if report:
-			mitigation = read_mitigation(mitigation_name)
-			pretty_print_mitigation(mitigation)
+		print_report(report, mitigation_name)
+
 	else:
 		print("GAE max version check : ✓\n")
+		print("*************************\n")
 
 
 def gae_location(cmd_list, report="False", severity="Major", mitigation_name="gae_location_mitigation.json"):
@@ -134,11 +134,64 @@ def gae_location(cmd_list, report="False", severity="Major", mitigation_name="ga
 		print("GAE location check : x")
 		print("\tInformation :")
 		print(f"\t\tGoogle AppEngine location :")
-		print(f"\t\t\t{location_id}")
+		print(f"\t\t\t{location_id}\n")
 
 		# Print report for gae_max_version
-		if report:
-			mitigation = read_mitigation(mitigation_name)
-			pretty_print_mitigation(mitigation)
+		print_report(report, mitigation_name)
+
 	else:
 		print("GAE location check : ✓\n")
+		print("*************************\n")
+
+
+def gae_runtime(cmd_list, report="False", severity="Major", mitigation_name="gae_runtime_mitigation.json"):
+	"""
+		Test for AppEngine location compliance to GDPR
+
+	"""
+	language = {
+		"go": ["go111" , "go112", "go113", "go114", "go115", "go116"],
+		"ja": ["java11", "java8"],
+		"no": ["nodejs10", "nodejs12", "nodejs14"],
+		"ph": ["php72", "php73", "php74"],
+		"py": ["python37", "python38", "python39"],
+		"ru": ["ruby25", "ruby26", "ruby27"]
+	}
+
+	datas = exec_cmd(cmd_list[0]).split('\n')[1:-1]
+
+	gae_datas = {} # Version_id: service
+	for data in datas:
+		gae_datas[data.split()[1]] = data.split()[0]
+
+	for version, service in gae_datas.items():
+		cmd = f"{cmd_list[1]}{service} {version}"
+		yaml_datas = yaml.load(exec_cmd(cmd), Loader=yaml.FullLoader)
+		yaml_datas_runtime_variable = yaml_datas["runtime"]
+		yaml_datas_name_variable = yaml_datas["name"]
+
+		try:
+			short = yaml_datas_runtime_variable[:2]
+			gae_runtime_result = {}
+			if yaml_datas_runtime_variable in language[short]:
+				continue
+			else:
+				gae_runtime_result[yaml_datas_name_variable] = yaml_datas_runtime_variable
+		except:
+			print("error")
+			print(yaml_datas_runtime_variable)
+			break
+
+	if gae_runtime_result:
+		print("GAE runtime check : x")
+		print("\tInformation :")
+		print(f"\t\tGoogle AppEngine runtime non compliance :")
+		for key, value in gae_runtime_result.items():
+			print(f"\t\t\t{key} : {value}")
+		print()
+		# Print report for gae_runtime
+		print_report(report, mitigation_name)
+
+	else:
+		print("GAE runtime check : ✓\n")
+		print("*************************\n")

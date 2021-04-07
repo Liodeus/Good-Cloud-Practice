@@ -1,6 +1,21 @@
-authentication - being able to change GCP project
+Being able to change user
+Finish to code list_users
+remove launch and command_lines from main.py
+add a try except for ctrl+c
+
 make requirement file
+	dns.googleapis.com
 make markdown file for github
 
 add more security check
-	gcloud app describe -> if not europe -> gae_location
+
+
+gcloud compute disks list -> if "europe-" not in location -> gce_disk_location -> Major
+gcloud compute firewall-rules list --format=json -> if logConfig == false -> gce_firewallrule_log -> Medium
+
+Need to do some research (easy) : 
+	gce_instance_location -> Major
+
+Later, need some reasearch (hard) :
+	gce_firewallrule_traffic -> use loadbalancer pas en frontal
+
