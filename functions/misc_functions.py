@@ -44,22 +44,11 @@ def pretty_print_mitigation(mitigation):
 	print("*************************\n")
 
 
-def get_project_list():
-	"""
-		Get the list of projects
-
-		Return list of projects
-	"""
-	res = exec_cmd("gcloud projects list").split('\n')[1:-1]
-
-	return [x.split()[0] for x in res]
-
-
 def change_project(project_id):
 	"""
 		Change the project
 	"""
-	res = exec_cmd(f"gcloud config set project {project_id}")
+	exec_cmd(f"gcloud config set project {project_id}")
 	print("\t\t**************************************************")
 	print("\t\t**************************************************")
 	print(f"\t\t\t\t{project_id}")
@@ -78,9 +67,24 @@ def print_report(report, mitigation_name):
 		print("*************************\n")
 
 
+def get_project_list():
+	"""
+		Get the list of projects
+
+		Return list of projects
+	"""
+	res = exec_cmd("gcloud projects list")
+	if "UNAUTHENTICATED" in res:
+		print("You need to reauthenticate !\n")
+		print("You may run the following command : gcloud auth login")
+		exit()
+
+	return [x.split()[0] for x in res.split('\n')[1:-1]]
+
+
 def list_projects():
 	"""
-		List projects
+		Print the list of projects
 	"""
 	projects = get_project_list()
 
@@ -90,12 +94,30 @@ def list_projects():
 	exit()
 
 
+def get_list_users():
+	"""
+		Get the list of users
+
+		Return list of users
+	"""
+	res = exec_cmd("gcloud auth list").split('\n')[2:]
+	users = []
+	for x in res:
+		try:
+			users.append(x.split()[-1])
+		except IndexError:
+			break
+
+	return users
+
+
 def list_users():
 	"""
-		List users
+		Print the list of users
 	"""
+	users = get_list_users()
 
-	# print("This is the list of user(s) :")
-	# for user in users:
-	# 	print(f"\t{user}")
-	# exit()
+	print("This is the list of user(s) :")
+	for user in users:
+		print(f"\t{user}")
+	exit()

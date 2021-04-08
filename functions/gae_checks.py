@@ -195,3 +195,4 @@ def gae_runtime(cmd_list, report="False", severity="Major", mitigation_name="gae
 	else:
 		print("GAE runtime check : ✓\n")
 		print("*************************\n")
+
