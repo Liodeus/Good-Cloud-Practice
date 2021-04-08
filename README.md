@@ -1,13 +1,11 @@
-# GCP_Security_Check
+# Good Cloud Practice (GCP)
 
-GCP_Security_Check is a Python script, which scan and report your non compliance.
+Good Cloud Practice (GCP) is a Python script, which scan and report your non compliance.
 
 ## Installation
-
 To do
 
 ## Usage
-
 To do
 
 ## Contributing
