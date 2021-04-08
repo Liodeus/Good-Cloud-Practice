@@ -1,5 +1,6 @@
 import shlex, subprocess
 import json
+import sys
 
 
 def exec_cmd(cmd):
@@ -87,11 +88,24 @@ def list_projects():
 		Print the list of projects
 	"""
 	projects = get_project_list()
+	current_project = get_current_project().strip()
 
 	print("This is the list of project(s) :")
 	for project in projects:
-		print(f"\t{project}")
+		if project == current_project:
+			print(f"\t{project} -> Current project")
+		else:
+			print(f"\t{project}")
 	exit()
+
+
+def get_current_project():
+	"""
+		Get the current project
+
+		Return name of current project
+	"""
+	return exec_cmd("gcloud config get-value project")
 
 
 def get_list_users():
@@ -116,8 +130,25 @@ def list_users():
 		Print the list of users
 	"""
 	users = get_list_users()
+	current_user = get_current_user()
 
 	print("This is the list of user(s) :")
 	for user in users:
-		print(f"\t{user}")
+		if user == current_user:
+			print(f"\t{user} -> Current user")
+		else:
+			print(f"\t{user}")
 	exit()
+
+
+def get_current_user():
+	"""
+		Get the current user
+
+		Return name of current user
+	"""
+	res = exec_cmd("gcloud auth list").split('\n')[2:]
+
+	for x in res:
+		if "*" in x:
+			return x.split()[1]

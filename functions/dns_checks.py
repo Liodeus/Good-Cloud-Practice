@@ -7,6 +7,12 @@ def dnssec(cmd_list, report="False", severity="Major", mitigation_name="dnssec_m
 	"""
 	datas = exec_cmd(cmd_list[0]).split()
 
+	if datas[0] == "API":
+		print("DNSSEC check : x")
+		print("\tAPI [dns.googleapis.com] not enabled\n")
+		print("*************************\n")
+		sys.exit()
+
 	if datas[0] == "Listed":
 		print("DNSSEC check : ✓\n")
 		print("*************************\n")
@@ -45,6 +51,13 @@ def rsasha1(cmd_list, report="False", severity="Critical", mitigation_name="rsas
 		Test for DNSSEC RSASHA1 weak algorithm
 	"""
 	datas = exec_cmd(cmd_list[0]).split()
+
+	if datas[0] == "API":
+		print("RSASHA1 check : x")
+		print("\tAPI [dns.googleapis.com] not enabled\n")
+		print("*************************\n")
+		sys.exit()
+
 	managed_zones = [x.split('/')[-1] for x in datas]
 
 	managed_zones_results = {}

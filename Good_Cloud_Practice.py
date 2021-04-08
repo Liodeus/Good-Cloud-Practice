@@ -1,8 +1,9 @@
-from functions.misc_functions import *
 from functions.dns_checks import *
 from functions.gae_checks import *
+from functions.gce_checks import *
 import threading
 import argparse
+import sys
 
 
 command_lines = {
@@ -31,12 +32,18 @@ command_lines = {
 			"gcloud app versions list",
 			"gcloud app versions describe --service="
 		],
+	},
+	"GCE": {
+		"DISK_LOCATION": [
+			"gcloud compute disks list",
+		]
 	}
 }
 
 
 def launch(REPORT, projects_list=[]):
 	thr_list = []
+	print(f"Current user : {get_current_user()}\n")
 	for project in projects_list:
 		change_project(project)
 		functions = {
@@ -46,6 +53,7 @@ def launch(REPORT, projects_list=[]):
 			gae_max_version: (command_lines["GAE"]["MAX_VERSION"], REPORT),
 			gae_location: (command_lines["GAE"]["LOCATION"], REPORT),
 			gae_runtime: (command_lines["GAE"]["RUNTIME"], REPORT),
+			gce_disk_location: (command_lines["GCE"]["DISK_LOCATION"], REPORT)
 		}
 
 		for function, parameters in functions.items():
@@ -66,7 +74,7 @@ def main(REPORT, project_id=None):
         launch(REPORT, [project_id])
     else:
         print(f"You do not appear to have access to project [{project_id}] or it does not exist.")
-        exit()
+        sys.exit()
 
 
 if __name__ == "__main__":
@@ -81,4 +89,9 @@ if __name__ == "__main__":
         list_projects()
     elif args.list_users:
         list_users()
-    main(args.report, args.project_id)
+
+    try:
+    	main(args.report, args.project_id)
+    except KeyboardInterrupt:
+    	print("CTRL+C")
+    	sys.exit()

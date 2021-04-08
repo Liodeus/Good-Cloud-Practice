@@ -129,7 +129,7 @@ def gae_location(cmd_list, report="False", severity="Major", mitigation_name="ga
 	"""
 	yaml_datas = yaml.load(exec_cmd(cmd_list[0]), Loader=yaml.FullLoader)
 	location_id = yaml_datas["locationId"]
-	location_id = "test"
+
 	if "europe" not in location_id:
 		print("GAE location check : x")
 		print("\tInformation :")
