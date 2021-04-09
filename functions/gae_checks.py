@@ -134,7 +134,7 @@ def gae_location(cmd_list, report="False", severity="Major", mitigation_name="ga
 		print("GAE location check : x")
 		print("\tInformation :")
 		print(f"\t\tGoogle AppEngine location :")
-		print(f"\t\t\t{location_id}\n")
+		print(f"\t\t\t{location_id}")
 
 		# Print report for gae_max_version
 		print_report(report, mitigation_name)
@@ -188,7 +188,7 @@ def gae_runtime(cmd_list, report="False", severity="Major", mitigation_name="gae
 		print(f"\t\tGoogle AppEngine runtime non compliance :")
 		for key, value in gae_runtime_result.items():
 			print(f"\t\t\t{key} : {value}")
-		print()
+
 		# Print report for gae_runtime
 		print_report(report, mitigation_name)
 

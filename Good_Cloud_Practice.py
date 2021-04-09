@@ -36,6 +36,15 @@ command_lines = {
 	"GCE": {
 		"DISK_LOCATION": [
 			"gcloud compute disks list",
+		],
+		"FIREWALLRULE_LOG": [
+			"gcloud compute firewall-rules list --format=json"
+		],
+		"INSTANCE_EXTERNALIP": [
+			"gcloud compute instances list"
+		],
+		"INSTANCE_LOCATION": [
+			"gcloud compute instances list"
 		]
 	}
 }
@@ -47,13 +56,16 @@ def launch(REPORT, projects_list=[]):
 	for project in projects_list:
 		change_project(project)
 		functions = {
+			gce_instance_location: (command_lines["GCE"]["INSTANCE_EXTERNALIP"], REPORT),
+			gce_instance_externalip: (command_lines["GCE"]["INSTANCE_EXTERNALIP"], REPORT),
+			gae_runtime: (command_lines["GAE"]["RUNTIME"], REPORT),
 			dnssec: (command_lines["DNS"]["DNSSEC"], REPORT),
 			rsasha1: (command_lines["DNS"]["RSASHA1"], REPORT),
 			gae_env_secret: (command_lines["GAE"]["ENV_SECRET"], REPORT),
 			gae_max_version: (command_lines["GAE"]["MAX_VERSION"], REPORT),
 			gae_location: (command_lines["GAE"]["LOCATION"], REPORT),
-			gae_runtime: (command_lines["GAE"]["RUNTIME"], REPORT),
-			gce_disk_location: (command_lines["GCE"]["DISK_LOCATION"], REPORT)
+			gce_disk_location: (command_lines["GCE"]["DISK_LOCATION"], REPORT),
+			gce_firewallrule_log: (command_lines["GCE"]["FIREWALLRULE_LOG"], REPORT)
 		}
 
 		for function, parameters in functions.items():
@@ -66,32 +78,33 @@ def launch(REPORT, projects_list=[]):
 
 
 def main(REPORT, project_id=None):
-    projects_list = get_project_list()
+	projects_list = get_project_list()
 
-    if project_id == None:
-        launch(REPORT, projects_list)
-    elif project_id in projects_list:
-        launch(REPORT, [project_id])
-    else:
-        print(f"You do not appear to have access to project [{project_id}] or it does not exist.")
-        sys.exit()
+	if project_id == None:
+		launch(REPORT, projects_list)
+	elif project_id in projects_list:
+		launch(REPORT, [project_id])
+	else:
+		print(f"You do not appear to have access to project [{project_id}] or it does not exist.")
+		sys.exit()
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-r", "--report", action="store_true", help='Enable report mode')
-    parser.add_argument( "-lp", "--list_projects", action="store_true", help='List projects')
-    parser.add_argument("-lu", "--list_users", action="store_true", help='List users')
-    parser.add_argument("--project_id", required=False, help='Do the checks on this project-id')
-    args = parser.parse_args()
+	banner()
+	parser = argparse.ArgumentParser()
+	parser.add_argument("-r", "--report", action="store_true", help='Enable report mode')
+	parser.add_argument( "-lp", "--list_projects", action="store_true", help='List projects')
+	parser.add_argument("-lu", "--list_users", action="store_true", help='List users')
+	parser.add_argument("--project_id", required=False, help='Do the checks on this project-id')
+	args = parser.parse_args()
 
-    if args.list_projects:
-        list_projects()
-    elif args.list_users:
-        list_users()
+	if args.list_projects:
+		list_projects()
+	elif args.list_users:
+		list_users()
 
-    try:
-    	main(args.report, args.project_id)
-    except KeyboardInterrupt:
-    	print("CTRL+C")
-    	sys.exit()
+	try:
+		main(args.report, args.project_id)
+	except KeyboardInterrupt:
+		print("CTRL+C")
+		sys.exit()

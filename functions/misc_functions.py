@@ -3,6 +3,24 @@ import json
 import sys
 
 
+def banner():
+	""""
+		Print the tool banner
+	"""
+	banner = '''
+   _____                       _      _____   _                       _     _____                          _     _               
+  / ____|                     | |    / ____| | |                     | |   |  __ \                        | |   (_)              
+ | |  __    ___     ___     __| |   | |      | |   ___    _   _    __| |   | |__) |  _ __    __ _    ___  | |_   _    ___    ___ 
+ | | |_ |  / _ \   / _ \   / _` |   | |      | |  / _ \  | | | |  / _` |   |  ___/  | '__|  / _` |  / __| | __| | |  / __|  / _ \
+
+ | |__| | | (_) | | (_) | | (_| |   | |____  | | | (_) | | |_| | | (_| |   | |      | |    | (_| | | (__  | |_  | | | (__  |  __/
+  \_____|  \___/   \___/   \__,_|    \_____| |_|  \___/   \__,_|  \__,_|   |_|      |_|     \__,_|  \___|  \__| |_|  \___|  \___|
+                                                                                                                                 
+                                                                                                                      By Liodeus           
+	'''
+	print(banner)
+
+
 def exec_cmd(cmd):
 	"""
 		Execute a command line passed by argument
@@ -50,17 +68,18 @@ def change_project(project_id):
 		Change the project
 	"""
 	exec_cmd(f"gcloud config set project {project_id}")
-	print("\t\t**************************************************")
-	print("\t\t**************************************************")
-	print(f"\t\t\t\t{project_id}")
-	print("\t\t**************************************************")
-	print("\t\t**************************************************\n")
+	print("\t\t\t\t\t\t**************************************************")
+	print("\t\t\t\t\t\t**************************************************")
+	print(f"\t\t\t\t\t\t*\t\t{project_id}\t\t *")
+	print("\t\t\t\t\t\t**************************************************")
+	print("\t\t\t\t\t\t**************************************************\n")
 
 
 def print_report(report, mitigation_name):
 	"""
 		Print report
 	"""
+	print("")
 	if report:
 		mitigation = read_mitigation(mitigation_name)
 		pretty_print_mitigation(mitigation)

@@ -1,0 +1,5 @@
+{
+	"description": "Avoid public IP addresses on Compute engine instances (VMs) significantly reduces the attack surface.\n\n\tExternal IPs for GCE VMs are forbidden.\n\n\tInstances without a IP addresses can be accessed from the internal network (VPN, Interconnect) or using IAP tunnels, or behing load balancers.",
+	"fix": "gcloud compute instances delete-access-config INSTANCE_NAME --zone=ZONE -- access-config-name 'ACCESS_CONFIG_NAME'",
+	"references": "https://cloud.google.com/compute/docs/ip-addresses/reserve-static-external-ip-address#unassign_ip\n\thttps://cloud.google.com/compute/docs/instances/connecting-to-instance\n\thttps://cloud.google.com/compute/docs/instances/connecting-advanced#sshbetweeninstances\n\thttps://cloud.google.com/compute/docs/instances/connecting-advanced\n\thttps://cloud.google.com/load-balancing/docs/backend-service#backends_and_external_ip_addresses\n\thttps://cloud.google.com/iap/docs/tcp-forwarding-overview"
+}

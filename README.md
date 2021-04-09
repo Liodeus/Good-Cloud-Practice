@@ -1,12 +1,15 @@
 # Good Cloud Practice (GCP)
 
-Good Cloud Practice (GCP) is a Python script, which scan and report your non compliance.
+![](/Images/banner.png)
+
+Good Cloud Practice (GCP) is a Python script, which scan and report your Google Cloud Platfrom non compliance.
 
 ## Installation
 To do
 
 ## Usage
-To do
+
+![](/Images/GCP_How_To.png)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

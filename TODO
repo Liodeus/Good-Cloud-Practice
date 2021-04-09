@@ -3,19 +3,23 @@ add a --list parameter witch accept a list of project_id if you don't want to sc
 print the criticity
 make the count of vulns ? a table or just printing it at the end of the scan
 add timing of the scan
+print severity
+
+Report :
+	better reporting
+	html/pdf ?
 
 make requirement file
 	dns.googleapis.com
 
 add more security check
-	gcloud compute firewall-rules list --format=json -> if logConfig == false -> gce_firewallrule_log -> Medium
-	gcloud compute instances list -> if external IP -> gce_instance_externalip -> Major
-	gcloud compute instances list -> if not europe -> gce_instance_location -> Major
 	gcloud compute instances list- > gcloud compute instances describe NAME --zone=ZONE -> yaml -> email: -> if email [0-9]*-compute@developer.gserviceaccount.com -> gce_instance_service_account -> Major
 	gcloud compute instances list- > gcloud compute instances describe NAME --zone=ZONE -> yaml -> canIpForward: -> if true -> gce_ip_forwarding -> Critical
 	gcloud compute instances list- > gcloud compute instances describe NAME --zone=ZONE -> yaml -> network: -> .split('/')[-1] == default -> gce_network_name -> Major
 	gcloud compute instances list- > gcloud compute instances describe NAME --zone=ZONE -> yaml ->  enableIntegrityMonitoring:
   	enableSecureBoot:  enableVtpm: -> all true or -> gce_shielded_instances -> Minor
+
+  	For functions which launch the same commands do something to speed things up
 
 
 Need to do some research (easy) : 
@@ -29,4 +33,3 @@ Later, need some reasearch (hard) :
 
 	Try to catch error in threads
 	Being able to change user ? -> gcloud config set account
-
