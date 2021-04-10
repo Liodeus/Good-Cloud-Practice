@@ -1,4 +1,5 @@
 import subprocess
+from  colorama import Fore, Style
 import shlex
 import yaml
 import json
@@ -10,14 +11,14 @@ def banner():
 	""""
 		Print the tool banner
 	"""
-	banner = '''
-   _____                       _      _____   _                       _     _____                          _     _               
-  / ____|                     | |    / ____| | |                     | |   |  __ \                        | |   (_)              
- | |  __    ___     ___     __| |   | |      | |   ___    _   _    __| |   | |__) |  _ __    __ _    ___  | |_   _    ___    ___ 
- | | |_ |  / _ \   / _ \   / _` |   | |      | |  / _ \  | | | |  / _` |   |  ___/  | '__|  / _` |  / __| | __| | |  / __|  / _ \
+	banner = f'''
+{Fore.CYAN}   _____ {Style.RESET_ALL}                      _    {Fore.CYAN}  _____ {Style.RESET_ALL}  _                       _    {Fore.CYAN} _____  {Style.RESET_ALL}                        _     _               
+{Fore.CYAN}  / ____|{Style.RESET_ALL}                     | |   {Fore.CYAN} / ____|{Style.RESET_ALL} | |                     | |   {Fore.CYAN}|  __ \ {Style.RESET_ALL}                       | |   (_)              
+{Fore.CYAN} | |  __ {Style.RESET_ALL}   ___     ___     __| |   {Fore.CYAN}| |     {Style.RESET_ALL} | |   ___    _   _    __| |   {Fore.CYAN}| |__) |{Style.RESET_ALL}  _ __    __ _    ___  | |_   _    ___    ___ 
+{Fore.CYAN} | | |_ |{Style.RESET_ALL}  / _ \   / _ \   / _` |   {Fore.CYAN}| |     {Style.RESET_ALL} | |  / _ \  | | | |  / _` |   {Fore.CYAN}|  ___/ {Style.RESET_ALL} | '__|  / _` |  / __| | __| | |  / __|  / _ \
 
- | |__| | | (_) | | (_) | | (_| |   | |____  | | | (_) | | |_| | | (_| |   | |      | |    | (_| | | (__  | |_  | | | (__  |  __/
-  \_____|  \___/   \___/   \__,_|    \_____| |_|  \___/   \__,_|  \__,_|   |_|      |_|     \__,_|  \___|  \__| |_|  \___|  \___|
+{Fore.CYAN} | |__| |{Style.RESET_ALL} | (_) | | (_) | | (_| |   {Fore.CYAN}| |____ {Style.RESET_ALL} | | | (_) | | |_| | | (_| |   {Fore.CYAN}| |     {Style.RESET_ALL} | |    | (_| | | (__  | |_  | | | (__  |  __/
+{Fore.CYAN}  \_____|{Style.RESET_ALL}  \___/   \___/   \__,_|   {Fore.CYAN} \_____|{Style.RESET_ALL} |_|  \___/   \__,_|  \__,_|   {Fore.CYAN}|_|     {Style.RESET_ALL} |_|     \__,_|  \___|  \__| |_|  \___|  \___|
                                                                                                                                  
                                                                                                                       By Liodeus           
 	'''
@@ -63,7 +64,7 @@ def pretty_print_mitigation(mitigation):
 	print("References :")
 	print(f"\t{mitigation['references']}\n")
 
-	print("**************************************************\n")
+	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 
 
 def change_project(project_id):
@@ -71,11 +72,11 @@ def change_project(project_id):
 		Change the project
 	"""
 	exec_cmd(f"gcloud config set project {project_id}")
-	print("\t\t\t\t\t\t**************************************************")
-	print("\t\t\t\t\t\t**************************************************")
-	print(f"\t\t\t\t\t\t*\t\t{project_id}\t\t *")
-	print("\t\t\t\t\t\t**************************************************")
-	print("\t\t\t\t\t\t**************************************************\n")
+	print(f"{Fore.CYAN}\t\t\t\t\t\t**************************************************{Style.RESET_ALL}")
+	print(f"{Fore.CYAN}\t\t\t\t\t\t**************************************************{Style.RESET_ALL}")
+	print(f"\t\t\t\t\t\t{Fore.CYAN}*{Style.RESET_ALL}\t\t{project_id}\t\t {Fore.CYAN}*{Style.RESET_ALL}")
+	print(f"{Fore.CYAN}\t\t\t\t\t\t**************************************************{Style.RESET_ALL}")
+	print(f"{Fore.CYAN}\t\t\t\t\t\t**************************************************{Style.RESET_ALL}\n")
 
 
 def print_report(report, mitigation_name, severity):
@@ -83,12 +84,26 @@ def print_report(report, mitigation_name, severity):
 		Print report
 	"""
 	print("")
+	print_severity(severity)
 	if report:
 		mitigation = read_mitigation(mitigation_name)
-		print(f"Severity : {severity}\n")
 		pretty_print_mitigation(mitigation)
 	else:
-		print("**************************************************\n")
+		print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
+
+
+def print_severity(severity):
+	color = ""
+	if severity == "Minor":
+		color = Fore.CYAN
+	elif severity == "Medium":
+		color = Fore.GREEN
+	elif severity == "Major":
+		color = Fore.YELLOW
+	elif severity == "Critical":
+		color = Fore.RED
+
+	print(f"Severity : {color}{severity}{Style.RESET_ALL}\n")
 
 
 def get_project_list():
@@ -179,7 +194,7 @@ def get_current_user():
 
 def report_print(string_to_print, dict_result, report, mitigation_name, severity):
 	if dict_result:
-		print(f"{string_to_print} : x")
+		print(f"{string_to_print} : {Fore.RED}x{Style.RESET_ALL}")
 		print("\tInformation :")
 		for key, value in dict_result.items():
 			if string_to_print == "GCE instance shielding":
@@ -200,5 +215,5 @@ def report_print(string_to_print, dict_result, report, mitigation_name, severity
 
 		print_report(report, mitigation_name, severity)
 	else:
-		print(f"{string_to_print} : ✓\n")
-		print("**************************************************\n")
+		print(f"{string_to_print} : {Fore.GREEN}✓{Style.RESET_ALL}\n")
+		print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")

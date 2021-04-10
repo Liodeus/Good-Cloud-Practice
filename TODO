@@ -1,16 +1,13 @@
 remove launch and command_lines from main.py
 add a --list parameter witch accept a list of project_id if you don't want to scan all project
-add some colors in output, for severity, x/✓
 make the count of vulns ? a table or just printing it at the end of the scan
-add a -s/--sort -> sort by vulnerability severity
 
 Report :
-	better reporting
 	There's a bug when functions finish at the same time, printing get fck, found how to resolve that
 	html/pdf ?
+	add a -s/--sort -> sort by vulnerability severity
 
 make requirement file
-	dns.googleapis.com
 
 add more security check
  	For functions which launch the same commands do something to speed things up
@@ -27,6 +24,3 @@ Later, need some reasearch (hard) :
 
 	Try to catch error in threads
 	Being able to change user ? -> gcloud config set account
-
-
-git commit -m "added two functions who reduce the number of lines in gce_checks : gce_reduce, gce_reduce_two (192 to 86) and addedtwo functions who reduce the number of lines in gae_checks : gae_reduce, gae_reduce_two (153 to 49)"
