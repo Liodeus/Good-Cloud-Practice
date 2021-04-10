@@ -29,4 +29,4 @@ Later, need some reasearch (hard) :
 	Being able to change user ? -> gcloud config set account
 
 
-commit -m "added functions : gce_ip_forwarding, gce_network_name, gce_shielded_instances, report to remove some repeating code (gce_checks was 296 now 193, gae_check was 193 now 154, dns_check was 86 now 61). Added time took for the scan, now print the severity in report mode"
+git commit -m "added two functions who reduce the number of lines in gce_checks : gce_reduce, gce_reduce_two (192 to 86) and addedtwo functions who reduce the number of lines in gae_checks : gae_reduce, gae_reduce_two (153 to 49)"
