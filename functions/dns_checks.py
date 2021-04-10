@@ -10,12 +10,12 @@ def dnssec(cmd_list, report="False", severity="Major", mitigation_name="dnssec_m
 	if datas[0] == "API":
 		print("DNSSEC check : x")
 		print("\tAPI [dns.googleapis.com] not enabled\n")
-		print("*************************\n")
+		print("**************************************************\n")
 		sys.exit()
 
 	if datas[0] == "Listed":
 		print("DNSSEC check : ✓\n")
-		print("*************************\n")
+		print("**************************************************\n")
 	else:
 		managed_zones = [x.split('/')[-1] for x in datas]
 
@@ -24,26 +24,13 @@ def dnssec(cmd_list, report="False", severity="Major", mitigation_name="dnssec_m
 			managed_zones_results[zone] = exec_cmd(f"{cmd_list[1]} {zone}")
 
 		# DNSSEC check
-		dnssec_results = {"off": [], "on": []}
+		dnssec_results = {}
 		for zone, result in managed_zones_results.items():
 			if "state: off" in result or "state" not in result:
-				dnssec_results["off"].append(zone)
-			else:
-				dnssec_results["on"].append(zone)
+				dnssec_results[zone] = "OFF"
 
 		# Print report for DNSSEC
-		if dnssec_results["off"]:
-			print("DNSSEC check : x")
-			print("\tInformation :")
-			str_tmp = "\t\t\t".join(f"{x}\n" for x in dnssec_results["off"])
-			print(f"\t\tDNSSEC has not been enabled for : \n\t\t\t{str_tmp}")
-
-			# Print report for DNSSEC
-			print_report(report, mitigation_name)
-
-		else:
-			print("DNSSEC check : ✓\n")
-			print("*************************\n")
+		report_print("DNSSEC check", dnssec_results, report, mitigation_name, severity)
 
 
 def rsasha1(cmd_list, report="False", severity="Critical", mitigation_name="rsasha1_mitigation.json"):
@@ -55,7 +42,7 @@ def rsasha1(cmd_list, report="False", severity="Critical", mitigation_name="rsas
 	if datas[0] == "API":
 		print("RSASHA1 check : x")
 		print("\tAPI [dns.googleapis.com] not enabled\n")
-		print("*************************\n")
+		print("**************************************************\n")
 		sys.exit()
 
 	managed_zones = [x.split('/')[-1] for x in datas]
@@ -64,24 +51,10 @@ def rsasha1(cmd_list, report="False", severity="Critical", mitigation_name="rsas
 	for zone in managed_zones:
 		managed_zones_results[zone] = exec_cmd(f"{cmd_list[1]} {zone}")
 
-	# RSASHA1 check
-	rsasha1_results = {"off": [], "on": []}
-	for zone, result in managed_zones_results.items():
-		if "algorithm: RSASHA1" in result:
-			rsasha1_results["on"].append(zone)
-		else:
-			rsasha1_results["off"].append(zone)
+	rsasha1_results = {}
+	for key, value in managed_zones_results.items():
+		if "algorithm: RSASHA1" in value:
+			rsasha1_results[key] = "RSASHA1"
 
 	# Print report for RSASHA1
-	if rsasha1_results["on"]:
-		print("RSASHA1 check : ✓\n")
-		print("\tInformation :")
-		str_tmp = ", ".join(x for x in rsasha1_results["on"])
-		print(f"\t\tDNSSEC has weak RSASHA1 algorithm enabled : {str_tmp}\n")
-
-		# Print report for RSASHA1
-		print_report(report, mitigation_name)
-
-	else:
-		print("RSASHA1 check : ✓\n")
-		print("*************************\n")
+	report_print("RSASHA1 check", rsasha1_results, report, mitigation_name, severity)

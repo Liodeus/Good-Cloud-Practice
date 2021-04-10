@@ -1,0 +1,5 @@
+{
+	"description": "GCE Instances should enable 'Shielded VM' options.\n\n\tShielded VM offers verifiable integrity of your Compute Engine VM instances, so you can be confident your instances haven't been compromised by boot- or kernel-level malware or rootkits. Shielded VM's verifiable integrity is achieved through the use of Secure Boot, virtual trusted platform module (vTPM)-enabled Measured Boot, and integrity monitoring.",
+	"fix": "Verify that the Operating System Image of your VM supports the shielded VM dfeature on : Operating System details\n\nThen :\n\tgcloud compute instances stop VM_NAME\n\tgcloud compute instances update VM_NAME \\\n\t\t--shielded-vtpm \\\n\t\t--shielded-integrity-monitoring\n\tgcloud compute instances stop VM_NAME\n\n\tIf your VM does not support Shielded VM options, you should recreate it with another OS that supports it.",
+	"references": "https://cloud.google.com/security/shielded-cloud/shielded-vm\n\thttps://cloud.google.com/compute/docs/instances/modifying-shielded-vm"
+}

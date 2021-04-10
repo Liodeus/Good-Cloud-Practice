@@ -1,6 +1,4 @@
 from functions.misc_functions import *
-import yaml
-import re
 
 
 def gae_env_secret(cmd_list, report="False", severity="Critical", mitigation_name="gae_env_secret_mitigation.json"):
@@ -81,23 +79,7 @@ def gae_env_secret(cmd_list, report="False", severity="Critical", mitigation_nam
 						gae_regex_result[yaml_datas_name_variable].append(res)
 
 	# Print report for gae_env_secret
-	if gae_regex_result:
-		print("GAE env variable check : x")
-		print("\tInformation :")
-		print("\t\tGoogle AppEngine env variable secret found :")
-		for full_path, results in gae_regex_result.items():
-			str_tmp = ""
-			print(f"\t\t\t{full_path} :")
-			for result in results:
-				for secret, secret_value in result.items():
-					str_tmp += f"\t\t\t\t{secret} -> {secret_value}\n"
-			print(f"{str_tmp}")
-
-		print_report(report, mitigation_name)
-
-	else:
-		print("GAE env variable check : ✓\n")
-		print("*************************\n")
+	report_print("GAE env variable check", gae_regex_result, report, mitigation_name, severity)
 
 
 def gae_max_version(cmd_list, report="False", severity="Critical", mitigation_name="gae_max_version_mitigation.json"):
@@ -107,19 +89,12 @@ def gae_max_version(cmd_list, report="False", severity="Critical", mitigation_na
 	"""
 	datas = exec_cmd(cmd_list[0]).split('\n')[1:-1]
 
-	if len(datas) > 2:
-		tmp_str = '\t\t\t'.join(f"{x.split()[1]}\n" for x in datas)
-		print("GAE max version check : x")
-		print("\tInformation :")
-		print(f"\t\tGoogle AppEngine number of version found : {len(datas)}")
-		print(f"\t\t\t{tmp_str}")
+	max_version_result = {}
+	for data in datas:
+		max_version_result[data.split()[1]] = ""
 
-		# Print report for gae_max_version
-		print_report(report, mitigation_name)
-
-	else:
-		print("GAE max version check : ✓\n")
-		print("*************************\n")
+	# Print report for gae_max_version
+	report_print("GAE max version check", max_version_result, report, mitigation_name, severity)
 
 
 def gae_location(cmd_list, report="False", severity="Major", mitigation_name="gae_location_mitigation.json"):
@@ -128,20 +103,12 @@ def gae_location(cmd_list, report="False", severity="Major", mitigation_name="ga
 
 	"""
 	yaml_datas = yaml.load(exec_cmd(cmd_list[0]), Loader=yaml.FullLoader)
-	location_id = yaml_datas["locationId"]
+	location_id = {}
+	if "europe" not in yaml_datas["locationId"]:
+		location_id["location"] = yaml_datas["locationId"]
 
-	if "europe" not in location_id:
-		print("GAE location check : x")
-		print("\tInformation :")
-		print(f"\t\tGoogle AppEngine location :")
-		print(f"\t\t\t{location_id}")
-
-		# Print report for gae_max_version
-		print_report(report, mitigation_name)
-
-	else:
-		print("GAE location check : ✓\n")
-		print("*************************\n")
+	# Print report for gae_runtime
+	report_print("GAE location check", location_id, report, mitigation_name, severity)
 
 
 def gae_runtime(cmd_list, report="False", severity="Major", mitigation_name="gae_runtime_mitigation.json"):
@@ -182,17 +149,5 @@ def gae_runtime(cmd_list, report="False", severity="Major", mitigation_name="gae
 			print(yaml_datas_runtime_variable)
 			break
 
-	if gae_runtime_result:
-		print("GAE runtime check : x")
-		print("\tInformation :")
-		print(f"\t\tGoogle AppEngine runtime non compliance :")
-		for key, value in gae_runtime_result.items():
-			print(f"\t\t\t{key} : {value}")
-
-		# Print report for gae_runtime
-		print_report(report, mitigation_name)
-
-	else:
-		print("GAE runtime check : ✓\n")
-		print("*************************\n")
-
+	# Print report for gae_runtime
+	report_print("GAE runtime check", gae_runtime_result, report, mitigation_name, severity)

@@ -1,25 +1,19 @@
 remove launch and command_lines from main.py
 add a --list parameter witch accept a list of project_id if you don't want to scan all project
-print the criticity
+add some colors in output, for severity, x/✓
 make the count of vulns ? a table or just printing it at the end of the scan
-add timing of the scan
-print severity
+add a -s/--sort -> sort by vulnerability severity
 
 Report :
 	better reporting
+	There's a bug when functions finish at the same time, printing get fck, found how to resolve that
 	html/pdf ?
 
 make requirement file
 	dns.googleapis.com
 
 add more security check
-	gcloud compute instances list- > gcloud compute instances describe NAME --zone=ZONE -> yaml -> email: -> if email [0-9]*-compute@developer.gserviceaccount.com -> gce_instance_service_account -> Major
-	gcloud compute instances list- > gcloud compute instances describe NAME --zone=ZONE -> yaml -> canIpForward: -> if true -> gce_ip_forwarding -> Critical
-	gcloud compute instances list- > gcloud compute instances describe NAME --zone=ZONE -> yaml -> network: -> .split('/')[-1] == default -> gce_network_name -> Major
-	gcloud compute instances list- > gcloud compute instances describe NAME --zone=ZONE -> yaml ->  enableIntegrityMonitoring:
-  	enableSecureBoot:  enableVtpm: -> all true or -> gce_shielded_instances -> Minor
-
-  	For functions which launch the same commands do something to speed things up
+ 	For functions which launch the same commands do something to speed things up
 
 
 Need to do some research (easy) : 
@@ -33,3 +27,6 @@ Later, need some reasearch (hard) :
 
 	Try to catch error in threads
 	Being able to change user ? -> gcloud config set account
+
+
+commit -m "added functions : gce_ip_forwarding, gce_network_name, gce_shielded_instances, report to remove some repeating code (gce_checks was 296 now 193, gae_check was 193 now 154, dns_check was 86 now 61). Added time took for the scan, now print the severity in report mode"

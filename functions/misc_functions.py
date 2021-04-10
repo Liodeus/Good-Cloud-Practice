@@ -1,6 +1,9 @@
-import shlex, subprocess
+import subprocess
+import shlex
+import yaml
 import json
 import sys
+import re
 
 
 def banner():
@@ -60,7 +63,7 @@ def pretty_print_mitigation(mitigation):
 	print("References :")
 	print(f"\t{mitigation['references']}\n")
 
-	print("*************************\n")
+	print("**************************************************\n")
 
 
 def change_project(project_id):
@@ -75,16 +78,17 @@ def change_project(project_id):
 	print("\t\t\t\t\t\t**************************************************\n")
 
 
-def print_report(report, mitigation_name):
+def print_report(report, mitigation_name, severity):
 	"""
 		Print report
 	"""
 	print("")
 	if report:
 		mitigation = read_mitigation(mitigation_name)
+		print(f"Severity : {severity}\n")
 		pretty_print_mitigation(mitigation)
 	else:
-		print("*************************\n")
+		print("**************************************************\n")
 
 
 def get_project_list():
@@ -171,3 +175,30 @@ def get_current_user():
 	for x in res:
 		if "*" in x:
 			return x.split()[1]
+
+
+def report_print(string_to_print, dict_result, report, mitigation_name, severity):
+	if dict_result:
+		print(f"{string_to_print} : x")
+		print("\tInformation :")
+		for key, value in dict_result.items():
+			if string_to_print == "GCE instance shielding":
+				for config_name, state in value.items():
+					if not state:
+						print(f"\t\t{config_name} -> {state}")
+			elif string_to_print == "GAE env variable check":
+				str_tmp = ""
+				print(f"\t\t{key} :")
+				for result in value:
+					for secret, secret_value in result.items():
+						str_tmp += f"\t\t\t{secret} -> {secret_value}\n"
+				print(f"{str_tmp}")
+			elif string_to_print == "GAE max version check":
+				print(f"\t\t{key}")
+			else:
+				print(f"\t\t{key} -> {value}")
+
+		print_report(report, mitigation_name, severity)
+	else:
+		print(f"{string_to_print} : ✓\n")
+		print("**************************************************\n")
