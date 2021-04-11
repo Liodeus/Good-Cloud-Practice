@@ -36,6 +36,7 @@ You will need to have a Google account and those tools installed.
 
 - [gcloud](https://cloud.google.com/sdk/docs/install#deb)
 - python3
+- python3-pip
 
 Now you need to authorize gcloud to access the Cloud Platform with Google user credentials.
 

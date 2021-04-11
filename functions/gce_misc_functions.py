@@ -20,6 +20,8 @@ def gce_reduce(cmd_list, function_name):
 				result[name] = state
 	else:
 		datas = exec_cmd(cmd_list[0]).split('\n')[1:-1]
+		if "This API method requires billing to be enabled." in datas[0]:
+			return {"API_BILLING": True}
 
 		if function_name in ["gce_disk_location"]:
 			if "ERROR:" in datas[0]:

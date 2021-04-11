@@ -46,7 +46,10 @@ def gce_instance_service_account(cmd_list, report="False", severity="Major", mit
 		Test for instance default account
 	"""
 	location_result = gce_reduce(cmd_list, "gce_instance_service_account")
-	services_account = gce_reduce_two(location_result, cmd_list, "gce_instance_service_account")
+	if "API_BILLING" in location_result:
+		services_account = location_result
+	else:
+		services_account = gce_reduce_two(location_result, cmd_list, "gce_instance_service_account")
 
 	# Print report for gce_instance_service_account
 	report_print("GCE instance service account", services_account, report, mitigation_name, severity)
@@ -57,7 +60,10 @@ def gce_ip_forwarding(cmd_list, report="False", severity="Critical", mitigation_
 		Test for 
 	"""
 	location_result = gce_reduce(cmd_list, "gce_ip_forwarding")
-	services_account = gce_reduce_two(location_result, cmd_list, "gce_ip_forwarding")
+	if "API_BILLING" in location_result:
+		services_account = location_result
+	else:
+		services_account = gce_reduce_two(location_result, cmd_list, "gce_ip_forwarding")
 
 	# Print report for gce_instance_service_account
 	report_print("GCE instance IP forwarding", services_account, report, mitigation_name, severity)
@@ -68,7 +74,11 @@ def gce_network_name(cmd_list, report="False", severity="Major", mitigation_name
 		Test for 
 	"""
 	location_result = gce_reduce(cmd_list, "gce_network_name")
-	network_default = gce_reduce_two(location_result, cmd_list, "gce_network_name")
+	
+	if "API_BILLING" in location_result:
+		network_default = location_result
+	else:
+		network_default = gce_reduce_two(location_result, cmd_list, "gce_network_name")
 
 	# Print report for gce_network_name
 	report_print("GCE instance instance default network", network_default, report, mitigation_name, severity)
@@ -79,7 +89,10 @@ def gce_shielded_instances(cmd_list, report="False", severity="Minor", mitigatio
 		Test if enableIntegrityMonitoring, enableSecureBoot,enableVtpm are enable on GCE instances
 	"""
 	location_result = gce_reduce(cmd_list, "gce_shielded_instances")
-	shield_result = gce_reduce_two(location_result, cmd_list, "gce_shielded_instances")
+	if "API_BILLING" in location_result:
+		shield_result = location_result
+	else:
+		shield_result = gce_reduce_two(location_result, cmd_list, "gce_shielded_instances")
 
 	# Print report for gce_shielded_instances
 	report_print("GCE instance shielding", shield_result, report, mitigation_name, severity)

@@ -112,11 +112,20 @@ def get_project_list():
 
 		Return list of projects
 	"""
-	res = exec_cmd("gcloud projects list")
+	try:
+		res = exec_cmd("gcloud projects list")
+	except FileNotFoundError:
+		print("You need to install gcloud !")
+		sys.exit()
+
+	if "You do not currently have an active account selected." in res:
+		print("You do not currently have an active account selected.\nPlease run :\n\tgcloud auth login")
+		sys.exit()
+
 	if "UNAUTHENTICATED" in res:
 		print("You need to reauthenticate !\n")
 		print("You may run the following command : gcloud auth login")
-		exit()
+		sys.exit()
 
 	return [x.split()[0] for x in res.split('\n')[1:-1]]
 
@@ -134,7 +143,7 @@ def list_projects():
 			print(f"\t{project} -> Current project")
 		else:
 			print(f"\t{project}")
-	exit()
+	sys.exit()
 
 
 def get_current_project():
@@ -153,6 +162,11 @@ def get_list_users():
 		Return list of users
 	"""
 	res = exec_cmd("gcloud auth list").split('\n')[2:]
+
+	if res[1] == "To login, run:":
+		print("You do not currently have an active account selected.\nPlease run :\n\tgcloud auth login")
+		sys.exit()
+
 	users = []
 	for x in res:
 		try:
@@ -176,7 +190,7 @@ def list_users():
 			print(f"\t{user} -> Current user")
 		else:
 			print(f"\t{user}")
-	exit()
+	sys.exit()
 
 
 def get_current_user():
@@ -196,24 +210,27 @@ def report_print(string_to_print, dict_result, report, mitigation_name, severity
 	if dict_result:
 		print(f"{string_to_print} : {Fore.RED}x{Style.RESET_ALL}")
 		print("\tInformation :")
-		for key, value in dict_result.items():
-			if string_to_print == "GCE instance shielding":
-				for config_name, state in value.items():
-					if not state:
-						print(f"\t\t{config_name} -> {state}")
-			elif string_to_print == "GAE env variable check":
-				str_tmp = ""
-				print(f"\t\t{key} :")
-				for result in value:
-					for secret, secret_value in result.items():
-						str_tmp += f"\t\t\t{secret} -> {secret_value}\n"
-				print(f"{str_tmp}")
-			elif string_to_print == "GAE max version check":
-				print(f"\t\t{key}")
-			else:
-				print(f"\t\t{key} -> {value}")
+		if "API_BILLING" in dict_result:
+			print("This API method requires billing to be enabled. Please enable billing by visiting https://console.developers.google.com/billing/enable then retry.")
+		else:
+			for key, value in dict_result.items():
+				if string_to_print == "GCE instance shielding":
+					for config_name, state in value.items():
+						if not state:
+							print(f"\t\t{config_name} -> {state}")
+				elif string_to_print == "GAE env variable check":
+					str_tmp = ""
+					print(f"\t\t{key} :")
+					for result in value:
+						for secret, secret_value in result.items():
+							str_tmp += f"\t\t\t{secret} -> {secret_value}\n"
+					print(f"{str_tmp}")
+				elif string_to_print == "GAE max version check":
+					print(f"\t\t{key}")
+				else:
+					print(f"\t\t{key} -> {value}")
 
-		print_report(report, mitigation_name, severity)
+			print_report(report, mitigation_name, severity)
 	else:
 		print(f"{string_to_print} : {Fore.GREEN}✓{Style.RESET_ALL}\n")
 		print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
