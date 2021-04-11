@@ -9,6 +9,7 @@
  • <a href="#requirements">Requirements</a>
  • <a href="#installation">Installation</a>
  • <a href="#usage">Usage</a>
+ • <a href="#Examples">Examples</a>
  • <a href="#contributing">Contributing</a>
  • <a href="#thanks">Thanks</a>
 </p>
@@ -24,9 +25,9 @@ I made this tool to learn security on Google Cloud Platform.
 
 ## Main Features
 
-- Bla
-- Bla
-- Bla
+- DNS checks : 2
+- Google AppEngine checks : 4
+- Google Compute Engine checks : 8
 
 ## Requirements
 
@@ -36,7 +37,7 @@ You will need to have a Google account and those tools installed.
 
 - [gcloud](https://cloud.google.com/sdk/docs/install#deb)
 - python3
-- python3-pip
+- python3-pip (sudo apt install python3-pip)
 
 Now you need to authorize gcloud to access the Cloud Platform with Google user credentials.
 
@@ -64,6 +65,23 @@ optional arguments:
   -lu, --list_users     List users
   --project_id PROJECT_ID
                         Do the checks on this project-id
+```
+
+## Examples
+
+Run all the compliances checks on every projects :
+```
+python3 Good_Cloud_Practice.py
+```
+
+Run all the compliances checks on every projects and enable report mode :
+```
+python3 Good_Cloud_Practice.py -r
+```
+
+Run all the compliances checks on a particular project :
+```
+python3 Good_Cloud_Practice.py --project_id mystic-sun-309920
 ```
 
 ## Contributing

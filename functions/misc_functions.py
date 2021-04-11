@@ -211,7 +211,8 @@ def report_print(string_to_print, dict_result, report, mitigation_name, severity
 		print(f"{string_to_print} : {Fore.RED}x{Style.RESET_ALL}")
 		print("\tInformation :")
 		if "API_BILLING" in dict_result:
-			print("This API method requires billing to be enabled. Please enable billing by visiting https://console.developers.google.com/billing/enable then retry.")
+			print("\t\tThis API method requires billing to be enabled. Please enable billing by visiting https://console.developers.google.com/billing/enable then retry.\n")
+			print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 		else:
 			for key, value in dict_result.items():
 				if string_to_print == "GCE instance shielding":

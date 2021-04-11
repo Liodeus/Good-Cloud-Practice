@@ -10,7 +10,10 @@ def gce_reduce(cmd_list, function_name):
 	result = {}
 
 	if function_name in ["gce_firewallrule_log"]:
-		datas = json.loads(exec_cmd(cmd_list[0]))
+		try:
+			datas = json.loads(exec_cmd(cmd_list[0]))
+		except json.decoder.JSONDecodeError:
+			return {"API_BILLING": True}
 
 		for data in datas:
 			state = data["logConfig"]["enable"]
