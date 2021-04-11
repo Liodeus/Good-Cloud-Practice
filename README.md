@@ -1,5 +1,5 @@
 <p align="center">
-![](/Images/logo.png)
+  <img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/Images/logo.png" alt="Logo">
   
 <p align="center">A python3 script, which scan and report your Google Cloud Platfrom non compliance.
 
@@ -13,12 +13,10 @@
  • <a href="#thanks">Thanks</a>
 </p>
 
-
 <div align="center">
   <sub>Created by
   <a href="https://liodeus.github.io/">Liodeus</a>
 </div>
-
 
 ## Introduction
 
