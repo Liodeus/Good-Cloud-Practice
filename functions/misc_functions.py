@@ -115,7 +115,8 @@ def get_project_list():
 	try:
 		res = exec_cmd("gcloud projects list")
 	except FileNotFoundError:
-		print("You need to install gcloud !")
+		print("You need to install gcloud !\n")
+		print("Go check requirements : https://github.com/Liodeus/Good-Cloud-Practice#requirements")
 		sys.exit()
 
 	if "You do not currently have an active account selected." in res:
