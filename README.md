@@ -45,7 +45,7 @@ gcloud auth login
 
 ## Installation
 
-```bash
+```
 git clone https://github.com/Liodeus/Good-Cloud-Practice
 cd Good-Cloud-Practice
 pip3 install -r requirements.txt
@@ -53,7 +53,7 @@ pip3 install -r requirements.txt
 
 ## Usage
 
-```bash
+```
 Usage: Good_Cloud_Practice.py [-h] [-r] [-lp] [-lu] [--project_id PROJECT_ID]
 
 optional arguments:
