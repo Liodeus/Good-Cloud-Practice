@@ -1,11 +1,15 @@
-remove launch and command_lines from main.py
-add a --list parameter witch accept a list of project_id if you don't want to scan all project
-make the count of vulns ? a table or just printing it at the end of the scan
+In priority :
+	resize l'image banner readme -> https://github.com/pwn0sec/PwnXSS
+	remove launch and command_lines from main.py
+	add a --list parameter witch accept a list of project_id if you don't want to scan all project
+	make the count of vulns ? a table or just printing it at the end of the scan
+	make install in readme -> test if there's bug doing it
+		Add a check, to see if gcloud is install
+
 
 Report :
 	There's a bug when functions finish at the same time, printing get fck, found how to resolve that
 	html/pdf ?
-	add a -s/--sort -> sort by vulnerability severity
 
 make requirement file
 
