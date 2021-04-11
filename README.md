@@ -1,14 +1,14 @@
-![](/Images/logo.png)
+<p align="center">![](/Images/logo.png)
+A python3 script, which scan and report your Google Cloud Platfrom non compliance.
 
-<p align="center">A python3 script, which scan and report your Google Cloud Platfrom non compliance.
 <p align="center">
   <a href="#introduction">Introduction</a>
-  <a href="#main-features">Main Features</a>
-  <a href="#requirements">Requirements</a>
-  <a href="#installation">Installation</a>
-  <a href="#usage">Usage</a>
-  <a href="#contributing">Contributing</a>
-  <a href="#thanks">Thanks</a>
+ • <a href="#main-features">Main Features</a>
+ • <a href="#requirements">Requirements</a>
+ • <a href="#installation">Installation</a>
+ • <a href="#usage">Usage</a>
+ • <a href="#contributing">Contributing</a>
+ • <a href="#thanks">Thanks</a>
 </p>
 
 
