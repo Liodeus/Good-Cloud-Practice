@@ -37,9 +37,9 @@ You will need to have a Google account and those tools installed.
 
 - [gcloud](https://cloud.google.com/sdk/docs/install#deb)
 - python3
-- python3-pip (sudo apt install python3-pip)
+- python3-pip - (sudo apt install python3-pip)
 
-Now you need to authorize gcloud to access the Cloud Platform with Google user credentials.
+Once gcloud is installed, you need to authorize gcloud to access the Cloud Platform with Google user credentials.
 
 ```bash
 gcloud auth login
@@ -64,7 +64,7 @@ optional arguments:
   -lp, --list_projects  List projects
   -lu, --list_users     List users
   --project_id PROJECT_ID
-                        Do the checks on this project-id
+                        Do the compliances checks on this project ID
 ```
 
 ## Examples

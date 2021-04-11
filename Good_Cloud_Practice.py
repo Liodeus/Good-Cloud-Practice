@@ -120,7 +120,7 @@ if __name__ == "__main__":
 	parser.add_argument("-r", "--report", action="store_true", help='Enable report mode')
 	parser.add_argument( "-lp", "--list_projects", action="store_true", help='List projects')
 	parser.add_argument("-lu", "--list_users", action="store_true", help='List users')
-	parser.add_argument("--project_id", required=False, help='Do the checks on this project-id')
+	parser.add_argument("--project_id", required=False, help='Do the compliances checks on this project ID')
 	args = parser.parse_args()
 
 	if args.list_projects:
