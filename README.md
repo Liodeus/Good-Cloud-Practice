@@ -88,8 +88,6 @@ python3 Good_Cloud_Practice.py --project_id mystic-sun-309920
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Please make sure to update tests as appropriate.
-
 ## Thanks
 
 Thanks to this project : [ram](https://github.com/BrunoReboul/ram) for most of the inspiration.
