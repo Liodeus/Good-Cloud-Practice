@@ -13,7 +13,7 @@
  • <a href="#thanks">Thanks</a>
 </p>
 
-<div align="right">
+<div align="center">
   <sub>Created by
   <a href="https://liodeus.github.io/">Liodeus</a>
 </div>
