@@ -1,5 +1,5 @@
 <p align="center">
-  ![](/Images/logo.png)
+![](/Images/logo.png)
   
 <p align="center">A python3 script, which scan and report your Google Cloud Platfrom non compliance.
 
