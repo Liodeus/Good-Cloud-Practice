@@ -1,5 +1,6 @@
-import subprocess
 from  colorama import Fore, Style
+import subprocess
+import datetime
 import shlex
 import yaml
 import json
@@ -70,14 +71,29 @@ def pretty_print_mitigation(mitigation):
 def change_project(project_id):
 	"""
 		Change the project
-	"""
-	exec_cmd(f"gcloud config set project {project_id}")
-	print(f"{Fore.CYAN}\t\t\t\t\t\t**************************************************{Style.RESET_ALL}")
-	print(f"{Fore.CYAN}\t\t\t\t\t\t**************************************************{Style.RESET_ALL}")
-	print(f"\t\t\t\t\t\t{Fore.CYAN}*{Style.RESET_ALL}\t\t{project_id}\t\t {Fore.CYAN}*{Style.RESET_ALL}")
-	print(f"{Fore.CYAN}\t\t\t\t\t\t**************************************************{Style.RESET_ALL}")
-	print(f"{Fore.CYAN}\t\t\t\t\t\t**************************************************{Style.RESET_ALL}\n")
 
+		Return True if ok else return False
+	"""
+	if re.match("[a-z]{1}[a-z0-9-]{5,29}", project_id):
+		res = exec_cmd(f"gcloud config set project {project_id}")
+
+		if "You do not appear to have access to project" not in res and "(gcloud.config.set)" not in res:
+			print(f"{Fore.CYAN}\t\t\t\t\t\t**************************************************{Style.RESET_ALL}")
+			print(f"{Fore.CYAN}\t\t\t\t\t\t**************************************************{Style.RESET_ALL}")
+			print(f"\t\t\t\t\t\t\t\t{project_id}")
+			print(f"{Fore.CYAN}\t\t\t\t\t\t**************************************************{Style.RESET_ALL}")
+			print(f"{Fore.CYAN}\t\t\t\t\t\t**************************************************{Style.RESET_ALL}\n")
+			return True
+		else:
+			return print_error(project_id)
+	else:
+		return print_error(project_id)
+
+
+def print_error(project_id):
+	print(f"You do not appear to have access to project [{project_id}] or it does not exist.\n")
+	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
+	return False
 
 def print_report(report, mitigation_name, severity):
 	"""
@@ -137,6 +153,7 @@ def list_projects():
 	"""
 	projects = get_project_list()
 	current_project = get_current_project().strip()
+	print_current_user()
 
 	print("This is the list of project(s) :")
 	for project in projects:
@@ -183,32 +200,31 @@ def list_users():
 		Print the list of users
 	"""
 	users = get_list_users()
-	current_user = get_current_user()
+	print_current_user()
 
 	print("This is the list of user(s) :")
 	for user in users:
-		if user == current_user:
-			print(f"\t{user} -> Current user")
-		else:
-			print(f"\t{user}")
+		print(f"\t{user}")
 	sys.exit()
 
 
-def get_current_user():
+def print_current_user():
 	"""
 		Get the current user
-
-		Return name of current user
 	"""
 	res = exec_cmd("gcloud auth list").split('\n')[2:]
 
 	for x in res:
 		if "*" in x:
-			return x.split()[1]
+			print(f"Current user : {x.split()[1]}\n") 
 
 
 def report_print(string_to_print, dict_result, report, mitigation_name, severity):
+	"""
+
+	"""
 	if dict_result:
+		non_compliance_summary[severity] += 1
 		print(f"{string_to_print} : {Fore.RED}x{Style.RESET_ALL}")
 		print("\tInformation :")
 		if "API_BILLING" in dict_result:
@@ -219,7 +235,7 @@ def report_print(string_to_print, dict_result, report, mitigation_name, severity
 				if string_to_print == "GCE instance shielding":
 					for config_name, state in value.items():
 						if not state:
-							print(f"\t\t{config_name} -> {state}")
+							print(f"\t\t{key} : {config_name} -> {state}")
 				elif string_to_print == "GAE env variable check":
 					str_tmp = ""
 					print(f"\t\t{key} :")
@@ -236,3 +252,45 @@ def report_print(string_to_print, dict_result, report, mitigation_name, severity
 	else:
 		print(f"{string_to_print} : {Fore.GREEN}✓{Style.RESET_ALL}\n")
 		print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
+
+
+def get_date():
+	"""
+		Print the actual date
+	"""
+	print(datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S'))
+	print()
+
+
+non_compliance_summary = {
+	"Critical": 0,
+	"Major": 0,
+	"Medium": 0,
+	"Minor": 0
+}
+def print_non_compliance_summary():
+	crit = non_compliance_summary['Critical']
+	maj = non_compliance_summary['Major']
+	med = non_compliance_summary['Medium']
+	mino = non_compliance_summary['Minor']
+	total = crit + maj + med + mino
+
+	print("Non compliances summary :")
+	print(f"\t{Fore.RED}Critical -> {crit}/4{Style.RESET_ALL}")
+	print(f"\t{Fore.YELLOW}Major -> {maj}/8{Style.RESET_ALL}")
+	print(f"\t{Fore.GREEN}Medium -> {med}/1{Style.RESET_ALL}")
+	print(f"\t{Fore.CYAN}Minor -> {mino}/1{Style.RESET_ALL}")
+	print(f"\tTotal -> {total}/14\n")
+	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
+	reset_count_non_compliance()
+
+
+def reset_count_non_compliance():
+	global non_compliance_summary
+
+	non_compliance_summary = {
+		"Critical": 0,
+		"Major": 0,
+		"Medium": 0,
+		"Minor": 0
+	}

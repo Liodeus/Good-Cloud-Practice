@@ -8,13 +8,14 @@ def dnssec(cmd_list, report="False", severity="Major", mitigation_name="dnssec_m
 	datas = exec_cmd(cmd_list[0]).split()
 
 	if datas[0] == "API":
-		print("DNSSEC check : x")
+		non_compliance_summary[severity] += 1
+		print(f"DNSSEC check : {Fore.RED}x{Style.RESET_ALL}")
 		print("\tAPI [dns.googleapis.com] not enabled\n")
 		print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 		sys.exit()
 
 	if datas[0] == "Listed":
-		print("DNSSEC check : ✓\n")
+		print(f"DNSSEC check : {Fore.GREEN}✓{Style.RESET_ALL}\n")
 		print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 	else:
 		managed_zones = [x.split('/')[-1] for x in datas]
@@ -40,6 +41,7 @@ def rsasha1(cmd_list, report="False", severity="Critical", mitigation_name="rsas
 	datas = exec_cmd(cmd_list[0]).split()
 
 	if datas[0] == "API":
+		non_compliance_summary[severity] += 1
 		print("RSASHA1 check : x")
 		print("\tAPI [dns.googleapis.com] not enabled\n")
 		print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")

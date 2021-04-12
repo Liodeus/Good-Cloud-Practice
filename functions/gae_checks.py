@@ -19,6 +19,9 @@ def gae_max_version(cmd_list, report="False", severity="Critical", mitigation_na
 	"""
 	max_version_result = gae_reduce(cmd_list, "gae_max_version")
 
+	if not len(max_version_result) > 2:
+		max_version_result = {}
+
 	# Print report for gae_max_version
 	report_print("GAE max version check", max_version_result, report, mitigation_name, severity)
 

@@ -63,8 +63,9 @@ optional arguments:
   -r, --report          Enable report mode
   -lp, --list_projects  List projects
   -lu, --list_users     List users
-  --project_id PROJECT_ID
+  -pi PROJECT_ID, --project_id PROJECT_ID
                         Do the compliances checks on this project ID
+  -l LIST, --list LIST  Do the compliances checks on this list of project ID
 ```
 
 ## Examples

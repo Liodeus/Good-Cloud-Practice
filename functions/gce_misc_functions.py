@@ -28,10 +28,10 @@ def gce_reduce(cmd_list, function_name):
 
 		if function_name in ["gce_disk_location"]:
 			if "ERROR:" in datas[0]:
-				print("GCE disk location check : x")
+				print(f"GCE disk location check : {Fore.RED}x{Style.RESET_ALL}")
 				print("\tAn error occured")
 				print(f"\t\t{' '.join(datas)}")
-				print("**************************************************\n")
+				print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 				sys.exit()
 		
 		for data in datas:
@@ -46,7 +46,7 @@ def gce_reduce(cmd_list, function_name):
 					result[name] = location
 			elif function_name in ["gce_instance_externalip"]:
 				external_ip = tmp[4]
-				if external_ip != "TERMINATED":
+				if external_ip not in ["TERMINATED", "RUNNING"]:
 					result[name] = external_ip
 
 	return result
@@ -71,7 +71,7 @@ def gce_reduce_two(result, cmd_list, function_name):
 		elif function_name == "gce_ip_forwarding":
 			forward = yaml_datas["canIpForward"]
 
-			if not forward:
+			if forward:
 				res[name] = forward
 
 		elif function_name == "gce_network_name":
