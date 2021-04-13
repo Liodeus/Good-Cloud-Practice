@@ -45,7 +45,7 @@ def read_mitigation(mitigation_name):
 		Return mitigation as a dictionnary
 	"""
 	with open(f"mitigations/{mitigation_name}") as f:
-		mitgation = json.loads(f.read())
+		mitgation = f.read()
 
 		return mitgation
 
@@ -56,15 +56,8 @@ def pretty_print_mitigation(mitigation):
 
 		Return mitigation as str
 	"""
-	print("Description :")
-	print(f"\t{mitigation['description']}\n")
-
-	print("Fix :")
-	print(f"\t{mitigation['fix']}\n")
-
-	print("References :")
-	print(f"\t{mitigation['references']}\n")
-
+	mitigation = '\n'.join(mitigation.split('\n')[2:])
+	print(mitigation)
 	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 
 
@@ -94,6 +87,7 @@ def print_error(project_id):
 	print(f"You do not appear to have access to project [{project_id}] or it does not exist.\n")
 	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 	return False
+
 
 def print_report(report, mitigation_name, severity):
 	"""
@@ -236,7 +230,7 @@ def report_print(string_to_print, dict_result, report, mitigation_name, severity
 					for config_name, state in value.items():
 						if not state:
 							print(f"\t\t{key} : {config_name} -> {state}")
-				elif string_to_print == "GAE env variable check":
+				elif string_to_print in ["GAE env variable check", "GCF env secret check"]:
 					str_tmp = ""
 					print(f"\t\t{key} :")
 					for result in value:
@@ -276,11 +270,11 @@ def print_non_compliance_summary():
 	total = crit + maj + med + mino
 
 	print("Non compliances summary :")
-	print(f"\t{Fore.RED}Critical -> {crit}/4{Style.RESET_ALL}")
-	print(f"\t{Fore.YELLOW}Major -> {maj}/8{Style.RESET_ALL}")
+	print(f"\t{Fore.RED}Critical -> {crit}/6{Style.RESET_ALL}")
+	print(f"\t{Fore.YELLOW}Major -> {maj}/11{Style.RESET_ALL}")
 	print(f"\t{Fore.GREEN}Medium -> {med}/1{Style.RESET_ALL}")
 	print(f"\t{Fore.CYAN}Minor -> {mino}/1{Style.RESET_ALL}")
-	print(f"\tTotal -> {total}/14\n")
+	print(f"\tTotal -> {total}/19\n")
 	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 	reset_count_non_compliance()
 

@@ -1,10 +1,18 @@
 from functions.dns_checks import *
 from functions.gae_checks import *
 from functions.gce_checks import *
+from functions.bq_checks import *
+from functions.gcf_checks import *
 import threading
 
 
 command_lines = {
+	"BQ": {
+		"DATASET_LOCATION": [
+			"bq ls",
+			"bq show --format=prettyjson "
+		]
+	},
 	"DNS": {
 		"DNSSEC": [
 			"gcloud dns managed-zones list --uri",
@@ -59,6 +67,23 @@ command_lines = {
 		"SHIELDED_ISNTANCES": [
 			"gcloud compute instances list",
 			"gcloud compute instances describe --zone="
+		]
+	},
+	"GCF": {
+		"ENV_SECRET": [
+			"gcloud functions list",
+			"gcloud functions describe --region="
+		],
+		"LOCATION": [
+			"gcloud functions list",
+		],
+		"RUNTIME": [
+			"gcloud functions list",
+			"gcloud functions describe --region="
+		],
+		"SERVICE_ACCOUNT": [
+			"gcloud functions list",
+			"gcloud functions describe --region="
 		],
 	}
 }
@@ -80,12 +105,17 @@ def launch(REPORT, projects_list=[]):
 				gce_shielded_instances: (command_lines["GCE"]["INSTANCE_SERVICE"], REPORT),
 				gae_runtime: (command_lines["GAE"]["RUNTIME"], REPORT),
 				gae_env_secret: (command_lines["GAE"]["ENV_SECRET"], REPORT),
-				dnssec: (command_lines["DNS"]["DNSSEC"], REPORT),
-				rsasha1: (command_lines["DNS"]["RSASHA1"], REPORT),
+				clouddns_dnssec: (command_lines["DNS"]["DNSSEC"], REPORT),
+				clouddns_rsasha1: (command_lines["DNS"]["RSASHA1"], REPORT),
 				gae_max_version: (command_lines["GAE"]["MAX_VERSION"], REPORT),
 				gae_location: (command_lines["GAE"]["LOCATION"], REPORT),
 				gce_disk_location: (command_lines["GCE"]["DISK_LOCATION"], REPORT),
 				gce_firewallrule_log: (command_lines["GCE"]["FIREWALLRULE_LOG"], REPORT),
+				bq_dataset_location: (command_lines["BQ"]["DATASET_LOCATION"], REPORT),
+				gcf_env_secret: (command_lines["GCF"]["ENV_SECRET"], REPORT),
+				gcf_location: (command_lines["GCF"]["LOCATION"], REPORT),
+				gcf_runtime: (command_lines["GCF"]["RUNTIME"], REPORT),
+				gcf_service_account: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT),
 			}
 
 			for function, parameters in functions.items():

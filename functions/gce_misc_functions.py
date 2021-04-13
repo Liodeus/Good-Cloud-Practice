@@ -28,7 +28,6 @@ def gce_reduce(cmd_list, function_name):
 
 		if function_name in ["gce_disk_location"]:
 			if "ERROR:" in datas[0]:
-				print(f"GCE disk location check : {Fore.RED}x{Style.RESET_ALL}")
 				print("\tAn error occured")
 				print(f"\t\t{' '.join(datas)}")
 				print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")

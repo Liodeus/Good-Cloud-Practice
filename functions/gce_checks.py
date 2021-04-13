@@ -1,7 +1,7 @@
 from functions.gce_misc_functions import *
 
 
-def gce_firewallrule_log(cmd_list, report="False", severity="Medium", mitigation_name="gce_firewallrule_log_mitigation.json"):
+def gce_firewallrule_log(cmd_list, report="False", severity="Medium", mitigation_name="gce_firewallrule_log.md"):
 	"""
 		Test if firewall rule are enable
 	"""
@@ -11,7 +11,7 @@ def gce_firewallrule_log(cmd_list, report="False", severity="Medium", mitigation
 	report_print("GCE firewallrule_log ", firewall_rule_enable, report, mitigation_name, severity)
 
 
-def gce_disk_location(cmd_list, report="False", severity="Major", mitigation_name="gce_disk_location_mitigation.json"):
+def gce_disk_location(cmd_list, report="False", severity="Major", mitigation_name="gce_disk_location.md"):
 	"""
 		Test for disk location compliance to GDPR
 	"""
@@ -21,7 +21,7 @@ def gce_disk_location(cmd_list, report="False", severity="Major", mitigation_nam
 	report_print("GCE disk location", disk_location_result, report, mitigation_name, severity)
 
 
-def gce_instance_externalip(cmd_list, report="False", severity="Major", mitigation_name="gce_instance_externalip_mitigation.json"):
+def gce_instance_externalip(cmd_list, report="False", severity="Major", mitigation_name="gce_instance_externalip.md"):
 	"""
 		Test for external ip on GCE instance
 	"""
@@ -31,7 +31,7 @@ def gce_instance_externalip(cmd_list, report="False", severity="Major", mitigati
 	report_print("GCE instance external ip", external_ip_result, report, mitigation_name, severity)
 
 
-def gce_instance_location(cmd_list, report="False", severity="Major", mitigation_name="gce_instance_location_mitigation.json"):
+def gce_instance_location(cmd_list, report="False", severity="Major", mitigation_name="gce_instance_location.md"):
 	"""
 		Test for instance location compliance to GDPR
 	"""
@@ -41,7 +41,7 @@ def gce_instance_location(cmd_list, report="False", severity="Major", mitigation
 	report_print("GCE instance location", location_result, report, mitigation_name, severity)
 
 
-def gce_instance_service_account(cmd_list, report="False", severity="Major", mitigation_name="gce_instance_service_account_mitigation.json"):
+def gce_instance_service_account(cmd_list, report="False", severity="Major", mitigation_name="gce_instance_service_account.md"):
 	"""
 		Test for instance default account
 	"""
@@ -55,7 +55,7 @@ def gce_instance_service_account(cmd_list, report="False", severity="Major", mit
 	report_print("GCE instance service account", services_account, report, mitigation_name, severity)
 
 
-def gce_ip_forwarding(cmd_list, report="False", severity="Critical", mitigation_name="gce_ip_forwarding_mitigation.json"):
+def gce_ip_forwarding(cmd_list, report="False", severity="Critical", mitigation_name="gce_ip_forwarding.md"):
 	"""
 		Test for 
 	"""
@@ -69,7 +69,7 @@ def gce_ip_forwarding(cmd_list, report="False", severity="Critical", mitigation_
 	report_print("GCE instance IP forwarding", services_account, report, mitigation_name, severity)
 		
 
-def gce_network_name(cmd_list, report="False", severity="Major", mitigation_name="gce_network_name_mitigation.json"):
+def gce_network_name(cmd_list, report="False", severity="Major", mitigation_name="gce_network_name.md"):
 	"""
 		Test for 
 	"""
@@ -84,7 +84,7 @@ def gce_network_name(cmd_list, report="False", severity="Major", mitigation_name
 	report_print("GCE instance instance default network", network_default, report, mitigation_name, severity)
 
 
-def gce_shielded_instances(cmd_list, report="False", severity="Minor", mitigation_name="gce_shielded_instances_mitigation.json"):
+def gce_shielded_instances(cmd_list, report="False", severity="Minor", mitigation_name="gce_shielded_instances.md"):
 	"""
 		Test if enableIntegrityMonitoring, enableSecureBoot,enableVtpm are enable on GCE instances
 	"""

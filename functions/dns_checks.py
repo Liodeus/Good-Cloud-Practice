@@ -1,14 +1,13 @@
 from functions.misc_functions import *
 
 
-def dnssec(cmd_list, report="False", severity="Major", mitigation_name="dnssec_mitigation.json"):
+def clouddns_dnssec(cmd_list, report="False", severity="Major", mitigation_name="clouddns_dnssec.md"):
 	"""
 		Test for DNSSEC security
 	"""
 	datas = exec_cmd(cmd_list[0]).split()
 
 	if datas[0] == "API":
-		non_compliance_summary[severity] += 1
 		print(f"DNSSEC check : {Fore.RED}x{Style.RESET_ALL}")
 		print("\tAPI [dns.googleapis.com] not enabled\n")
 		print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
@@ -34,15 +33,14 @@ def dnssec(cmd_list, report="False", severity="Major", mitigation_name="dnssec_m
 		report_print("DNSSEC check", dnssec_results, report, mitigation_name, severity)
 
 
-def rsasha1(cmd_list, report="False", severity="Critical", mitigation_name="rsasha1_mitigation.json"):
+def clouddns_rsasha1(cmd_list, report="False", severity="Critical", mitigation_name="clouddns_rsasha1.md"):
 	"""
 		Test for DNSSEC RSASHA1 weak algorithm
 	"""
 	datas = exec_cmd(cmd_list[0]).split()
 
 	if datas[0] == "API":
-		non_compliance_summary[severity] += 1
-		print("RSASHA1 check : x")
+		print("clouddns rsasha1 check : x")
 		print("\tAPI [dns.googleapis.com] not enabled\n")
 		print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 		sys.exit()
@@ -59,4 +57,4 @@ def rsasha1(cmd_list, report="False", severity="Critical", mitigation_name="rsas
 			rsasha1_results[key] = "RSASHA1"
 
 	# Print report for RSASHA1
-	report_print("RSASHA1 check", rsasha1_results, report, mitigation_name, severity)
+	report_print("clouddns rsasha1 check", rsasha1_results, report, mitigation_name, severity)

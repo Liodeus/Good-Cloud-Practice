@@ -1,6 +1,6 @@
 from functions.gae_misc_functions import *
 
-def gae_env_secret(cmd_list, report="False", severity="Critical", mitigation_name="gae_env_secret_mitigation.json"):
+def gae_env_secret(cmd_list, report="False", severity="Critical", mitigation_name="gae_env_secret.md"):
 	"""
 		Test for AppEngine env variable secret
 
@@ -12,7 +12,7 @@ def gae_env_secret(cmd_list, report="False", severity="Critical", mitigation_nam
 	report_print("GAE env variable check", gae_regex_result, report, mitigation_name, severity)
 
 
-def gae_max_version(cmd_list, report="False", severity="Critical", mitigation_name="gae_max_version_mitigation.json"):
+def gae_max_version(cmd_list, report="False", severity="Critical", mitigation_name="gae_max_version.md"):
 	"""
 		Test for AppEngine max version number
 
@@ -26,7 +26,7 @@ def gae_max_version(cmd_list, report="False", severity="Critical", mitigation_na
 	report_print("GAE max version check", max_version_result, report, mitigation_name, severity)
 
 
-def gae_location(cmd_list, report="False", severity="Major", mitigation_name="gae_location_mitigation.json"):
+def gae_location(cmd_list, report="False", severity="Major", mitigation_name="gae_location.md"):
 	"""
 		Test for AppEngine location compliance to GDPR
 
@@ -37,7 +37,7 @@ def gae_location(cmd_list, report="False", severity="Major", mitigation_name="ga
 	report_print("GAE location check", location_id, report, mitigation_name, severity)
 
 
-def gae_runtime(cmd_list, report="False", severity="Major", mitigation_name="gae_runtime_mitigation.json"):
+def gae_runtime(cmd_list, report="False", severity="Major", mitigation_name="gae_runtime.md"):
 	"""
 		Test for AppEngine location compliance to GDPR
 

@@ -1,18 +1,59 @@
 In priority :
+	add requirement bq (tool) or is it installed with gcloud ?
+	for API [...] not enable : non_compliance_summary[severity] += 1 ?
 	Do a better function for the Non compliances summary and add a non compliance summary by category
 
 Report :
 	html/pdf ?
 
-Need to do some research (easy) : 
-	gce_instance_location -> Major
-	gce_target_https_proxy_ssl_policy
-	gce_target_ssl_proxy_ssl_policy
+Need to do some research (easy) :
+	gce_target_https_proxy_ssl_policy -> https://cloud.google.com/load-balancing/docs/https/setting-up-https#console_1
+	gce_target_ssl_proxy_ssl_policy -> https://cloud.google.com/load-balancing/docs/https/setting-up-https#console_1
 	Being able to change user ? -> gcloud config set account
 
 Later, need some reasearch (hard) :
+	gae_uses_iap
 	gce_firewallrule_traffic -> use loadbalancer pas en frontal
 	gce_router_nat_log
+	cloudsql_networkacl
+	cloudsql_ssl
 	There's a bug when functions finish at the same time, printing get fck, found how to resolve that - check if it's still here ?
 	Try to catch error in threads
 	For functions which launch the same commands do something to speed things up
+
+
+cloudsql_backup
+	gcloud sql instances list
+	gcloud sql instances describe NAME
+	yaml -> ["settings"]["backupConfiguration"]["enabled"]
+	if enabled == false
+		error
+		if binaryLogEnabled: == false
+
+
+cloudsql_backup_location
+	gcloud sql instances list
+	gcloud sql instances describe NAME
+	yaml -> ["settings"]["backupConfiguration"]["location"]
+	if "europe" not in location
+		error
+
+
+cloudsql_location
+	gcloud sql instances list
+		if europe not in location
+
+
+cloudsql_maintenance
+	gcloud sql instances list
+	gcloud sql instances describe NAME
+	    # Verify that resource is Cloud SQL instance and is not a first gen
+	    # Maintenance window is supported only on 2nd generation instances
+			backendType: SECOND_GEN
+			instanceType: CLOUD_SQL_INSTANCE
+	yaml
+	maintenanceWindow:
+		if day  == 0:
+			error
+
+
