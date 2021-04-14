@@ -1,15 +1,16 @@
 In priority :
-	add requirement bq (tool) or is it installed with gcloud ?
-	for API [...] not enable : non_compliance_summary[severity] += 1 ?
 	Do a better function for the Non compliances summary and add a non compliance summary by category
+
 
 Report :
 	html/pdf ?
+
 
 Need to do some research (easy) :
 	gce_target_https_proxy_ssl_policy -> https://cloud.google.com/load-balancing/docs/https/setting-up-https#console_1
 	gce_target_ssl_proxy_ssl_policy -> https://cloud.google.com/load-balancing/docs/https/setting-up-https#console_1
 	Being able to change user ? -> gcloud config set account
+
 
 Later, need some reasearch (hard) :
 	gae_uses_iap
@@ -19,8 +20,9 @@ Later, need some reasearch (hard) :
 	cloudsql_ssl
 	There's a bug when functions finish at the same time, printing get fck, found how to resolve that - check if it's still here ?
 	Try to catch error in threads
-	For functions which launch the same commands do something to speed things up
+	For functions which launch the same commands do something to speed things up, launch the command stock the result in a dictionnary, if data in dictionnary use it else launch command then add it to the dictionnary
 
+--------------------------------------------------------------------------------------------------------------------
 
 cloudsql_backup
 	gcloud sql instances list
@@ -55,5 +57,3 @@ cloudsql_maintenance
 	maintenanceWindow:
 		if day  == 0:
 			error
-
-
