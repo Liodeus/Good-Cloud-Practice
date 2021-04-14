@@ -1,4 +1,4 @@
-# monitor_gce_ip_forwarding forbid_ip_forward
+# gce_ip_forwarding
 
 ## Background
 

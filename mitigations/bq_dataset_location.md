@@ -1,4 +1,4 @@
-# bq_dataset_location to_be_adapted
+# bq_dataset_location
 
 ## Background
 

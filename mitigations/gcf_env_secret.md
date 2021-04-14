@@ -1,4 +1,4 @@
-# gcf_env_secrets no_secret_in_env_vars
+# gcf_env_secrets
 
 ## Background
 

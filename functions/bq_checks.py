@@ -1,7 +1,7 @@
 from functions.misc_functions import *
 
 
-def bq_dataset_location(cmd_list, report="False", severity="Critical", mitigation_name="bq_dataset_location.md"):
+def bq_dataset_location(cmd_list, report="False", lock="", severity="Critical", mitigation_name="bq_dataset_location.md"):
 	"""
 		Test for BigQuery location compliance to GDPR
 	"""
@@ -21,4 +21,4 @@ def bq_dataset_location(cmd_list, report="False", severity="Critical", mitigatio
 			if "europe" not in res:
 				bq_result[data] = res
 	
-	report_print("BQ dataset location", bq_result, report, mitigation_name, severity)
+	report_print("BQ dataset location", bq_result, report, mitigation_name, severity, lock)

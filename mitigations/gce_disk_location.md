@@ -1,4 +1,4 @@
-# gce_disk_location to_be_adapted
+# gce_disk_location
 
 ## Background
 

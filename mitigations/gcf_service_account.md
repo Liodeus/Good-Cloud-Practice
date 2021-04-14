@@ -1,4 +1,4 @@
-# monitor_gcf_service_account no_default_service_account
+# gcf_service_account
 
 ## Background
 

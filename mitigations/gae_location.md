@@ -1,4 +1,4 @@
-# gae_location to_be_adapted
+# gae_location
 
 ## Background
 

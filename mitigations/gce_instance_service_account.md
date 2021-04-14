@@ -1,4 +1,4 @@
-# gce_instance_service_account no_default_service_account
+# gce_instance_service_account
 
 ## Background
 

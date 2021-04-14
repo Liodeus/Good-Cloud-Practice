@@ -1,4 +1,4 @@
-# monitor_gce_network_name no_default_network
+# gce_network_name
 
 ## Background
 

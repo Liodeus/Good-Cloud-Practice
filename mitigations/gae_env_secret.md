@@ -1,4 +1,4 @@
-# gae_env_secrets no_secret_in_env_vars
+# gae_env_secrets
 
 ## Background
 

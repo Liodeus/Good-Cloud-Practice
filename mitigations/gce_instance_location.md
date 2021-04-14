@@ -1,4 +1,4 @@
-# gce_instance_location to_be_adapted
+# gce_instance_location
 
 ## Background
 

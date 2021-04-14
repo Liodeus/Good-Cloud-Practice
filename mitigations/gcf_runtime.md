@@ -1,4 +1,4 @@
-# monitor_gcf_runtime gcf_runtime
+# gcf_runtime
 
 ## Background
 
@@ -11,8 +11,7 @@ So, only non-deprecated and sanctionned runtimes are allowed.
 
 ## Fix
 
-This setting cannot be changed after the cloud function creation, you must delete it and re-deploy it with an approved runtime (*).
-*: this may require porting the code to another programming language
+This setting cannot be changed after the cloud function creation, you must delete it and re-deploy it with an approved runtime : this may require porting the code to another programming language
 
 ## References
 

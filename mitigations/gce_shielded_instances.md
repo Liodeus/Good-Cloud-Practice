@@ -1,4 +1,4 @@
-# monitor_gce_shielded_instances gce_shielded_instances
+# gce_shielded_instances
 
 ## Background
 

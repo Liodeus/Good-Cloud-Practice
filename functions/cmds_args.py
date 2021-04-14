@@ -1,9 +1,8 @@
-from functions.dns_checks import *
+from functions.clouddns_checks import *
 from functions.gae_checks import *
 from functions.gce_checks import *
 from functions.bq_checks import *
 from functions.gcf_checks import *
-import threading
 
 
 command_lines = {
@@ -85,6 +84,23 @@ command_lines = {
 			"gcloud functions list",
 			"gcloud functions describe --region="
 		],
+	},
+	"CLOUDSQL": {
+		"BACKUP": [
+			"gcloud sql instances list",
+			"gcloud sql instances describe "
+		],
+		"BACKUP_LOCATION": [
+			"gcloud sql instances list",
+		],
+		"LOCATION": [
+			"gcloud sql instances list",
+			"gcloud sql instances describe "
+		],
+		"MAINTENANCE": [
+			"gcloud sql instances list",
+			"gcloud sql instances describe "
+		],
 	}
 }
 
@@ -95,27 +111,32 @@ def launch(REPORT, projects_list=[]):
 	get_vuln_number()
 	print_current_user()
 	for project in projects_list:
+		lock = threading.Lock()
 		if change_project(project):
 			functions = {
-				gce_instance_externalip: (command_lines["GCE"]["INSTANCE_EXTERNALIP"], REPORT),
-				gce_instance_location: (command_lines["GCE"]["INSTANCE_EXTERNALIP"], REPORT),
-				gce_instance_service_account: (command_lines["GCE"]["INSTANCE_SERVICE"], REPORT),
-				gce_ip_forwarding: (command_lines["GCE"]["IP_FORWARDING"], REPORT),
-				gce_network_name: (command_lines["GCE"]["NETWORK_NAME"], REPORT),
-				gce_shielded_instances: (command_lines["GCE"]["INSTANCE_SERVICE"], REPORT),
-				gae_runtime: (command_lines["GAE"]["RUNTIME"], REPORT),
-				gae_env_secret: (command_lines["GAE"]["ENV_SECRET"], REPORT),
-				clouddns_dnssec: (command_lines["DNS"]["DNSSEC"], REPORT),
-				clouddns_rsasha1: (command_lines["DNS"]["RSASHA1"], REPORT),
-				gae_max_version: (command_lines["GAE"]["MAX_VERSION"], REPORT),
-				gae_location: (command_lines["GAE"]["LOCATION"], REPORT),
-				gce_disk_location: (command_lines["GCE"]["DISK_LOCATION"], REPORT),
-				gce_firewallrule_log: (command_lines["GCE"]["FIREWALLRULE_LOG"], REPORT),
-				bq_dataset_location: (command_lines["BQ"]["DATASET_LOCATION"], REPORT),
-				gcf_env_secret: (command_lines["GCF"]["ENV_SECRET"], REPORT),
-				gcf_location: (command_lines["GCF"]["LOCATION"], REPORT),
-				gcf_runtime: (command_lines["GCF"]["RUNTIME"], REPORT),
-				gcf_service_account: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT),
+				gce_instance_externalip: (command_lines["GCE"]["INSTANCE_EXTERNALIP"], REPORT, lock),
+				gce_instance_location: (command_lines["GCE"]["INSTANCE_EXTERNALIP"], REPORT, lock),
+				gce_instance_service_account: (command_lines["GCE"]["INSTANCE_SERVICE"], REPORT, lock),
+				gce_ip_forwarding: (command_lines["GCE"]["IP_FORWARDING"], REPORT, lock),
+				gce_network_name: (command_lines["GCE"]["NETWORK_NAME"], REPORT, lock),
+				gce_shielded_instances: (command_lines["GCE"]["INSTANCE_SERVICE"], REPORT, lock),
+				gae_runtime: (command_lines["GAE"]["RUNTIME"], REPORT, lock),
+				gae_env_secret: (command_lines["GAE"]["ENV_SECRET"], REPORT, lock),
+				clouddns_dnssec: (command_lines["DNS"]["DNSSEC"], REPORT, lock),
+				clouddns_rsasha1: (command_lines["DNS"]["RSASHA1"], REPORT, lock),
+				gae_max_version: (command_lines["GAE"]["MAX_VERSION"], REPORT, lock),
+				gae_location: (command_lines["GAE"]["LOCATION"], REPORT, lock),
+				gce_disk_location: (command_lines["GCE"]["DISK_LOCATION"], REPORT, lock),
+				gce_firewallrule_log: (command_lines["GCE"]["FIREWALLRULE_LOG"], REPORT, lock),
+				bq_dataset_location: (command_lines["BQ"]["DATASET_LOCATION"], REPORT, lock),
+				gcf_env_secret: (command_lines["GCF"]["ENV_SECRET"], REPORT, lock),
+				gcf_location: (command_lines["GCF"]["LOCATION"], REPORT, lock),
+				gcf_runtime: (command_lines["GCF"]["RUNTIME"], REPORT, lock),
+				gcf_service_account: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT, lock),
+				# cloudsql_backup: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT, lock),
+				# cloudsql_backup_location: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT, lock),
+				# cloudsql_location: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT, lock),
+				# cloudsql_maintenance: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT, lock),
 			}
 
 			for function, parameters in functions.items():
@@ -134,5 +155,9 @@ def get_vuln_number():
 		Print the number of checks
 	"""
 	for key, value in command_lines.items():
-		print(f"{key} checks :\t {len(value)}")
+		print(len(key))
+		if len(key) < 13:
+			print(f"{key} checks :\t\t {len(value)}")
+		else:
+			print(f"{key} checks : {len(value)}")
 	print()

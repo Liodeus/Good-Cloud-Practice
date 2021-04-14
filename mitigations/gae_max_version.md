@@ -1,4 +1,4 @@
-# gae_max_version traffic_split_to_more_than_2_versions
+# gae_max_version
 
 ## Background
 

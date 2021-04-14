@@ -1,10 +1,11 @@
 In priority :
-	Do a better function for the Non compliances summary and add a non compliance summary by category
-
+	Do sqlcloud functions (4)
+	Do cloudsql_backup_location mitigation
 
 Report :
 	html/pdf ?
 
+Add comments where there is none
 
 Need to do some research (easy) :
 	gce_target_https_proxy_ssl_policy -> https://cloud.google.com/load-balancing/docs/https/setting-up-https#console_1
@@ -18,42 +19,6 @@ Later, need some reasearch (hard) :
 	gce_router_nat_log
 	cloudsql_networkacl
 	cloudsql_ssl
-	There's a bug when functions finish at the same time, printing get fck, found how to resolve that - check if it's still here ?
+	There's a bug when functions finish at the same time, printing get fck, found how to resolve that
 	Try to catch error in threads
-	For functions which launch the same commands do something to speed things up, launch the command stock the result in a dictionnary, if data in dictionnary use it else launch command then add it to the dictionnary
-
---------------------------------------------------------------------------------------------------------------------
-
-cloudsql_backup
-	gcloud sql instances list
-	gcloud sql instances describe NAME
-	yaml -> ["settings"]["backupConfiguration"]["enabled"]
-	if enabled == false
-		error
-		if binaryLogEnabled: == false
-
-
-cloudsql_backup_location
-	gcloud sql instances list
-	gcloud sql instances describe NAME
-	yaml -> ["settings"]["backupConfiguration"]["location"]
-	if "europe" not in location
-		error
-
-
-cloudsql_location
-	gcloud sql instances list
-		if europe not in location
-
-
-cloudsql_maintenance
-	gcloud sql instances list
-	gcloud sql instances describe NAME
-	    # Verify that resource is Cloud SQL instance and is not a first gen
-	    # Maintenance window is supported only on 2nd generation instances
-			backendType: SECOND_GEN
-			instanceType: CLOUD_SQL_INSTANCE
-	yaml
-	maintenanceWindow:
-		if day  == 0:
-			error
+	GCP service account - If client need to scan infra, without giving you an account

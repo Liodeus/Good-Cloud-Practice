@@ -1,11 +1,18 @@
 from  colorama import Fore, Style
 import subprocess
+import threading
 import datetime
 import shlex
 import yaml
 import json
 import sys
 import re
+
+NB_CRITICAL = 6
+NB_MAJOR = 11
+NB_MEDIUM = 1
+NB_MINOR = 1
+NB_TOTAL = NB_CRITICAL + NB_MAJOR + NB_MEDIUM + NB_MINOR
 
 
 def banner():
@@ -93,7 +100,9 @@ def print_report(report, mitigation_name, severity):
 	"""
 		Print report
 	"""
-	print("")
+	if mitigation_name not in ["gae_env_secret.md", "gcf_env_secret.md"]:
+		print("")
+
 	print_severity(severity)
 	if report:
 		mitigation = read_mitigation(mitigation_name)
@@ -213,10 +222,11 @@ def print_current_user():
 			print(f"Current user : {x.split()[1]}\n") 
 
 
-def report_print(string_to_print, dict_result, report, mitigation_name, severity):
+def report_print(string_to_print, dict_result, report, mitigation_name, severity, lock):
 	"""
 
 	"""
+	lock.acquire()
 	if dict_result:
 		print(f"{string_to_print} : {Fore.RED}x{Style.RESET_ALL}")
 		print("\tInformation :")
@@ -225,6 +235,20 @@ def report_print(string_to_print, dict_result, report, mitigation_name, severity
 			print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 		else:
 			non_compliance_summary[severity] += 1
+			str_start = string_to_print[:3]
+
+			if str_start == "BQ ":
+				non_compliance_summary["BQ"] += 1
+			elif str_start == "CLO": 
+				non_compliance_summary["CLOUDDNS"] += 1
+			elif str_start == "GAE": 
+				non_compliance_summary["GAE"] += 1
+			elif str_start == "GCE": 
+				non_compliance_summary["GCE"] += 1
+			elif str_start == "GCF": 
+				non_compliance_summary["GCF"] += 1
+
+
 			for key, value in dict_result.items():
 				if string_to_print == "GCE instance shielding":
 					for config_name, state in value.items():
@@ -246,6 +270,7 @@ def report_print(string_to_print, dict_result, report, mitigation_name, severity
 	else:
 		print(f"{string_to_print} : {Fore.GREEN}✓{Style.RESET_ALL}\n")
 		print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
+	lock.release()
 
 
 def get_date():
@@ -260,7 +285,12 @@ non_compliance_summary = {
 	"Critical": 0,
 	"Major": 0,
 	"Medium": 0,
-	"Minor": 0
+	"Minor": 0,
+	"BQ": 0,
+	"CLOUDDNS": 0,
+	"GAE": 0,
+	"GCE": 0,
+	"GCF": 0
 }
 def print_non_compliance_summary():
 	crit = non_compliance_summary['Critical']
@@ -270,11 +300,19 @@ def print_non_compliance_summary():
 	total = crit + maj + med + mino
 
 	print("Non compliances summary :")
-	print(f"\t{Fore.RED}Critical -> {crit}/6{Style.RESET_ALL}")
-	print(f"\t{Fore.YELLOW}Major -> {maj}/11{Style.RESET_ALL}")
-	print(f"\t{Fore.GREEN}Medium -> {med}/1{Style.RESET_ALL}")
-	print(f"\t{Fore.CYAN}Minor -> {mino}/1{Style.RESET_ALL}")
-	print(f"\tTotal -> {total}/19\n")
+	print(f"\t{Fore.RED}Critical -> {crit}/{NB_CRITICAL}{Style.RESET_ALL}")
+	print(f"\t{Fore.YELLOW}Major -> {maj}/{NB_MAJOR}{Style.RESET_ALL}")
+	print(f"\t{Fore.GREEN}Medium -> {med}/{NB_MEDIUM}{Style.RESET_ALL}")
+	print(f"\t{Fore.CYAN}Minor -> {mino}/{NB_MINOR}{Style.RESET_ALL}")
+	print(f"\tTotal -> {total}/{NB_TOTAL}\n")
+
+	print("Nom compliances by type :")
+	print(f"\tBiqQuery -> {non_compliance_summary['BQ']}")
+	print(f"\tCLOUDDNS -> {non_compliance_summary['CLOUDDNS']}")
+	print(f"\tGoogle AppEngine -> {non_compliance_summary['GAE']}")
+	print(f"\tGoogle Compute Engine -> {non_compliance_summary['GCE']}")
+	print(f"\tGoogle Cloud Function -> {non_compliance_summary['GCF']}\n")
+
 	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 	reset_count_non_compliance()
 
@@ -286,5 +324,11 @@ def reset_count_non_compliance():
 		"Critical": 0,
 		"Major": 0,
 		"Medium": 0,
-		"Minor": 0
+		"Minor": 0,
+		"BQ": 0,
+		"CLOUDDNS": 0,
+		"GAE": 0,
+		"GCE": 0,
+		"GCF": 0
 	}
+
