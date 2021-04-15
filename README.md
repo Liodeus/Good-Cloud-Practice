@@ -26,10 +26,11 @@ I made this tool to learn security on Google Cloud Platform.
 ## Main Features
 
 - BigQuery checks : 1
-- DNS checks : 2
+- Cloud DNS checks : 2
 - Google AppEngine checks : 4
 - Google Compute Engine checks : 8
 - Google Cloud Function checks : 4
+- Cloud SQL checks : 4
 
 ## Requirements
 
