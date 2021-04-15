@@ -1,6 +1,6 @@
 In priority :
-	Do sqlcloud functions (4)
-	Do cloudsql_backup_location mitigation
+	do some research on that : GCP service account - If client need to scan infra, without giving you an account
+	Being able to change user -> gcloud config set account
 
 Report :
 	html/pdf ?
@@ -10,7 +10,6 @@ Add comments where there is none
 Need to do some research (easy) :
 	gce_target_https_proxy_ssl_policy -> https://cloud.google.com/load-balancing/docs/https/setting-up-https#console_1
 	gce_target_ssl_proxy_ssl_policy -> https://cloud.google.com/load-balancing/docs/https/setting-up-https#console_1
-	Being able to change user ? -> gcloud config set account
 
 
 Later, need some reasearch (hard) :
@@ -19,6 +18,4 @@ Later, need some reasearch (hard) :
 	gce_router_nat_log
 	cloudsql_networkacl
 	cloudsql_ssl
-	There's a bug when functions finish at the same time, printing get fck, found how to resolve that
 	Try to catch error in threads
-	GCP service account - If client need to scan infra, without giving you an account

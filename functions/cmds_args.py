@@ -1,4 +1,5 @@
 from functions.clouddns_checks import *
+from functions.cloudsql_checks import *
 from functions.gae_checks import *
 from functions.gce_checks import *
 from functions.bq_checks import *
@@ -92,10 +93,10 @@ command_lines = {
 		],
 		"BACKUP_LOCATION": [
 			"gcloud sql instances list",
+			"gcloud sql instances describe "
 		],
 		"LOCATION": [
-			"gcloud sql instances list",
-			"gcloud sql instances describe "
+			"gcloud sql instances list"
 		],
 		"MAINTENANCE": [
 			"gcloud sql instances list",
@@ -133,10 +134,10 @@ def launch(REPORT, projects_list=[]):
 				gcf_location: (command_lines["GCF"]["LOCATION"], REPORT, lock),
 				gcf_runtime: (command_lines["GCF"]["RUNTIME"], REPORT, lock),
 				gcf_service_account: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT, lock),
-				# cloudsql_backup: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT, lock),
-				# cloudsql_backup_location: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT, lock),
-				# cloudsql_location: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT, lock),
-				# cloudsql_maintenance: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT, lock),
+				cloudsql_backup: (command_lines["CLOUDSQL"]["BACKUP"], REPORT, lock),
+				cloudsql_backup_location: (command_lines["CLOUDSQL"]["BACKUP_LOCATION"], REPORT, lock),
+				cloudsql_location: (command_lines["CLOUDSQL"]["LOCATION"], REPORT, lock),
+				cloudsql_maintenance: (command_lines["CLOUDSQL"]["MAINTENANCE"], REPORT, lock),
 			}
 
 			for function, parameters in functions.items():
@@ -155,9 +156,8 @@ def get_vuln_number():
 		Print the number of checks
 	"""
 	for key, value in command_lines.items():
-		print(len(key))
-		if len(key) < 13:
+		if len(key) < 8:
 			print(f"{key} checks :\t\t {len(value)}")
 		else:
-			print(f"{key} checks : {len(value)}")
+			print(f"{key} checks :\t {len(value)}")
 	print()

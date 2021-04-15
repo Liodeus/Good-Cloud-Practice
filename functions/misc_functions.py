@@ -8,10 +8,10 @@ import json
 import sys
 import re
 
-NB_CRITICAL = 6
-NB_MAJOR = 11
+NB_CRITICAL = 8
+NB_MAJOR = 12
 NB_MEDIUM = 1
-NB_MINOR = 1
+NB_MINOR = 2
 NB_TOTAL = NB_CRITICAL + NB_MAJOR + NB_MEDIUM + NB_MINOR
 
 
@@ -239,14 +239,16 @@ def report_print(string_to_print, dict_result, report, mitigation_name, severity
 
 			if str_start == "BQ ":
 				non_compliance_summary["BQ"] += 1
-			elif str_start == "CLO": 
-				non_compliance_summary["CLOUDDNS"] += 1
 			elif str_start == "GAE": 
 				non_compliance_summary["GAE"] += 1
 			elif str_start == "GCE": 
 				non_compliance_summary["GCE"] += 1
 			elif str_start == "GCF": 
 				non_compliance_summary["GCF"] += 1
+			elif "Cloud DNS" in string_to_print: 
+				non_compliance_summary["CLOUDDNS"] += 1
+			elif "Cloud SQL" in string_to_print: 
+				non_compliance_summary["CLOUDSQL"] += 1
 
 
 			for key, value in dict_result.items():
@@ -290,7 +292,8 @@ non_compliance_summary = {
 	"CLOUDDNS": 0,
 	"GAE": 0,
 	"GCE": 0,
-	"GCF": 0
+	"GCF": 0,
+	"CLOUDSQL": 0
 }
 def print_non_compliance_summary():
 	crit = non_compliance_summary['Critical']
@@ -308,10 +311,11 @@ def print_non_compliance_summary():
 
 	print("Nom compliances by type :")
 	print(f"\tBiqQuery -> {non_compliance_summary['BQ']}")
-	print(f"\tCLOUDDNS -> {non_compliance_summary['CLOUDDNS']}")
+	print(f"\tCloud DNS -> {non_compliance_summary['CLOUDDNS']}")
 	print(f"\tGoogle AppEngine -> {non_compliance_summary['GAE']}")
 	print(f"\tGoogle Compute Engine -> {non_compliance_summary['GCE']}")
-	print(f"\tGoogle Cloud Function -> {non_compliance_summary['GCF']}\n")
+	print(f"\tGoogle Cloud Function -> {non_compliance_summary['GCF']}")
+	print(f"\tCloud SQL -> {non_compliance_summary['CLOUDSQL']}\n")
 
 	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 	reset_count_non_compliance()
@@ -329,6 +333,15 @@ def reset_count_non_compliance():
 		"CLOUDDNS": 0,
 		"GAE": 0,
 		"GCE": 0,
-		"GCF": 0
+		"GCF": 0,
+		"CLOUDSQL": 0
 	}
 
+
+def error_api_not_enabled(lock, type_function_name, error_message):
+	lock.acquire()
+	print(f"{type_function_name} check : {Fore.RED}x{Style.RESET_ALL}")
+	print(f"\t{error_message}\n")
+	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
+	lock.release()
+	sys.exit()

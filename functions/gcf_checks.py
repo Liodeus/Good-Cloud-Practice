@@ -5,7 +5,7 @@ def gcf_env_secret(cmd_list, report="False", lock="", severity="Critical", mitig
 	"""
 		Test
 	"""
-	gcf_result = gcf_reduce(cmd_list, "gcf_env_secret")
+	gcf_result = gcf_reduce(cmd_list, "gcf_env_secret", lock)
 	gcf_env_secret_result = gfc_reduce_two(gcf_result, cmd_list, "gcf_env_secret")
 	
 	report_print("GCF env secret check", gcf_env_secret_result, report, mitigation_name, severity, lock)
@@ -15,7 +15,7 @@ def gcf_location(cmd_list, report="False", lock="", severity="Major", mitigation
 	"""
 		Test
 	"""
-	gcf_location_result = gcf_reduce(cmd_list, "gcf_location")
+	gcf_location_result = gcf_reduce(cmd_list, "gcf_location", lock)
 
 	# Print report for gcf_location
 	report_print("GCF location check", gcf_location_result, report, mitigation_name, severity, lock)
@@ -25,7 +25,7 @@ def gcf_runtime(cmd_list, report="False", lock="", severity="Major", mitigation_
 	"""
 		Test
 	"""
-	gcf_result = gcf_reduce(cmd_list, "gcf_runtime")
+	gcf_result = gcf_reduce(cmd_list, "gcf_runtime", lock)
 	gcf_runtime_result = gfc_reduce_two(gcf_result, cmd_list, "gcf_runtime")
 
 	# Print report for gcf_runtime
@@ -36,7 +36,7 @@ def gcf_service_account(cmd_list, report="False", lock="", severity="Major", mit
 	"""
 		Test
 	"""
-	gcf_result = gcf_reduce(cmd_list, "gcf_service_account")
+	gcf_result = gcf_reduce(cmd_list, "gcf_service_account", lock)
 	gcf_service_account_result = gfc_reduce_two(gcf_result, cmd_list, "gcf_service_account")
 
 	# Print report for gcf_service_account

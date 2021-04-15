@@ -63,17 +63,14 @@ def get_languages():
 	}
 
 
-def gcf_reduce(cmd_list, function_name):
+def gcf_reduce(cmd_list, function_name, lock):
 	"""
 
 	"""
 	datas = exec_cmd(cmd_list[0])
 
 	if "API [cloudfunctions.googleapis.com] not enabled" in datas:
-		print(f"GCF {function_name} : {Fore.RED}x{Style.RESET_ALL}")
-		print("\tAPI [cloudfunctions.googleapis.com] not enabled\n")
-		print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
-		sys.exit()
+		error_api_not_enabled(lock, f"GCF {function_name}", "API [cloudfunctions.googleapis.com] not enabled")
 
 	datas = datas.split('\n')[1:-1]
 
