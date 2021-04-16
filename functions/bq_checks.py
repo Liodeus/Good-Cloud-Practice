@@ -7,9 +7,11 @@ def bq_dataset_location(cmd_list, report="False", lock="", severity="Critical", 
 	"""
 	datas = exec_cmd(cmd_list[0])
 
+	if datas == "":
+		error_api_not_enabled(lock, "bq_dataset_location", "Missing permission or BiqQuery has not been enabled")
+
 	if "BigQuery error in ls operation" in datas:
 		error_api_not_enabled(lock, "BQ dataset location", "BiqQuery has not been enabled")
-		lock.acquire()
 
 	bq_result = {}
 	if datas:

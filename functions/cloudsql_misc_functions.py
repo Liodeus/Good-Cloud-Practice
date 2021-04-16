@@ -7,8 +7,11 @@ def cloudsql_reduce(cmd_list, function_name, lock):
 	"""
 	datas = exec_cmd(cmd_list[0])
 
+	if "ERROR:" in datas:
+		error_api_not_enabled(lock, f"Cloud SQL {function_name}", "Missing permission")
+
 	if "API [sqladmin.googleapis.com] not enabled" in datas:
-		error_api_not_enabled(lock, f"GCF {function_name}", "API [sqladmin.googleapis.com] not enabled")
+		error_api_not_enabled(lock, f"Cloud SQL {function_name}", "API [sqladmin.googleapis.com] not enabled")
 
 	datas = datas.split('\n')[1:-1]
 

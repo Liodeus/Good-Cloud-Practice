@@ -5,7 +5,7 @@ def gce_firewallrule_log(cmd_list, report="False", lock="", severity="Medium", m
 	"""
 		Test if firewall rule are enable
 	"""
-	firewall_rule_enable = gce_reduce(cmd_list, "gce_firewallrule_log")
+	firewall_rule_enable = gce_reduce(cmd_list, "gce_firewallrule_log", lock)
 
 	# Print report for gce_firewallrule_log
 	report_print("GCE firewallrule_log ", firewall_rule_enable, report, mitigation_name, severity, lock)
@@ -15,7 +15,7 @@ def gce_disk_location(cmd_list, report="False", lock="", severity="Major", mitig
 	"""
 		Test for disk location compliance to GDPR
 	"""
-	disk_location_result = gce_reduce(cmd_list, "gce_disk_location")
+	disk_location_result = gce_reduce(cmd_list, "gce_disk_location", lock)
 
 	# Print report for gce_disk_location
 	report_print("GCE disk location", disk_location_result, report, mitigation_name, severity, lock)
@@ -25,7 +25,7 @@ def gce_instance_externalip(cmd_list, report="False", lock="", severity="Major",
 	"""
 		Test for external ip on GCE instance
 	"""
-	external_ip_result = gce_reduce(cmd_list, "gce_instance_externalip")
+	external_ip_result = gce_reduce(cmd_list, "gce_instance_externalip", lock)
 
 	# Print report for gce_instance_externalip
 	report_print("GCE instance external ip", external_ip_result, report, mitigation_name, severity, lock)
@@ -35,7 +35,7 @@ def gce_instance_location(cmd_list, report="False", lock="", severity="Major", m
 	"""
 		Test for instance location compliance to GDPR
 	"""
-	location_result = gce_reduce(cmd_list, "gce_instance_location")
+	location_result = gce_reduce(cmd_list, "gce_instance_location", lock)
 	
 	# Print report for gce_disk_location
 	report_print("GCE instance location", location_result, report, mitigation_name, severity, lock)
@@ -45,7 +45,7 @@ def gce_instance_service_account(cmd_list, report="False", lock="", severity="Ma
 	"""
 		Test for instance default account
 	"""
-	location_result = gce_reduce(cmd_list, "gce_instance_service_account")
+	location_result = gce_reduce(cmd_list, "gce_instance_service_account", lock)
 	if "API_BILLING" in location_result:
 		services_account = location_result
 	else:
@@ -59,7 +59,7 @@ def gce_ip_forwarding(cmd_list, report="False", lock="", severity="Critical", mi
 	"""
 		Test for 
 	"""
-	location_result = gce_reduce(cmd_list, "gce_ip_forwarding")
+	location_result = gce_reduce(cmd_list, "gce_ip_forwarding", lock)
 	if "API_BILLING" in location_result:
 		services_account = location_result
 	else:
@@ -73,7 +73,7 @@ def gce_network_name(cmd_list, report="False", lock="", severity="Major", mitiga
 	"""
 		Test for 
 	"""
-	location_result = gce_reduce(cmd_list, "gce_network_name")
+	location_result = gce_reduce(cmd_list, "gce_network_name", lock)
 	
 	if "API_BILLING" in location_result:
 		network_default = location_result
@@ -88,7 +88,7 @@ def gce_shielded_instances(cmd_list, report="False", lock="", severity="Minor", 
 	"""
 		Test if enableIntegrityMonitoring, enableSecureBoot,enableVtpm are enable on GCE instances
 	"""
-	location_result = gce_reduce(cmd_list, "gce_shielded_instances")
+	location_result = gce_reduce(cmd_list, "gce_shielded_instances", lock)
 	if "API_BILLING" in location_result:
 		shield_result = location_result
 	else:

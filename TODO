@@ -1,6 +1,5 @@
 In priority :
-	do some research on that : GCP service account - If client need to scan infra, without giving you an account
-	Being able to change user -> gcloud config set account
+	print the missing right for service account
 
 Report :
 	html/pdf ?

@@ -341,7 +341,8 @@ def reset_count_non_compliance():
 def error_api_not_enabled(lock, type_function_name, error_message):
 	lock.acquire()
 	print(f"{type_function_name} check : {Fore.RED}x{Style.RESET_ALL}")
-	print(f"\t{error_message}\n")
+	print("\tInformation")
+	print(f"\t\t{error_message}\n")
 	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 	lock.release()
 	sys.exit()

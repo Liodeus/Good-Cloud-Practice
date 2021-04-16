@@ -40,13 +40,34 @@ You will need to have a Google account and those tools installed.
 
 - [gcloud](https://cloud.google.com/sdk/docs/install#deb)
 - python3
-- python3-pip - (sudo apt install python3-pip)
+- python3-pip
 
-Once gcloud is installed, you need to authorize gcloud to access the Cloud Platform with Google user credentials.
+Once gcloud is installed, you need to authorize gcloud to access the Cloud Platform with Google user credentials or use a service account :
 
+#### Authorize gcloud
 ```bash
 gcloud auth login
 ```
+
+##### Service account
+
+1. In the Cloud Console, go to the Service accounts page.
+2. Select a project.
+3. Click Create service account.
+   Enter a service account name to display in the Cloud Console.
+4. The Cloud Console generates a service account ID based on this name. Edit the ID if necessary. You cannot change the ID later.
+5. To set access controls, click Create and continue to the next step.
+6. Choose one or more IAM roles to grant to the service account on the project.
+7. Grant the role : Viewer
+8. When you are done adding roles, click Continue.
+
+##### Generate keys
+
+1. Click on your newly created account
+2. Go to keys panel
+3. Add key -> Create new key
+4. Key type : JSON
+5. Click create and store the key securely
 
 ## Installation
 
@@ -59,7 +80,7 @@ pip3 install -r requirements.txt
 ## Usage
 
 ```
-Usage: Good_Cloud_Practice.py [-h] [-r] [-lp] [-lu] [--project_id PROJECT_ID]
+Usage: Good_Cloud_Practice.py [-h] [-r] [-lp] [-lu] [-pi PROJECT_ID] [-l LIST] [-u USER] [-k KEY]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -69,6 +90,8 @@ optional arguments:
   -pi PROJECT_ID, --project_id PROJECT_ID
                         Do the compliances checks on this project ID
   -l LIST, --list LIST  Do the compliances checks on this list of project ID
+  -u USER, --user USER  Use this user acccount to do the compliances checks
+  -k KEY, --key KEY     Use this service acccount to do the compliances checks
 ```
 
 ## Examples
@@ -86,6 +109,11 @@ python3 Good_Cloud_Practice.py -r
 Run all the compliances checks on a particular project :
 ```
 python3 Good_Cloud_Practice.py --project_id mystic-sun-309920
+```
+
+Use a service account :
+```
+python3 Good_Cloud_Practice.py -k path_of_the_key.json
 ```
 
 ## Contributing

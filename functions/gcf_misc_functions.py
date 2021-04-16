@@ -72,6 +72,9 @@ def gcf_reduce(cmd_list, function_name, lock):
 	if "API [cloudfunctions.googleapis.com] not enabled" in datas:
 		error_api_not_enabled(lock, f"GCF {function_name}", "API [cloudfunctions.googleapis.com] not enabled")
 
+	if "The following regions were fully or partially" in datas:
+		error_api_not_enabled(lock, f"GCF {function_name}", "Missing permissions")
+
 	datas = datas.split('\n')[1:-1]
 
 	res = {}

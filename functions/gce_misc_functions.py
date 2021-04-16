@@ -1,7 +1,7 @@
 from functions.misc_functions import *
 
 
-def gce_reduce(cmd_list, function_name):
+def gce_reduce(cmd_list, function_name, lock):
 	"""
 		It's a function to reduce the number of lines, for functions having the same codes
 
@@ -10,8 +10,12 @@ def gce_reduce(cmd_list, function_name):
 	result = {}
 
 	if function_name in ["gce_firewallrule_log"]:
+		res = exec_cmd(cmd_list[0])
+		if "ERROR:" in res:
+			error_api_not_enabled(lock, f"GCE {function_name}", "Missing permission")
+
 		try:
-			datas = json.loads(exec_cmd(cmd_list[0]))
+			datas = json.loads(res)
 		except json.decoder.JSONDecodeError:
 			return {"API_BILLING": True}
 
@@ -23,6 +27,10 @@ def gce_reduce(cmd_list, function_name):
 				result[name] = state
 	else:
 		datas = exec_cmd(cmd_list[0]).split('\n')[1:-1]
+
+		if "permission for" in datas[0]:
+			error_api_not_enabled(lock, f"GCE {function_name}", "Missing permission")
+
 		if "This API method requires billing to be enabled." in datas[0]:
 			return {"API_BILLING": True}
 

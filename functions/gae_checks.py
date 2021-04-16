@@ -5,7 +5,7 @@ def gae_env_secret(cmd_list, report="False", lock="", severity="Critical", mitig
 		Test for AppEngine env variable secret
 
 	"""
-	gae_datas = gae_reduce(cmd_list, "gae_env_secret")
+	gae_datas = gae_reduce(cmd_list, "gae_env_secret", lock)
 	gae_regex_result = gae_reduce_two(gae_datas, cmd_list, "gae_env_secret")
 
 	# Print report for gae_env_secret
@@ -17,7 +17,7 @@ def gae_max_version(cmd_list, report="False", lock="", severity="Critical", miti
 		Test for AppEngine max version number
 
 	"""
-	max_version_result = gae_reduce(cmd_list, "gae_max_version")
+	max_version_result = gae_reduce(cmd_list, "gae_max_version", lock)
 
 	if not len(max_version_result) > 2:
 		max_version_result = {}
@@ -31,7 +31,7 @@ def gae_location(cmd_list, report="False", lock="", severity="Major", mitigation
 		Test for AppEngine location compliance to GDPR
 
 	"""
-	location_id = gae_reduce(cmd_list, "gae_location")
+	location_id = gae_reduce(cmd_list, "gae_location", lock)
 
 	# Print report for gae_runtime
 	report_print("GAE location check", location_id, report, mitigation_name, severity, lock)
@@ -42,7 +42,7 @@ def gae_runtime(cmd_list, report="False", lock="", severity="Major", mitigation_
 		Test for AppEngine location compliance to GDPR
 
 	"""
-	gae_datas = gae_reduce(cmd_list, "gae_runtime")
+	gae_datas = gae_reduce(cmd_list, "gae_runtime", lock)
 	gae_runtime_result = gae_reduce_two(gae_datas, cmd_list, "gae_runtime")
 
 	# Print report for gae_runtime

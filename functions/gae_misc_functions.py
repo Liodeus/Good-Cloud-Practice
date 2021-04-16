@@ -63,22 +63,29 @@ def get_languages():
 	}
 
 
-def gae_reduce(cmd_list, function_name):
+def gae_reduce(cmd_list, function_name, lock):
 	"""
 
 	"""
 	result = {}
 
 	if function_name == "gae_location":
-		yaml_datas = yaml.load(exec_cmd(cmd_list[0]), Loader=yaml.FullLoader)
+		try:
+			yaml_datas = yaml.load(exec_cmd(cmd_list[0]), Loader=yaml.FullLoader)
+		except yaml.scanner.ScannerError:
+			error_api_not_enabled(lock, f"GAE {function_name}", "Missing permission")
 	
 		if "europe" not in yaml_datas["locationId"]:
 			result["location"] = yaml_datas["locationId"]
 
 	else:	
-		datas = exec_cmd(cmd_list[0]).split('\n')[1:-1]
+		datas = exec_cmd(cmd_list[0])
 
-		
+		if "ERROR:" in datas:
+			error_api_not_enabled(lock, f"GAE {function_name}", "Missing permission")
+
+		datas = datas.split('\n')[1:-1]
+
 		for data in datas:
 			if function_name in ["gae_max_version"]:
 				result[data.split()[1]] = ""
