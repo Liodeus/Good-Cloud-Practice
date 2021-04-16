@@ -5,7 +5,7 @@ import time
 import sys
 
 
-def main(REPORT, project_id=None, path=None, user=None, key=None):
+def main(REPORT, project_id=None, path=None, user=None, key=None, lp=None, lu=None):
 	t0 = time.time()
 	get_date()
 
@@ -27,6 +27,12 @@ def main(REPORT, project_id=None, path=None, user=None, key=None):
 		else:
 			print("User does not exist or you need to run : gcloud auth login")
 			sys.exit()
+
+	if lp:
+		list_projects()
+	
+	if lu:
+		list_users()
 
 	if path != None:
 		if os.path.isfile(path):
@@ -62,13 +68,16 @@ if __name__ == "__main__":
 	parser.add_argument("-k", "--key", required=False, help="Use this service acccount to do the compliances checks")
 	args = parser.parse_args()
 
-	if args.list_projects:
-		list_projects()
-	elif args.list_users:
-		list_users()
+	if args.key and args.user:
+		print("Choose between --user and --key not both")
+		sys.exit()
 
+	if args.list_projects and args.list_users:
+		print("Choose between --list_projects and --list_users not both")
+		sys.exit()
+	
 	try:
-		main(args.report, args.project_id, args.list, args.user, args.key)
+		main(args.report, args.project_id, args.list, args.user, args.key, args.list_projects, args.list_users)
 	except KeyboardInterrupt:
 		print("CTRL+C")
 		sys.exit()

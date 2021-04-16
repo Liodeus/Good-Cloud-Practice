@@ -1,8 +1,9 @@
-from functions.misc_functions import *
+from functions.misc_functions_folder.misc_functions import *
+
 
 def get_secret_search():
 	"""
-
+		Return all the regex to search
 	"""
 	return {
 		'AWS Access Key ID Value': '(A3T[A-Z0-9]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}',
@@ -51,7 +52,7 @@ def get_secret_search():
 
 def get_languages():
 	"""
-
+		Return all the language accepted
 	"""
 	return {
 		"do": ["dotnet3"],
@@ -65,15 +66,15 @@ def get_languages():
 
 def gcf_reduce(cmd_list, function_name, lock):
 	"""
-
+		Google Cloud Function function lines of code reducer
 	"""
 	datas = exec_cmd(cmd_list[0])
 
 	if "API [cloudfunctions.googleapis.com] not enabled" in datas:
-		error_api_not_enabled(lock, f"GCF {function_name}", "API [cloudfunctions.googleapis.com] not enabled")
+		pretty_print_error(lock, f"GCF {function_name}", "API [cloudfunctions.googleapis.com] not enabled")
 
 	if "The following regions were fully or partially" in datas:
-		error_api_not_enabled(lock, f"GCF {function_name}", "Missing permissions")
+		pretty_print_error(lock, f"GCF {function_name}", "Missing permissions")
 
 	datas = datas.split('\n')[1:-1]
 
@@ -95,9 +96,7 @@ def gcf_reduce(cmd_list, function_name, lock):
 
 def gfc_reduce_two(result, cmd_list, function_name):
 	"""
-		It's a function to reduce the number of lines, for functions having the same codes
-
-		Return dictionnary of results
+		Google Cloud Function function lines of code reducer two
 	"""
 	res = {}
 	for name, region in result.items():

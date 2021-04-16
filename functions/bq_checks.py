@@ -1,4 +1,4 @@
-from functions.misc_functions import *
+from functions.misc_functions_folder.misc_functions import *
 
 
 def bq_dataset_location(cmd_list, report="False", lock="", severity="Critical", mitigation_name="bq_dataset_location.md"):
@@ -8,10 +8,10 @@ def bq_dataset_location(cmd_list, report="False", lock="", severity="Critical", 
 	datas = exec_cmd(cmd_list[0])
 
 	if datas == "":
-		error_api_not_enabled(lock, "bq_dataset_location", "Missing permission or BiqQuery has not been enabled")
+		pretty_print_error(lock, "bq_dataset_location", "Missing permission or BiqQuery has not been enabled")
 
 	if "BigQuery error in ls operation" in datas:
-		error_api_not_enabled(lock, "BQ dataset location", "BiqQuery has not been enabled")
+		pretty_print_error(lock, "BQ dataset location", "BiqQuery has not been enabled")
 
 	bq_result = {}
 	if datas:

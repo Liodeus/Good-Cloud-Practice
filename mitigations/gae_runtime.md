@@ -1,6 +1,6 @@
 # gae_runtime
 
-Source code written in specific versions of the supported programming languages are supported on App Engine:
+Source code written in specific versions of the supported programming languages are supported on App Engine :
 * Go: 1.11, 1.12, 1.13, 1.14, 1.15, 1.16
 * Java: 8, 11
 * Node.js: 10, 12, 14

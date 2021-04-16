@@ -42,7 +42,7 @@ You will need to have a Google account and those tools installed.
 - python3
 - python3-pip
 
-Once gcloud is installed, you need to authorize gcloud to access the Cloud Platform with Google user credentials or use a service account :
+Once gcloud is installed, you need to authorize gcloud to access the Cloud Platform with Google user credentials or use a service account via a key :
 
 #### Authorize gcloud
 ```bash
@@ -97,23 +97,33 @@ optional arguments:
 ## Examples
 
 Run all the compliances checks on every projects :
-```
+```shell
 python3 Good_Cloud_Practice.py
 ```
 
 Run all the compliances checks on every projects and enable report mode :
-```
+```shell
 python3 Good_Cloud_Practice.py -r
 ```
 
 Run all the compliances checks on a particular project :
-```
+```shell
 python3 Good_Cloud_Practice.py --project_id mystic-sun-309920
 ```
 
 Use a service account :
-```
+```shell
 python3 Good_Cloud_Practice.py -k path_of_the_key.json
+```
+
+List users
+```shell
+python3 Good_Cloud_Practice.py -lu
+```
+
+Use a particular account
+```shell
+python3 Good_Cloud_Practice.py -u ACCOUNT
 ```
 
 ## Contributing

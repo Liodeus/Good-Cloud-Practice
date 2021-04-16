@@ -1,8 +1,9 @@
-from functions.misc_functions import *
+from functions.misc_functions_folder.misc_functions import *
+
 
 def get_secret_search():
 	"""
-
+		Return all the regex to search
 	"""
 	return {
 		'AWS Access Key ID Value': '(A3T[A-Z0-9]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}',
@@ -51,7 +52,7 @@ def get_secret_search():
 
 def get_languages():
 	"""
-
+		Return all the language accepted
 	"""
 	return {
 		"go": ["go111" , "go112", "go113", "go114", "go115", "go116"],
@@ -65,7 +66,7 @@ def get_languages():
 
 def gae_reduce(cmd_list, function_name, lock):
 	"""
-
+		Google AppEngine function lines of code reducer
 	"""
 	result = {}
 
@@ -73,7 +74,7 @@ def gae_reduce(cmd_list, function_name, lock):
 		try:
 			yaml_datas = yaml.load(exec_cmd(cmd_list[0]), Loader=yaml.FullLoader)
 		except yaml.scanner.ScannerError:
-			error_api_not_enabled(lock, f"GAE {function_name}", "Missing permission")
+			pretty_print_error(lock, f"GAE {function_name}", "Missing permission")
 	
 		if "europe" not in yaml_datas["locationId"]:
 			result["location"] = yaml_datas["locationId"]
@@ -82,7 +83,7 @@ def gae_reduce(cmd_list, function_name, lock):
 		datas = exec_cmd(cmd_list[0])
 
 		if "ERROR:" in datas:
-			error_api_not_enabled(lock, f"GAE {function_name}", "Missing permission")
+			pretty_print_error(lock, f"GAE {function_name}", "Missing permission")
 
 		datas = datas.split('\n')[1:-1]
 
@@ -97,7 +98,7 @@ def gae_reduce(cmd_list, function_name, lock):
 
 def gae_reduce_two(result, cmd_list, function_name):
 	"""
-
+		Google AppEngine function lines of code reducer two
 	"""
 	res = {}
 

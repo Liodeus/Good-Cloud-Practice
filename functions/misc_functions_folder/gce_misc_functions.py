@@ -1,23 +1,21 @@
-from functions.misc_functions import *
+from functions.misc_functions_folder.misc_functions import *
 
 
 def gce_reduce(cmd_list, function_name, lock):
 	"""
-		It's a function to reduce the number of lines, for functions having the same codes
-
-		Return dictionnary of results
+		Google Compute Engine function lines of code reducer
 	"""
 	result = {}
 
 	if function_name in ["gce_firewallrule_log"]:
 		res = exec_cmd(cmd_list[0])
 		if "ERROR:" in res:
-			error_api_not_enabled(lock, f"GCE {function_name}", "Missing permission")
+			pretty_print_error(lock, f"GCE {function_name}", "Missing permission")
 
 		try:
 			datas = json.loads(res)
 		except json.decoder.JSONDecodeError:
-			return {"API_BILLING": True}
+			pretty_print_error(lock, f"GCE {function_name}", "This API method requires billing to be enabled. Please enable billing by visiting https://console.developers.google.com/billing/enable then retry.")
 
 		for data in datas:
 			state = data["logConfig"]["enable"]
@@ -29,10 +27,10 @@ def gce_reduce(cmd_list, function_name, lock):
 		datas = exec_cmd(cmd_list[0]).split('\n')[1:-1]
 
 		if "permission for" in datas[0]:
-			error_api_not_enabled(lock, f"GCE {function_name}", "Missing permission")
+			pretty_print_error(lock, f"GCE {function_name}", "Missing permission")
 
 		if "This API method requires billing to be enabled." in datas[0]:
-			return {"API_BILLING": True}
+			pretty_print_error(lock, f"GCE {function_name}", "This API method requires billing to be enabled. Please enable billing by visiting https://console.developers.google.com/billing/enable then retry.")
 
 		if function_name in ["gce_disk_location"]:
 			if "ERROR:" in datas[0]:
@@ -61,9 +59,7 @@ def gce_reduce(cmd_list, function_name, lock):
 
 def gce_reduce_two(result, cmd_list, function_name):
 	"""
-		It's a function to reduce the number of lines, for functions having the same codes
-
-		Return dictionnary of results
+		Google Compute Engine function lines of code reducer two
 	"""
 	res = {}
 	for name, location in result.items():

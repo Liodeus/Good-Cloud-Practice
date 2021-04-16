@@ -1,16 +1,17 @@
-from functions.misc_functions import *
+from functions.misc_functions_folder.misc_functions import *
+
 
 def clouddns_reduce(cmd_list, function_name, lock):
 	"""
-
+		Cloud DNS function lines of code reducer
 	"""
 	datas = exec_cmd(cmd_list[0]).split()
 
 	if datas[0] == "ERROR:":
-		error_api_not_enabled(lock, f"Cloud DNS {function_name}", "Missing permissions")
+		pretty_print_error(lock, f"Cloud DNS {function_name}", "Missing permissions")
 
 	if datas[0] == "API":
-		error_api_not_enabled(lock, f"Cloud DNS {function_name}", "API [dns.googleapis.com] not enabled")
+		pretty_print_error(lock, f"Cloud DNS {function_name}", "API [dns.googleapis.com] not enabled")
 
 	if function_name == "clouddns_dnssec":
 		if datas[0] == "Listed":

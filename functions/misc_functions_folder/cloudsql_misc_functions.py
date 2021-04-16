@@ -1,17 +1,17 @@
-from functions.misc_functions import *
+from functions.misc_functions_folder.misc_functions import *
 
 
 def cloudsql_reduce(cmd_list, function_name, lock):
 	"""
-
+		Cloud SQL function lines of code reducer
 	"""
 	datas = exec_cmd(cmd_list[0])
 
-	if "ERROR:" in datas:
-		error_api_not_enabled(lock, f"Cloud SQL {function_name}", "Missing permission")
-
 	if "API [sqladmin.googleapis.com] not enabled" in datas:
-		error_api_not_enabled(lock, f"Cloud SQL {function_name}", "API [sqladmin.googleapis.com] not enabled")
+		pretty_print_error(lock, f"Cloud SQL {function_name}", "API [sqladmin.googleapis.com] not enabled")
+
+	if "ERROR:" in datas:
+		pretty_print_error(lock, f"Cloud SQL {function_name}", "Missing permission")
 
 	datas = datas.split('\n')[1:-1]
 
@@ -32,7 +32,7 @@ def cloudsql_reduce(cmd_list, function_name, lock):
 
 def cloudsql_reduce_two(result, cmd_list, function_name):
 	"""
-
+		Cloud SQL function lines of code reducer two
 	"""
 	res = {}
 	for key in result.keys():

@@ -1,10 +1,9 @@
 In priority :
-	print the missing right for service account
+	?
 
 Report :
 	html/pdf ?
 
-Add comments where there is none
 
 Need to do some research (easy) :
 	gce_target_https_proxy_ssl_policy -> https://cloud.google.com/load-balancing/docs/https/setting-up-https#console_1
@@ -17,4 +16,3 @@ Later, need some reasearch (hard) :
 	gce_router_nat_log
 	cloudsql_networkacl
 	cloudsql_ssl
-	Try to catch error in threads

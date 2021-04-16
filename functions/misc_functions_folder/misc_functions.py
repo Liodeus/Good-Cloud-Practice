@@ -112,6 +112,9 @@ def print_report(report, mitigation_name, severity):
 
 
 def print_severity(severity):
+	"""
+		Print the severity by colors
+	"""
 	color = ""
 	if severity == "Minor":
 		color = Fore.CYAN
@@ -296,6 +299,9 @@ non_compliance_summary = {
 	"CLOUDSQL": 0
 }
 def print_non_compliance_summary():
+	"""
+		Print at the end of the scan the non compliance summary by severity, then by types of checks	
+	"""
 	crit = non_compliance_summary['Critical']
 	maj = non_compliance_summary['Major']
 	med = non_compliance_summary['Medium']
@@ -322,6 +328,9 @@ def print_non_compliance_summary():
 
 
 def reset_count_non_compliance():
+	"""
+		Reset the global non_compliance_summary variable
+	"""
 	global non_compliance_summary
 
 	non_compliance_summary = {
@@ -338,7 +347,10 @@ def reset_count_non_compliance():
 	}
 
 
-def error_api_not_enabled(lock, type_function_name, error_message):
+def pretty_print_error(lock, type_function_name, error_message):
+	""""
+		Pretty print error message
+	"""
 	lock.acquire()
 	print(f"{type_function_name} check : {Fore.RED}x{Style.RESET_ALL}")
 	print("\tInformation")
