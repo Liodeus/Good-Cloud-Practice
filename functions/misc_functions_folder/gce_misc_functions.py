@@ -1,7 +1,7 @@
 from functions.misc_functions_folder.misc_functions import *
 
 
-def gce_reduce(cmd_list, function_name, lock):
+def gce_reduce(cmd_list, function_name, lock, project, mitigation_name, severity):
 	"""
 		Google Compute Engine function lines of code reducer
 	"""

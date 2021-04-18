@@ -64,17 +64,17 @@ def get_languages():
 	}
 
 
-def gcf_reduce(cmd_list, function_name, lock):
+def gcf_reduce(cmd_list, function_name, lock, project, mitigation_name, severity):
 	"""
 		Google Cloud Function function lines of code reducer
 	"""
 	datas = exec_cmd(cmd_list[0])
 
 	if "API [cloudfunctions.googleapis.com] not enabled" in datas:
-		pretty_print_error(lock, f"GCF {function_name}", "API [cloudfunctions.googleapis.com] not enabled")
+		pretty_print_error(lock, f"GCF {function_name}", "API [cloudfunctions.googleapis.com] not enabled", True, project, mitigation_name, severity)
 
 	if "The following regions were fully or partially" in datas:
-		pretty_print_error(lock, f"GCF {function_name}", "Missing permissions")
+		pretty_print_error(lock, f"GCF {function_name}", "Missing permissions", True, project, mitigation_name, severity)
 
 	datas = datas.split('\n')[1:-1]
 

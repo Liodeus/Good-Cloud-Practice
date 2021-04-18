@@ -1,4 +1,5 @@
 from  colorama import Fore, Style
+from ..report.report import *
 import subprocess
 import threading
 import datetime
@@ -219,16 +220,20 @@ def print_current_user():
 		Get the current user
 	"""
 	res = exec_cmd("gcloud auth list").split('\n')[2:]
-
+	user = ""
 	for x in res:
 		if "*" in x:
-			print(f"Current user : {x.split()[1]}\n") 
+			user = x.split()[1]
+			print(f"Current user : {user}\n") 
+	return user
 
 
-def report_print(string_to_print, dict_result, report, mitigation_name, severity, lock):
+def report_print(project, string_to_print, dict_result, report, mitigation_name, severity, lock):
 	"""
 
 	"""
+	state = True
+	str_to_print = ""
 	lock.acquire()
 	if dict_result:
 		print(f"{string_to_print} : {Fore.RED}x{Style.RESET_ALL}")
@@ -239,6 +244,7 @@ def report_print(string_to_print, dict_result, report, mitigation_name, severity
 		else:
 			non_compliance_summary[severity] += 1
 			str_start = string_to_print[:3]
+			state = False
 
 			if str_start == "BQ ":
 				non_compliance_summary["BQ"] += 1
@@ -253,7 +259,7 @@ def report_print(string_to_print, dict_result, report, mitigation_name, severity
 			elif "Cloud SQL" in string_to_print: 
 				non_compliance_summary["CLOUDSQL"] += 1
 
-
+			
 			for key, value in dict_result.items():
 				if string_to_print == "GCE instance shielding":
 					for config_name, state in value.items():
@@ -265,16 +271,21 @@ def report_print(string_to_print, dict_result, report, mitigation_name, severity
 					for result in value:
 						for secret, secret_value in result.items():
 							str_tmp += f"\t\t\t{secret} -> {secret_value}\n"
+					str_to_print = str_tmp
 					print(f"{str_tmp}")
 				elif string_to_print == "GAE max version check":
 					print(f"\t\t{key}")
 				else:
+					str_to_print += f"\t\t{key} -> {value}\n"
 					print(f"\t\t{key} -> {value}")
 
 			print_report(report, mitigation_name, severity)
+
 	else:
 		print(f"{string_to_print} : {Fore.GREEN}✓{Style.RESET_ALL}\n")
 		print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
+	
+	markdown_to_report(project, mitigation_name, str_to_print, severity, state)
 	lock.release()
 
 
@@ -308,6 +319,8 @@ def print_non_compliance_summary():
 	mino = non_compliance_summary['Minor']
 	total = crit + maj + med + mino
 
+	height = [crit, maj, med, mino]
+
 	print("Non compliances summary :")
 	print(f"\t{Fore.RED}Critical -> {crit}/{NB_CRITICAL}{Style.RESET_ALL}")
 	print(f"\t{Fore.YELLOW}Major -> {maj}/{NB_MAJOR}{Style.RESET_ALL}")
@@ -325,6 +338,8 @@ def print_non_compliance_summary():
 
 	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 	reset_count_non_compliance()
+
+	return height
 
 
 def reset_count_non_compliance():
@@ -347,14 +362,20 @@ def reset_count_non_compliance():
 	}
 
 
-def pretty_print_error(lock, type_function_name, error_message):
+def pretty_print_error(lock, type_function_name, error_message, state, project, mitigation_name, severity):
 	""""
 		Pretty print error message
 	"""
 	lock.acquire()
-	print(f"{type_function_name} check : {Fore.RED}x{Style.RESET_ALL}")
-	print("\tInformation")
-	print(f"\t\t{error_message}\n")
+	if state:
+		print(f"{type_function_name} check : {Fore.RED}x{Style.RESET_ALL}")
+		print("\tInformation")
+		print(f"\t\t{error_message}\n")
+		markdown_to_report(project, mitigation_name, error_message, severity, False)
+	else:
+		print(f"{type_function_name} check : {Fore.GREEN}✓{Style.RESET_ALL}\n")
+		markdown_to_report(project, mitigation_name, error_message, severity, True)
+
 	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 	lock.release()
 	sys.exit()

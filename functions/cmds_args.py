@@ -4,6 +4,7 @@ from functions.gae_checks import *
 from functions.gce_checks import *
 from functions.bq_checks import *
 from functions.gcf_checks import *
+from functions.report.report import *
 
 
 command_lines = {
@@ -110,34 +111,34 @@ def launch(REPORT, projects_list=[]):
 	thr_list = []
 
 	get_vuln_number()
-	print_current_user()
+	user = print_current_user()
 	for project in projects_list:
 		lock = threading.Lock()
 		if change_project(project):
 			functions = {
-				gce_instance_externalip: (command_lines["GCE"]["INSTANCE_EXTERNALIP"], REPORT, lock),
-				gce_instance_location: (command_lines["GCE"]["INSTANCE_EXTERNALIP"], REPORT, lock),
-				gce_instance_service_account: (command_lines["GCE"]["INSTANCE_SERVICE"], REPORT, lock),
-				gce_ip_forwarding: (command_lines["GCE"]["IP_FORWARDING"], REPORT, lock),
-				gce_network_name: (command_lines["GCE"]["NETWORK_NAME"], REPORT, lock),
-				gce_shielded_instances: (command_lines["GCE"]["INSTANCE_SERVICE"], REPORT, lock),
-				gae_runtime: (command_lines["GAE"]["RUNTIME"], REPORT, lock),
-				gae_env_secret: (command_lines["GAE"]["ENV_SECRET"], REPORT, lock),
-				clouddns_dnssec: (command_lines["DNS"]["DNSSEC"], REPORT, lock),
-				clouddns_rsasha1: (command_lines["DNS"]["RSASHA1"], REPORT, lock),
-				gae_max_version: (command_lines["GAE"]["MAX_VERSION"], REPORT, lock),
-				gae_location: (command_lines["GAE"]["LOCATION"], REPORT, lock),
-				gce_disk_location: (command_lines["GCE"]["DISK_LOCATION"], REPORT, lock),
-				gce_firewallrule_log: (command_lines["GCE"]["FIREWALLRULE_LOG"], REPORT, lock),
-				bq_dataset_location: (command_lines["BQ"]["DATASET_LOCATION"], REPORT, lock),
-				gcf_env_secret: (command_lines["GCF"]["ENV_SECRET"], REPORT, lock),
-				gcf_location: (command_lines["GCF"]["LOCATION"], REPORT, lock),
-				gcf_runtime: (command_lines["GCF"]["RUNTIME"], REPORT, lock),
-				gcf_service_account: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT, lock),
-				cloudsql_backup: (command_lines["CLOUDSQL"]["BACKUP"], REPORT, lock),
-				cloudsql_backup_location: (command_lines["CLOUDSQL"]["BACKUP_LOCATION"], REPORT, lock),
-				cloudsql_location: (command_lines["CLOUDSQL"]["LOCATION"], REPORT, lock),
-				cloudsql_maintenance: (command_lines["CLOUDSQL"]["MAINTENANCE"], REPORT, lock),
+				gce_instance_externalip: (command_lines["GCE"]["INSTANCE_EXTERNALIP"], REPORT, lock, project),
+				gce_instance_location: (command_lines["GCE"]["INSTANCE_EXTERNALIP"], REPORT, lock, project),
+				gce_instance_service_account: (command_lines["GCE"]["INSTANCE_SERVICE"], REPORT, lock, project),
+				gce_ip_forwarding: (command_lines["GCE"]["IP_FORWARDING"], REPORT, lock, project),
+				gce_network_name: (command_lines["GCE"]["NETWORK_NAME"], REPORT, lock, project),
+				gce_shielded_instances: (command_lines["GCE"]["INSTANCE_SERVICE"], REPORT, lock, project),
+				gae_runtime: (command_lines["GAE"]["RUNTIME"], REPORT, lock, project),
+				gae_env_secret: (command_lines["GAE"]["ENV_SECRET"], REPORT, lock, project),
+				clouddns_dnssec: (command_lines["DNS"]["DNSSEC"], REPORT, lock, project),
+				clouddns_rsasha1: (command_lines["DNS"]["RSASHA1"], REPORT, lock, project),
+				gae_max_version: (command_lines["GAE"]["MAX_VERSION"], REPORT, lock, project),
+				gae_location: (command_lines["GAE"]["LOCATION"], REPORT, lock, project),
+				gce_disk_location: (command_lines["GCE"]["DISK_LOCATION"], REPORT, lock, project),
+				gce_firewallrule_log: (command_lines["GCE"]["FIREWALLRULE_LOG"], REPORT, lock, project),
+				bq_dataset_location: (command_lines["BQ"]["DATASET_LOCATION"], REPORT, lock, project),
+				gcf_env_secret: (command_lines["GCF"]["ENV_SECRET"], REPORT, lock, project),
+				gcf_location: (command_lines["GCF"]["LOCATION"], REPORT, lock, project),
+				gcf_runtime: (command_lines["GCF"]["RUNTIME"], REPORT, lock, project),
+				gcf_service_account: (command_lines["GCF"]["SERVICE_ACCOUNT"], REPORT, lock, project),
+				cloudsql_backup: (command_lines["CLOUDSQL"]["BACKUP"], REPORT, lock, project),
+				cloudsql_backup_location: (command_lines["CLOUDSQL"]["BACKUP_LOCATION"], REPORT, lock, project),
+				cloudsql_location: (command_lines["CLOUDSQL"]["LOCATION"], REPORT, lock, project),
+				cloudsql_maintenance: (command_lines["CLOUDSQL"]["MAINTENANCE"], REPORT, lock, project),
 			}
 
 			for function, parameters in functions.items():
@@ -148,7 +149,10 @@ def launch(REPORT, projects_list=[]):
 			for index, thread in enumerate(thr_list):
 				thread.join()
 
-			print_non_compliance_summary()
+			height = print_non_compliance_summary()
+			genereta_graph_by_severity(height, project)
+
+	generate_html(datetime.datetime.today().strftime('%Y-%m-%d'), user)
 
 
 def get_vuln_number():

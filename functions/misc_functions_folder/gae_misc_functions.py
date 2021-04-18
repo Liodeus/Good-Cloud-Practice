@@ -64,7 +64,7 @@ def get_languages():
 	}
 
 
-def gae_reduce(cmd_list, function_name, lock):
+def gae_reduce(cmd_list, function_name, lock, project, mitigation_name, severity):
 	"""
 		Google AppEngine function lines of code reducer
 	"""
@@ -74,7 +74,7 @@ def gae_reduce(cmd_list, function_name, lock):
 		try:
 			yaml_datas = yaml.load(exec_cmd(cmd_list[0]), Loader=yaml.FullLoader)
 		except yaml.scanner.ScannerError:
-			pretty_print_error(lock, f"GAE {function_name}", "Missing permission")
+			pretty_print_error(lock, f"GAE {function_name}", "Missing permission", False, project, mitigation_name, severity)
 	
 		if "europe" not in yaml_datas["locationId"]:
 			result["location"] = yaml_datas["locationId"]
@@ -83,7 +83,7 @@ def gae_reduce(cmd_list, function_name, lock):
 		datas = exec_cmd(cmd_list[0])
 
 		if "ERROR:" in datas:
-			pretty_print_error(lock, f"GAE {function_name}", "Missing permission")
+			pretty_print_error(lock, f"GAE {function_name}", "Missing permission", False, project, mitigation_name, severity)
 
 		datas = datas.split('\n')[1:-1]
 

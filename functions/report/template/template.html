@@ -1,0 +1,82 @@
+<html>
+<head>
+	<title>Good Cloud Practice Report</title>
+</head>
+	<body>
+		<img src="images/logo.png" alt="Logo">
+
+		<p>Report</p>
+		<p>User : {{ user }}</p>
+		<p>{{ date }}</p>
+
+
+		{% for project, results in all_results.items() %}
+			<h1>{{ project }}</h1>
+
+			<p>Graphique - Summary</p>
+			<img src="functions/report/graph_images/graph_by_severity_{{ project }}.png" alt="Graph {{ project }}">
+
+			<details>
+				<summary>Results</summary>
+				{% if results["non_compliant"] %}
+					<details>
+						<summary>Non compliant</summary>
+						{% for key, values in results["non_compliant"].items() %}
+							<details>
+							 	<summary>{{ values[0] }} - {{ key }} : x</summary>
+								<table>
+									<tbody>
+										<tr>
+											<td>Information</td>
+										</tr>
+										<tr>
+											<td>{{ values[1] }}</td>
+										</tr>
+										<tr>
+											<td>Details</td>
+										</tr>
+										<tr>
+											<td>{{ values[2] }}</td>
+										</tr>
+										<tr>
+											<td>Fix</td>
+										</tr>
+										<tr>
+											<td>{{ values[3] }}</td>
+										</tr>
+										<tr>
+											<td>References</td>
+										</tr>
+										<tr>
+											<td>{{ values[4] }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</details>
+						{% endfor %}
+					</details>
+				{% endif %}
+				{% if results["compliant"] %}
+					<details>
+						<summary>Compliant</summary>
+						{% for key, values in results["compliant"].items() %}
+							<details>
+								<summary>{{ values[0] }} - {{ key }} : v</summary>
+								<table>
+							 		<tbody>
+							 			<tr>
+											<td>Information</td>
+							 			</tr>
+										<tr>
+											<td>{{ values[1] }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</details>
+						{% endfor %}
+					</details>
+				{% endif %}
+			</details>
+		{% endfor %}
+	</body>
+</html>

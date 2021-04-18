@@ -1,17 +1,17 @@
 from functions.misc_functions_folder.misc_functions import *
 
 
-def cloudsql_reduce(cmd_list, function_name, lock):
+def cloudsql_reduce(cmd_list, function_name, lock, project, mitigation_name, severity):
 	"""
 		Cloud SQL function lines of code reducer
 	"""
 	datas = exec_cmd(cmd_list[0])
 
 	if "API [sqladmin.googleapis.com] not enabled" in datas:
-		pretty_print_error(lock, f"Cloud SQL {function_name}", "API [sqladmin.googleapis.com] not enabled")
+		pretty_print_error(lock, f"Cloud SQL {function_name}", "API [sqladmin.googleapis.com] not enabled", True, project, mitigation_name, severity)
 
 	if "ERROR:" in datas:
-		pretty_print_error(lock, f"Cloud SQL {function_name}", "Missing permission")
+		pretty_print_error(lock, f"Cloud SQL {function_name}", "Missing permission", True, project, mitigation_name, severity)
 
 	datas = datas.split('\n')[1:-1]
 

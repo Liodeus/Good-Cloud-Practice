@@ -1,25 +1,21 @@
 from functions.misc_functions_folder.misc_functions import *
 
 
-def clouddns_reduce(cmd_list, function_name, lock):
+def clouddns_reduce(cmd_list, function_name, lock, project, mitigation_name, severity):
 	"""
 		Cloud DNS function lines of code reducer
 	"""
 	datas = exec_cmd(cmd_list[0]).split()
 
 	if datas[0] == "ERROR:":
-		pretty_print_error(lock, f"Cloud DNS {function_name}", "Missing permissions")
+		pretty_print_error(lock, f"Cloud DNS {function_name}", "Missing permissions", True, project, mitigation_name, severity)
 
 	if datas[0] == "API":
-		pretty_print_error(lock, f"Cloud DNS {function_name}", "API [dns.googleapis.com] not enabled")
+		pretty_print_error(lock, f"Cloud DNS {function_name}", "API [dns.googleapis.com] not enabled", True, project, mitigation_name, severity)
 
 	if function_name == "clouddns_dnssec":
 		if datas[0] == "Listed":
-			lock.acquire()
-			print(f"Cloud DNS DNSSEC check : {Fore.GREEN}✓{Style.RESET_ALL}\n")
-			lock.release()
-			print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
-			sys.exit()
+			pretty_print_error(lock, f"Cloud DNS {function_name}", "", False, project, mitigation_name, severity)
 
 	managed_zones = [x.split('/')[-1] for x in datas]
 
