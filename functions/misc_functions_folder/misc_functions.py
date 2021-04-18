@@ -319,7 +319,8 @@ def print_non_compliance_summary():
 	mino = non_compliance_summary['Minor']
 	total = crit + maj + med + mino
 
-	height = [crit, maj, med, mino]
+	height_severity = [crit, maj, med, mino]
+	height_types = [non_compliance_summary['BQ'], non_compliance_summary['CLOUDDNS'], non_compliance_summary['GAE'], non_compliance_summary['GCE'], non_compliance_summary['GCF'], non_compliance_summary['CLOUDSQL']]
 
 	print("Non compliances summary :")
 	print(f"\t{Fore.RED}Critical -> {crit}/{NB_CRITICAL}{Style.RESET_ALL}")
@@ -339,7 +340,7 @@ def print_non_compliance_summary():
 	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 	reset_count_non_compliance()
 
-	return height
+	return height_severity, height_types
 
 
 def reset_count_non_compliance():

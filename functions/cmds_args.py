@@ -149,8 +149,9 @@ def launch(REPORT, projects_list=[]):
 			for index, thread in enumerate(thr_list):
 				thread.join()
 
-			height = print_non_compliance_summary()
-			genereta_graph_by_severity(height, project)
+			height_severity, height_types = print_non_compliance_summary()
+			genereta_graph_by_severity(height_severity, project)
+			genereta_graph_by_types(height_types, project)
 
 	generate_html(datetime.datetime.today().strftime('%Y-%m-%d'), user)
 
