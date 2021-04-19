@@ -275,6 +275,7 @@ def report_print(project, string_to_print, dict_result, report, mitigation_name,
 					print(f"{str_tmp}")
 				elif string_to_print == "GAE max version check":
 					print(f"\t\t{key}")
+					str_to_print += f"\t\t{key}\n"
 				else:
 					str_to_print += f"\t\t{key} -> {value}\n"
 					print(f"\t\t{key} -> {value}")

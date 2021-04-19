@@ -1,2 +1,5 @@
+matplotlib==3.3.4
+numpy==1.19.5
+Jinja2==2.11.3
 colorama==0.4.4
 PyYAML==5.4.1

@@ -1,10 +1,9 @@
 In priority :
-	html report add an errors details/summary
-	translate functions_name as name thanks to dictionnary
-	add css to the html report
-	add number of results after Result in template in ()
-	sort by severity
+	rework markdown_to_report
 	add a summary at the beginning of the report which is the sum of non compliance of each scan
+	work on multiple scan, scan result folder, etc
+	add a button to unfold/fold everything, one by results and one for all
+	references : make a href of each links
 
 
 Need to do some research (easy) :

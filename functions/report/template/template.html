@@ -1,6 +1,7 @@
 <html>
 <head>
 	<link rel="stylesheet" href="functions/report/template/style.css">
+	<link rel="stylesheet" href="functions/report/template/style_details.css">
 	<title>Good Cloud Practice Report</title>
 </head>
 	<body>
@@ -34,84 +35,72 @@
 							</tr>
 						</tbody>
 					</table>
-					
+					</br>
 
 					<details>
-						<summary>Results</summary>
+						<summary>Results ({{ results["numbers_results"][0] }})</summary>
 						{% if results["non_compliant"] %}
 							<details>
-								<summary>Non compliant</summary>
-								{% for key, values in results["non_compliant"].items() %}
+								<summary class="failure">Non compliant ({{ results["numbers_results"][1] }})</summary>
+								{% for key, values in results["non_compliant"] %}
 									<details>
-									 	<summary>{{ values[0] }} - {{ key }} : x</summary>
-										<table>
-											<tbody>
-												<tr>
-													<td>Information</td>
-												</tr>
-												<tr>
-													<td>{{ values[1] }}</td>
-												</tr>
-												<tr>
-													<td>Details</td>
-												</tr>
-												<tr>
-													<td>{{ values[2] }}</td>
-												</tr>
-												<tr>
-													<td>Fix</td>
-												</tr>
-												<tr>
-													<td>{{ values[3] }}</td>
-												</tr>
-												<tr>
-													<td>References</td>
-												</tr>
-												<tr>
-													<td>{{ values[4] }}</td>
-												</tr>
-											</tbody>
-										</table>
+										<summary class="failure">{{ values[0] }} - {{ key }}</summary>
+										<ul>
+											<li> 
+												<div class="failure">Information
+													<span class="info">{{ values[1] }}</span>
+												</div>
+											</li>
+											<li> 
+												<div class="failure">Details
+													<span class="info">{{ values[2] }}</span>
+												</div>
+											</li>
+											<li> 
+												<div class="failure">Fix
+													<span class="info">{{ values[3] }}</span>
+												</div>
+											</li>
+											<li> 
+												<div class="failure">References
+													<span class="info">{{ values[4] }}</span>
+												</div>
+											</li>
+										</ul>
 									</details>
 								{% endfor %}
 							</details>
 						{% endif %}
 						{% if results["compliant"] %}
 							<details>
-								<summary>Compliant</summary>
-								{% for key, values in results["compliant"].items() %}
+								<summary class="success">Compliant ({{ results["numbers_results"][2] }})</summary>
+								{% for key, values in results["compliant"] %}
 									<details>
-										<summary>{{ values[0] }} - {{ key }} : v</summary>
-										<table>
-									 		<tbody>
-									 			<tr>
-													<td>Information</td>
-									 			</tr>
-												<tr>
-													<td>{{ values[1] }}</td>
-												</tr>
-											</tbody>
-										</table>
+										<summary class="success">{{ values[0] }} - {{ key }}</summary>
+										<ul>
+											<li> 
+												<div class="success">Information
+													<span class="info">{{ values[1] }}</span>
+												</div>
+											</li>
+										</ul>
 									</details>
 								{% endfor %}
 							</details>
 						{% endif %}
 						{% if results["errors"] %}
 							<details>
-								<summary>Errors</summary>
-								{% for key, values in results["errors"].items() %}
+								<summary class="warning">Errors ({{ results["numbers_results"][3] }})</summary>
+								{% for key, values in results["errors"] %}
 									<details>
-										<summary>{{ values[0] }} - {{ key }} : v</summary>
-										<table>
-									 		<tbody>
-									 			<tr>
-													<td>Information</td>
-									 			</tr>
-												<tr>
-													<td>{{ values[1] }}</td>
-												</tr>
-											</tbody>
-										</table>
+										<summary class="warning">{{ values[0] }} - {{ key }}</summary>
+										<ul>
+											<li> 
+												<div class="warning">Information
+													<span class="info">{{ values[1] }}</span>
+												</div>
+											</li>
+										</ul>
 									</details>
 								{% endfor %}
 							</details>

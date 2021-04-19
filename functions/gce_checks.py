@@ -57,7 +57,7 @@ def gce_network_name(cmd_list, report, lock, project, severity="Major", mitigati
 	"""
 	network_name = gce_reduce(cmd_list, "gce_network_name", lock, project, mitigation_name, severity)
 	network_name_result = gce_reduce_two(network_name, cmd_list, "gce_network_name")
-	report_print(project, "GCE instance instance default network", network_name_result, report, mitigation_name, severity, lock)
+	report_print(project, "GCE instance default network", network_name_result, report, mitigation_name, severity, lock)
 
 
 def gce_shielded_instances(cmd_list, report, lock, project, severity="Minor", mitigation_name="gce_shielded_instances.md"):
