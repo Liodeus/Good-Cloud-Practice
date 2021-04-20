@@ -2,6 +2,8 @@
 <head>
 	<link rel="stylesheet" href="functions/report/template/style.css">
 	<link rel="stylesheet" href="functions/report/template/style_details.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src = "functions/report/template/script.js" type = "text/javascript"/></script>
 	<title>Good Cloud Practice Report</title>
 </head>
 	<body>
@@ -27,21 +29,23 @@
 				{% for project, results in all_results.items() %}
 					<center><h1>{{ project }}</h1></center>
 
-					<table class="center_table">
-						<tbody>
-							<tr>
-								<td><img src="functions/report/graph_images/graph_by_severity_{{ project }}.png" alt="Graph {{ project }}"></td>
-								<td><img src="functions/report/graph_images/graph_by_types_{{ project }}.png" alt="Graph {{ project }}"></td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="table_overflow">
+						<table class="center_table">
+							<tbody>
+								<tr>
+									<td><img src="functions/report/graph_images/graph_by_severity_{{ project }}.png" alt="Graph {{ project }}"></td>
+									<td><img src="functions/report/graph_images/graph_by_types_{{ project }}.png" alt="Graph {{ project }}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 					</br>
 
-					<details>
+					<details class="all_details">
 						<summary>Results ({{ results["numbers_results"][0] }})</summary>
 						{% if results["non_compliant"] %}
-							<details>
-								<summary class="failure">Non compliant ({{ results["numbers_results"][1] }})</summary>
+							<details class="details_failure_{{project}}">
+								<summary class="failure">Non compliant ({{ results["numbers_results"][1] }})<button type="button" id="btn_failure_{{project}}" onclick="open_close_all_fail('{{project}}')">Unfold</button></summary>
 								{% for key, values in results["non_compliant"] %}
 									<details>
 										<summary class="failure">{{ values[0] }} - {{ key }}</summary>
@@ -72,8 +76,8 @@
 							</details>
 						{% endif %}
 						{% if results["compliant"] %}
-							<details>
-								<summary class="success">Compliant ({{ results["numbers_results"][2] }})</summary>
+							<details class="details_success_{{project}}">
+								<summary class="success">Compliant ({{ results["numbers_results"][2] }})<button type="button" id="btn_success_{{project}}" onclick="open_close_all_success('{{project}}')">Unfold</button></summary>
 								{% for key, values in results["compliant"] %}
 									<details>
 										<summary class="success">{{ values[0] }} - {{ key }}</summary>
@@ -89,8 +93,8 @@
 							</details>
 						{% endif %}
 						{% if results["errors"] %}
-							<details>
-								<summary class="warning">Errors ({{ results["numbers_results"][3] }})</summary>
+							<details class="details_warning_{{project}}">
+								<summary class="warning">Errors ({{ results["numbers_results"][3] }})<button type="button" id="btn_warning_{{project}}" onclick="open_close_all_warning('{{project}}')">Unfold</button></summary>
 								{% for key, values in results["errors"] %}
 									<details>
 										<summary class="warning">{{ values[0] }} - {{ key }}</summary>
@@ -109,8 +113,11 @@
 				{% endfor %}
 			</main>
 		</div>
-	<footer class="footer">
-		<center>This is the footer</center>
-	</footer>
+		<footer class="footer-distributed">
+			<div>Liodeus</div>
+			<button onclick="scrollToTop()" id="scrollToTopBtn">☝️</button>
+			<a href="https://www.linkedin.com/in/thibault-galbourdin/"><i class="fa fa-linkedin"></i></a>
+			<a href="https://github.com/Liodeus/Good-Cloud-Practice"><i class="fa fa-github"></i></a>
+		</footer>
 	</body>
 </html>

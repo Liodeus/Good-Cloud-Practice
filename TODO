@@ -1,9 +1,10 @@
 In priority :
-	rework markdown_to_report
-	add a summary at the beginning of the report which is the sum of non compliance of each scan
+	still need to href some links if in fix or background
+	add a summary at the beginning of the report which is the sum of non compliance of each scan, graph and all in a "global" section
+	result section need to make a separation with the next scan 
 	work on multiple scan, scan result folder, etc
-	add a button to unfold/fold everything, one by results and one for all
-	references : make a href of each links
+	bug with fold/unfold, search how to resolve it
+	make an .exe ?
 
 
 Need to do some research (easy) :
@@ -17,3 +18,4 @@ Later, need some reasearch (hard) :
 	gce_router_nat_log
 	cloudsql_networkacl
 	cloudsql_ssl
+
