@@ -12,16 +12,14 @@ This means that by default, every instance in the project runs with editor right
 ```shell
 # Create a specfic service account for your instance
 gcloud iam service-accounts create SERVICE_ACCOUNT_ID --description="DESCRIPTION" --display-name="DISPLAY_NAME"
+
 # Grant only required roles to service accounts !!! Example with minimal rights !!!
-gcloud projects add-iam-policy-binding PROJECT_ID \
-    --member="serviceAccount:SERVICE_ACCOUNT_ID@PROJECT_ID.iam.gserviceaccount.com" \
-    --role="roles/monitoring.metricWriter"
-gcloud projects add-iam-policy-binding PROJECT_ID \
-    --member="serviceAccount:SERVICE_ACCOUNT_ID@PROJECT_ID.iam.gserviceaccount.com" \
-    --role="roles/logging.logWriter"
+gcloud projects add-iam-policy-binding PROJECT_ID --member="serviceAccount:SERVICE_ACCOUNT_ID@PROJECT_ID.iam.gserviceaccount.com" --role="roles/monitoring.metricWriter"
+
+gcloud projects add-iam-policy-binding PROJECT_ID --member="serviceAccount:SERVICE_ACCOUNT_ID@PROJECT_ID.iam.gserviceaccount.com" --role="roles/logging.logWriter"
+
 # Update your instance to use the new service account
-gcloud compute instances set-service-account [INSTANCE_NAME] \
-   --service-account SERVICE_ACCOUNT_ID@PROJECT_ID.iam.gserviceaccount.com
+gcloud compute instances set-service-account [INSTANCE_NAME] --service-account SERVICE_ACCOUNT_ID@PROJECT_ID.iam.gserviceaccount.com
 ```
 
 ## References

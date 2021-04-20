@@ -12,10 +12,10 @@ This means that by default, every Cloud Function in the project runs with editor
 ```shell
 # Create a specfic service account for your instance
 gcloud iam service-accounts create SERVICE_ACCOUNT_ID --description="DESCRIPTION" --display-name="DISPLAY_NAME"
+
 # Grant only required roles to service accounts !!! Exemple for BQ streaming :
-gcloud projects add-iam-policy-binding PROJECT_ID \
-    --member="serviceAccount:SERVICE_ACCOUNT_ID@PROJECT_ID.iam.gserviceaccount.com" \
-    --role="roles/bigquery.dataEditor"
+gcloud projects add-iam-policy-binding PROJECT_ID --member="serviceAccount:SERVICE_ACCOUNT_ID@PROJECT_ID.iam.gserviceaccount.com" --role="roles/bigquery.dataEditor"
+
 # Even better, you can create a Custom Role for your Cloud Function, see https://cloud.google.com/iam/docs/creating-custom-roles
 # Deploy your Cloud Function using new service account
 gcloud functions deploy FUNCTION_NAME --service-account SERVICE_ACCOUNT_ID@PROJECT_ID.iam.gserviceaccount.com

@@ -9,20 +9,9 @@ Biqquery datasets location have to comply with data soveriegnty regulation
 Bigquery datasets cannot be moved. Create a new dataset in a compliant location, move data, delete the non compliant dataset.
 
 ```shell
-bq --location=location mk \
---dataset \
---default_table_expiration integer1 \
---default_partition_expiration integer2 \
---description description \
-project_id:dataset
-
-bq ls --filter labels.key:value \
---max_results integer \
---format=prettyjson \
---project_id project_id
-
+bq --location=location mk --dataset --default_table_expiration integer1 --default_partition_expiration integer2 --description description project_id:dataset
+bq ls --filter labels.key:value --max_results integer --format=prettyjson --project_id project_id
 bq mk --transfer_config --project_id=PROJECT_ID --data_source=DATA_SOURCE --target_dataset=DATASET --display_name=NAME --params='PARAMETERS'
-
 bq rm -r -f -d project_id:dataset
 ```
 

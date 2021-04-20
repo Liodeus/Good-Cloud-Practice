@@ -8,11 +8,9 @@ Shielded VM offers verifiable integrity of your Compute Engine VM instances, so 
 
 ## Fix
 
-Verify that the Operating System Image of your VM supports the shielded VM dfeature on :
-[Operating System details](https://cloud.google.com/compute/docs/images/os-details#general-info)
+Verify that the Operating System Image of your VM supports the shielded VM feature on : [Operating System details](https://cloud.google.com/compute/docs/images/os-details#general-info)
 
 Then :
-
 ```shell
 gcloud compute instances stop VM_NAME
 gcloud compute instances update VM_NAME \
@@ -20,7 +18,6 @@ gcloud compute instances update VM_NAME \
     --shielded-integrity-monitoring
 gcloud compute instances stop VM_NAME
 ```
-
 If your VM does not support Shielded VM options, you should recreate it with another OS that supports it.
 
 ## References

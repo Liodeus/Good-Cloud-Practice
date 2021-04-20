@@ -3,7 +3,7 @@
 /* Eric Meyer's CSS Reset */
 html, body, div, span, applet, object, iframe,
 h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
+a, abbr, acronym, address, big, code, cite,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
@@ -118,4 +118,8 @@ table tbody tr {
 .date {
 	text-align: right;
 	padding-right: 8px
+}
+
+.date_table {
+	width: 100%;
 }

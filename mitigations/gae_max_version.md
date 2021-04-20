@@ -20,5 +20,5 @@ gcloud app versions delete VERSIONS
 ## References
 
 - [Deploying Versions of Your App to App Engine](https://cloud.google.com/appengine/docs/admin-api/deploying-apps)
-- [`gcloud app versions`](https://cloud.google.com/sdk/gcloud/reference/app/versions)
-- [`gcloud app services`](https://cloud.google.com/sdk/gcloud/reference/app/services)
+- [gcloud app versions](https://cloud.google.com/sdk/gcloud/reference/app/versions)
+- [gcloud app services](https://cloud.google.com/sdk/gcloud/reference/app/services)

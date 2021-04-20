@@ -7,7 +7,6 @@ App Engine application location have to comply with data soveriegnty regulation
 ## Fix
 
 There is only one GAE application per GCP project. The location is choosen at the time GAE is enable on the project an cannot be changed. A GAE application cannot be deleted. A project can be deleted.
-
 ```shell
 gcloud projects create
 gcloud app create [--region=REGION]

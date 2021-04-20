@@ -38,7 +38,7 @@ def markdown_to_report(project, mitigation_name, information, severity, complian
 		background = replace_for_html('\n'.join(mitigation.split('## Fix')[0].split('\n')[4:-2]).strip())
 		mitigation_name = mitigation_to_name[mitigation_name[:-3]]
 		fix = replace_for_html(mitigation.split('## Fix')[1].split('## References')[0].strip())
-		references = replace_for_html(mitigation.split('## Fix')[1].split('## References')[1].strip())
+		references = ref_to_href(mitigation.split('## Fix')[1].split('## References')[1].strip())
 
 		if not compliant_or_not:
 			if "API" in information or "Missing permission" in information:
@@ -65,7 +65,20 @@ def markdown_to_report(project, mitigation_name, information, severity, complian
 
 
 def replace_for_html(strg):
-	return strg.replace('\n', '</br>').replace('\t', '&emsp;').replace("```shell", "<code>").replace("```", "</code>")
+	return strg.replace('\n', '</br>').replace('\t', '&emsp;')
+
+
+def ref_to_href(refs):
+	strg = ""
+	if refs:
+		for ref in refs.split('\n'):
+			ref = ref[2:]
+			tmp = ref.split('(')
+
+			url = f'- <a href="{tmp[1][:-1]}">{tmp[0][1:-1]}</a>'
+			strg += f"{url}</br>"
+		
+	return strg
 
 
 def generate_html(date, user):

@@ -3,12 +3,11 @@
 ## Background
 
 Compute instance disks location have to comply with data soveriegnty regulation
-
 If you are moving an instance across regions, you must pick a different IP address for the VM instance.
 
 ## Fix
 
-[Moving an instance between zones](https://cloud.google.com/compute/docs/instances/moving-instance-across-zones)
+- [Moving an instance between zones](https://cloud.google.com/compute/docs/instances/moving-instance-across-zones)
 
 ## References
 

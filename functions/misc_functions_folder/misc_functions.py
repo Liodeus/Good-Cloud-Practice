@@ -271,13 +271,13 @@ def report_print(project, string_to_print, dict_result, report, mitigation_name,
 					for result in value:
 						for secret, secret_value in result.items():
 							str_tmp += f"\t\t\t{secret} -> {secret_value}\n"
-					str_to_print = str_tmp
+					str_to_print = str_tmp.replace('\t', '')
 					print(f"{str_tmp}")
 				elif string_to_print == "GAE max version check":
 					print(f"\t\t{key}")
-					str_to_print += f"\t\t{key}\n"
+					str_to_print += f"{key}\n"
 				else:
-					str_to_print += f"\t\t{key} -> {value}\n"
+					str_to_print += f"{key} -> {value}\n"
 					print(f"\t\t{key} -> {value}")
 
 			print_report(report, mitigation_name, severity)

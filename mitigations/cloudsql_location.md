@@ -9,14 +9,9 @@ Cloud SQL instances location have to comply with data soveriegnty regulation
 Cloud SQL instances cannot be moved. Create a new instance in a compliant location, move data, delete the non compliant dataset.
 
 ```shell
-gcloud sql export sql [INSTANCE_NAME] gs://[BUCKET_NAME]/sqldumpfile.gz \
-                              --database=[DATABASE_NAME] --offload
-  
+gcloud sql export sql [INSTANCE_NAME] gs://[BUCKET_NAME]/sqldumpfile.gz --database=[DATABASE_NAME] --offload
 gcloud sql instances create INSTANCE_NAME --tier=MACHINE_TYPE --region=REGION
-
-gcloud sql import sql [INSTANCE_NAME] gs://[BUCKET_NAME]/[IMPORT_FILE_NAME] \
-                            --database=[DATABASE_NAME]
-
+gcloud sql import sql [INSTANCE_NAME] gs://[BUCKET_NAME]/[IMPORT_FILE_NAME] --database=[DATABASE_NAME]
 gcloud sql instances delete [INSTANCE_NAME]
 ```
 
