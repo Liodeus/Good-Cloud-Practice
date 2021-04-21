@@ -8,7 +8,7 @@ The "default" network is also created with the "auto mode" option, which creates
 
 ## Fix
 
-[Delete the network](https://cloud.google.com/vpc/docs/using-vpc#deleting_a_network)
+- [Delete the network](https://cloud.google.com/vpc/docs/using-vpc#deleting_a_network)
 
 ## References
 

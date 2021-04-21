@@ -17,7 +17,7 @@
 				<table class="date_table">
 					<tbody>
 						<tr>
-							<td>Report</td>
+							<td>Good Cloud Practice Report</td>
 							<td class="date">{{ date }}</td>
 						</tr>
 						<tr>
@@ -25,6 +25,21 @@
 						</tr>
 					</tbody>
 				</table>
+
+				{% if size > 1 %}
+				<center><h1>Global</h1></center>
+				<div class="table_overflow">
+					<table class="center_table">
+						<tbody>
+							<tr>
+								<td><img src="./graph_images/graph_by_severity_global.png" alt="Graph global {{ project }}"></td>
+								<td><img src="./graph_images/graph_by_types_global.png" alt="Graph global {{ project }}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				</br>
+				{% endif %}
 
 				{% for project, results in all_results.items() %}
 					<center><h1>{{ project }}</h1></center>

@@ -1,10 +1,7 @@
 In priority :
-	still need to href some links in fix or background
-	add a summary at the beginning of the report which is the sum of non compliance of each scan, graph and all in a "global" section
 	bug with fold/unfold, search how to resolve it
 	make an .exe ?
-	csv format or the results ?
-
+	csv format of the results ?
 
 Need to do some research (easy) :
 	gce_target_https_proxy_ssl_policy -> https://cloud.google.com/load-balancing/docs/https/setting-up-https#console_1

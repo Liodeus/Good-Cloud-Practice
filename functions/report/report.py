@@ -35,9 +35,9 @@ def markdown_to_report(project, mitigation_name, information, severity, complian
 	with open(f"./mitigations/{mitigation_name}") as f:
 		mitigation = f.read()
 		information = replace_for_html(information)
-		background = replace_for_html('\n'.join(mitigation.split('## Fix')[0].split('\n')[4:-2]).strip())
+		background = replace_for_html(ref_to_href('\n'.join(mitigation.split('## Fix')[0].split('\n')[4:-2]).strip()))
 		mitigation_name = mitigation_to_name[mitigation_name[:-3]]
-		fix = replace_for_html(mitigation.split('## Fix')[1].split('## References')[0].strip())
+		fix = replace_for_html(ref_to_href(mitigation.split('## Fix')[1].split('## References')[0].strip()))
 		references = ref_to_href(mitigation.split('## Fix')[1].split('## References')[1].strip())
 
 		if not compliant_or_not:
@@ -65,23 +65,26 @@ def markdown_to_report(project, mitigation_name, information, severity, complian
 
 
 def replace_for_html(strg):
-	return strg.replace('\n', '</br>').replace('\t', '&emsp;')
+	return strg.replace('\n', '</br>').replace('\t', '&emsp;').replace("```shell", "<div class='code'>").replace("```", "</div>")
 
 
 def ref_to_href(refs):
 	strg = ""
 	if refs:
 		for ref in refs.split('\n'):
-			ref = ref[2:]
-			tmp = ref.split('(')
+			if ref[:3] == "- [" or ref[:3] == "\t- ":
+				ref = ref[2:]
+				tmp = ref.split('(')
 
-			url = f'- <a href="{tmp[1][:-1]}">{tmp[0][1:-1]}</a>'
-			strg += f"{url}</br>"
+				url = f'- <a href="{tmp[1][:-1]}">{tmp[0][1:-1]}</a>'
+				strg += f"{url}</br>"
+			else:
+				strg += f"{ref}\n"
 		
 	return strg
 
 
-def generate_html(date, user, folder_name):
+def generate_html(date, user, folder_name, global_heights):
 	final = {}
 	file_loader = FileSystemLoader("functions/report/template")
 	env = Environment(loader=file_loader)
@@ -106,29 +109,37 @@ def generate_html(date, user, folder_name):
 			except AttributeError:
 				final[key][k] = all_results[key][k]
 
-	output = template.render(all_results=final, date=date[:10], user=user)
+	output = template.render(all_results=final, size=len(final),date=date[:10], user=user)
 
 	with open(f"{folder_name}/report.html", "w") as result_file:
 	    result_file.write(output)
 
 
-def genereta_graph_by_severity(height_severity, project, folder_name):
+def genereta_graph_by_severity(height_severity, project, folder_name, state):
 	bars = ("Critical", "Major", "Medium", "Minor")
 	y_pos = np.arange(len(bars))
-
 	plt.bar(y_pos, height_severity, color=["red", "orange", "green", "cyan"])
 	plt.xticks(y_pos, bars, )
 	plt.title("Non compliance by severity")
-	plt.savefig(f"{folder_name}/graph_images/graph_by_severity_{project}.png")
+
+	if state:
+		plt.savefig(f"{folder_name}/graph_images/graph_by_severity_{project}.png")
+	else:
+		plt.savefig(f"{folder_name}/graph_images/graph_by_severity_global.png")
+	
 	plt.clf()
 
 
-def genereta_graph_by_types(height_types, project, folder_name):
+def genereta_graph_by_types(height_types, project, folder_name, state):
 	bars = ("BQ", "CLOUDDNS", "GAE", "GCE", "GCF", "CLOUDSQL")
 	y_pos = np.arange(len(bars))
-
 	plt.bar(y_pos, height_types)
 	plt.xticks(y_pos, bars, )
 	plt.title("Non compliance by types")
-	plt.savefig(f"{folder_name}/graph_images/graph_by_types_{project}.png")
+
+	if state:
+		plt.savefig(f"{folder_name}/graph_images/graph_by_types_{project}.png")
+	else:
+		plt.savefig(f"{folder_name}/graph_images/graph_by_types_global.png")
+
 	plt.clf()

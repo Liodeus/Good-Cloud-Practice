@@ -5,6 +5,7 @@
 GCE Instances use service accounts to run.
 
 Per default, an instance uses the service account {project_number}-compute@developer.gserviceaccount.com. This service account is the compute engine service account for the project, who by default has the Editor role on the project.
+
 This means that by default, every instance in the project runs with editor rights on the projects. Should an instance be compromized, malicious activity would have editor role : all data in the project could be accessible (data leak risk), new ressources could be created (financial risk) or illegal activity could be carried out (liability risk).
 
 ## Fix

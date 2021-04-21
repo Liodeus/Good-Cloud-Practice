@@ -206,3 +206,10 @@ section {
   border-radius: 10%;
   line-height: 25px;
 }
+
+.code {
+  font-style: italic;
+  background-color: #fff;
+  padding: 0 10 10 10;
+  border-radius: 10%;
+}

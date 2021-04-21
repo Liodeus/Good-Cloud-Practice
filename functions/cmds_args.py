@@ -123,6 +123,10 @@ def launch(REPORT, projects_list=[]):
 	exec_cmd(f"cp images/logo.png {report_folder_name}/images/")
 	exec_cmd(f"cp functions/report/template/style_details.css {report_folder_name}/css/")
 
+	global_heights = {
+		"severity": [],
+		"types": []
+	}
 	
 	get_vuln_number()
 	user = print_current_user()
@@ -164,10 +168,16 @@ def launch(REPORT, projects_list=[]):
 				thread.join()
 
 			height_severity, height_types = print_non_compliance_summary()
-			genereta_graph_by_severity(height_severity, project, report_folder_name)
-			genereta_graph_by_types(height_types, project, report_folder_name)
+			global_heights["severity"].append(height_severity)
+			global_heights["types"].append(height_types)
+			genereta_graph_by_severity(height_severity, project, report_folder_name, True)
+			genereta_graph_by_types(height_types, project, report_folder_name, True)
 
-	generate_html(date_of_scan, user, report_folder_name)
+	if len(global_heights["severity"]) > 1:
+		genereta_graph_by_severity([sum(x) for x in zip(*global_heights["severity"])], project, report_folder_name, False)
+		genereta_graph_by_types([sum(x) for x in zip(*global_heights["types"])], project, report_folder_name, False)
+
+	generate_html(date_of_scan, user, report_folder_name, global_heights)
 	print(f"The report is here : {report_folder_name}/report.html")
 
 

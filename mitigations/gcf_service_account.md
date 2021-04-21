@@ -5,6 +5,7 @@
 Cloud Functions use service accounts to run.
 
 Per default, a Cloud Function uses the service account {project-id}@@appspot.gserviceaccount.com. This service account is the app engine default service account for the project, who by default has the Editor role on the project.
+
 This means that by default, every Cloud Function in the project runs with editor rights on the project. Should an Function be compromised, malicious activity would have editor role : all data in the project could be accessible (data leak risk), new ressources could be created (financial risk) or illegal activity could be carried out (liability risk).
 
 ## Fix

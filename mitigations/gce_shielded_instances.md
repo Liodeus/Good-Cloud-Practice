@@ -8,7 +8,8 @@ Shielded VM offers verifiable integrity of your Compute Engine VM instances, so 
 
 ## Fix
 
-Verify that the Operating System Image of your VM supports the shielded VM feature on : [Operating System details](https://cloud.google.com/compute/docs/images/os-details#general-info)
+Verify that the Operating System Image of your VM supports the shielded VM feature on : 
+	- [Operating System details](https://cloud.google.com/compute/docs/images/os-details#general-info)
 
 Then :
 ```shell
