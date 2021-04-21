@@ -1,4 +1,6 @@
 In priority :
+	if results folder doesn't exist create it
+	add to readme images about the html format
 	bug with fold/unfold, search how to resolve it
 	make an .exe ?
 	csv format of the results ?
