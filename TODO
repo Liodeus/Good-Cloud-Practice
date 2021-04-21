@@ -1,10 +1,9 @@
 In priority :
-	still need to href some links if in fix or background
+	still need to href some links in fix or background
 	add a summary at the beginning of the report which is the sum of non compliance of each scan, graph and all in a "global" section
-	result section need to make a separation with the next scan 
-	work on multiple scan, scan result folder, etc
 	bug with fold/unfold, search how to resolve it
 	make an .exe ?
+	csv format or the results ?
 
 
 Need to do some research (easy) :
@@ -18,4 +17,3 @@ Later, need some reasearch (hard) :
 	gce_router_nat_log
 	cloudsql_networkacl
 	cloudsql_ssl
-

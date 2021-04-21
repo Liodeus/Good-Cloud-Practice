@@ -81,7 +81,7 @@ def ref_to_href(refs):
 	return strg
 
 
-def generate_html(date, user):
+def generate_html(date, user, folder_name):
 	final = {}
 	file_loader = FileSystemLoader("functions/report/template")
 	env = Environment(loader=file_loader)
@@ -106,29 +106,29 @@ def generate_html(date, user):
 			except AttributeError:
 				final[key][k] = all_results[key][k]
 
-	output = template.render(all_results=final, date=date, user=user)
+	output = template.render(all_results=final, date=date[:10], user=user)
 
-	with open("report.html", "w") as result_file:
+	with open(f"{folder_name}/report.html", "w") as result_file:
 	    result_file.write(output)
 
 
-def genereta_graph_by_severity(height_severity, project):
+def genereta_graph_by_severity(height_severity, project, folder_name):
 	bars = ("Critical", "Major", "Medium", "Minor")
 	y_pos = np.arange(len(bars))
 
 	plt.bar(y_pos, height_severity, color=["red", "orange", "green", "cyan"])
 	plt.xticks(y_pos, bars, )
 	plt.title("Non compliance by severity")
-	plt.savefig(f"functions/report/graph_images/graph_by_severity_{project}.png")
+	plt.savefig(f"{folder_name}/graph_images/graph_by_severity_{project}.png")
 	plt.clf()
 
 
-def genereta_graph_by_types(height_types, project):
+def genereta_graph_by_types(height_types, project, folder_name):
 	bars = ("BQ", "CLOUDDNS", "GAE", "GCE", "GCF", "CLOUDSQL")
 	y_pos = np.arange(len(bars))
 
 	plt.bar(y_pos, height_types)
 	plt.xticks(y_pos, bars, )
 	plt.title("Non compliance by types")
-	plt.savefig(f"functions/report/graph_images/graph_by_types_{project}.png")
+	plt.savefig(f"{folder_name}/graph_images/graph_by_types_{project}.png")
 	plt.clf()
