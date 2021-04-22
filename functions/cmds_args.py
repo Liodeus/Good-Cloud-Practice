@@ -5,7 +5,6 @@ from functions.gce_checks import *
 from functions.bq_checks import *
 from functions.gcf_checks import *
 from functions.report.report import *
-from os import mkdir
 
 
 command_lines = {
@@ -110,18 +109,7 @@ command_lines = {
 
 def launch(REPORT, projects_list=[]):
 	thr_list = []
-	date_of_scan = datetime.datetime.today().strftime("%Y-%m-%d-%H-%M-%S")
-	report_folder_name = f"./results/report_{date_of_scan.replace('-', '_')}"
-	mkdir(report_folder_name)
-	mkdir(f"{report_folder_name}/graph_images")
-	mkdir(f"{report_folder_name}/css")
-	mkdir(f"{report_folder_name}/js")
-	mkdir(f"{report_folder_name}/images")
-	exec_cmd(f"cp functions/report/template/script.js {report_folder_name}/js/")
-	exec_cmd(f"cp functions/report/template/script.js {report_folder_name}/js/")
-	exec_cmd(f"cp functions/report/template/style.css {report_folder_name}/css/")
-	exec_cmd(f"cp images/logo.png {report_folder_name}/images/")
-	exec_cmd(f"cp functions/report/template/style_details.css {report_folder_name}/css/")
+	date_of_scan, report_folder_name = create_folders()
 
 	global_heights = {
 		"severity": [],

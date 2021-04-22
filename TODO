@@ -1,5 +1,5 @@
 In priority :
-	if results folder doesn't exist create it
+	
 	add to readme images about the html format
 	bug with fold/unfold, search how to resolve it
 	make an .exe ?
@@ -16,3 +16,6 @@ Later, need some reasearch (hard) :
 	gce_router_nat_log
 	cloudsql_networkacl
 	cloudsql_ssl
+
+
+git commit -m "if results folder doesn't exist create it, reate a function to crete all the folders"
