@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/logo.png" alt="Logo">
   
-<p align="center">A python3 script, which scan and report your Google Cloud Platfrom non compliance.
+<p align="center">A python3 script, which scan and generate a html report about your Google Cloud Platfrom non compliance.
 
 <p align="center">
   <a href="#introduction">Introduction</a>
@@ -10,6 +10,7 @@
  • <a href="#installation">Installation</a>
  • <a href="#usage">Usage</a>
  • <a href="#Examples">Examples</a>
+ • <a href="#HTML-report">HTML report</a>
  • <a href="#contributing">Contributing</a>
  • <a href="#thanks">Thanks</a>
 </p>
@@ -125,6 +126,26 @@ Use a particular account
 ```shell
 python3 Good_Cloud_Practice.py -u ACCOUNT
 ```
+
+## HTML report
+
+The header, with the user who launch the scan and the date.
+<img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/header.png" alt="Logo">
+
+A global section with a summary of all the non compliance.
+<img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/global.png" alt="Global">
+
+A section, whith the name of the project scan, the summary of non compliance found and the result behind.
+<img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/section.png" alt="Section">
+
+Once the "Results" are unfold, you have three sections.
+<img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/unfold_section.png" alt="Unfold section">
+
+Here's what you can see one the "Non compliant" section is unfold.
+<img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/unfold_section_two.png" alt="Unfold section two">
+
+And finally the footer
+<img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/footer.png" alt="Footer">
 
 ## Contributing
 

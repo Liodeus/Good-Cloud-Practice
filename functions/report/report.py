@@ -28,7 +28,9 @@ mitigation_to_name = {
 	"cloudsql_backup": "Cloud SQL backup",
 	"cloudsql_backup_location": "Cloud SQL backup location",
 	"cloudsql_location": "Cloud SQL location",
-	"cloudsql_maintenance": "Cloud SQL maintenance"
+	"cloudsql_maintenance": "Cloud SQL maintenance",
+	"gce_router_nat_location": "Google Compute Engine NAT router location",
+	"gcs_storage_location": "Google Cloud Storage lcoation"
 }
 
 def markdown_to_report(project, mitigation_name, information, severity, compliant_or_not):
@@ -41,7 +43,7 @@ def markdown_to_report(project, mitigation_name, information, severity, complian
 		references = ref_to_href(mitigation.split('## Fix')[1].split('## References')[1].strip())
 
 		if not compliant_or_not:
-			if "API" in information or "Missing permission" in information:
+			if "API" in information or "Missing permission" in information or "Reauthentication" in information:
 				tmp = [severity, information]
 				try:
 					all_results[project]["errors"][mitigation_name] = tmp
@@ -131,7 +133,7 @@ def genereta_graph_by_severity(height_severity, project, folder_name, state):
 
 
 def genereta_graph_by_types(height_types, project, folder_name, state):
-	bars = ("BQ", "CLOUDDNS", "GAE", "GCE", "GCF", "CLOUDSQL")
+	bars = ("BQ", "DNS", "GAE", "GCE", "GCF", "SQL", "GCS")
 	y_pos = np.arange(len(bars))
 	plt.bar(y_pos, height_types)
 	plt.xticks(y_pos, bars, )

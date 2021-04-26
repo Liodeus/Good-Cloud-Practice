@@ -10,7 +10,7 @@ import json
 import sys
 import re
 
-NB_CRITICAL = 8
+NB_CRITICAL = 10
 NB_MAJOR = 12
 NB_MEDIUM = 1
 NB_MINOR = 2
@@ -251,16 +251,15 @@ def report_print(project, string_to_print, dict_result, report, mitigation_name,
 				non_compliance_summary["BQ"] += 1
 			elif str_start == "GAE": 
 				non_compliance_summary["GAE"] += 1
+			elif str_start == "GCS": 
+				non_compliance_summary["GCS"] += 1
 			elif str_start == "GCE": 
 				non_compliance_summary["GCE"] += 1
 			elif str_start == "GCF": 
 				non_compliance_summary["GCF"] += 1
 			elif "Cloud DNS" in string_to_print: 
 				non_compliance_summary["CLOUDDNS"] += 1
-			elif "Cloud SQL" in string_to_print: 
-				non_compliance_summary["CLOUDSQL"] += 1
 
-			
 			for key, value in dict_result.items():
 				if string_to_print == "GCE instance shielding":
 					for config_name, state in value.items():
@@ -307,9 +306,10 @@ non_compliance_summary = {
 	"BQ": 0,
 	"CLOUDDNS": 0,
 	"GAE": 0,
+	"GCS": 0,
 	"GCE": 0,
 	"GCF": 0,
-	"CLOUDSQL": 0
+	"CLOUDSQL": 0,
 }
 def print_non_compliance_summary():
 	"""
@@ -322,7 +322,7 @@ def print_non_compliance_summary():
 	total = crit + maj + med + mino
 
 	height_severity = [crit, maj, med, mino]
-	height_types = [non_compliance_summary['BQ'], non_compliance_summary['CLOUDDNS'], non_compliance_summary['GAE'], non_compliance_summary['GCE'], non_compliance_summary['GCF'], non_compliance_summary['CLOUDSQL']]
+	height_types = [non_compliance_summary['BQ'], non_compliance_summary['CLOUDDNS'], non_compliance_summary['GAE'], non_compliance_summary['GCE'], non_compliance_summary['GCF'], non_compliance_summary['CLOUDSQL'], non_compliance_summary['GCS']]
 
 	print("Non compliances summary :")
 	print(f"\t{Fore.RED}Critical -> {crit}/{NB_CRITICAL}{Style.RESET_ALL}")
@@ -337,7 +337,8 @@ def print_non_compliance_summary():
 	print(f"\tGoogle AppEngine -> {non_compliance_summary['GAE']}")
 	print(f"\tGoogle Compute Engine -> {non_compliance_summary['GCE']}")
 	print(f"\tGoogle Cloud Function -> {non_compliance_summary['GCF']}")
-	print(f"\tCloud SQL -> {non_compliance_summary['CLOUDSQL']}\n")
+	print(f"\tCloud SQL -> {non_compliance_summary['CLOUDSQL']}")
+	print(f"\tGoogle Cloud Storage -> {non_compliance_summary['GCS']}\n")
 
 	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 	reset_count_non_compliance()
@@ -359,9 +360,10 @@ def reset_count_non_compliance():
 		"BQ": 0,
 		"CLOUDDNS": 0,
 		"GAE": 0,
+		"GCS": 0,
 		"GCE": 0,
 		"GCF": 0,
-		"CLOUDSQL": 0
+		"CLOUDSQL": 0,
 	}
 
 

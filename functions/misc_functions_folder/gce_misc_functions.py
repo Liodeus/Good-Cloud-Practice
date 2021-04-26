@@ -10,12 +10,12 @@ def gce_reduce(cmd_list, function_name, lock, project, mitigation_name, severity
 	if function_name in ["gce_firewallrule_log"]:
 		res = exec_cmd(cmd_list[0])
 		if "ERROR:" in res:
-			pretty_print_error(lock, f"GCE {function_name}", "Missing permission")
+			pretty_print_error(lock, f"GCE {function_name}", "Missing permissions", True, project, mitigation_name, severity)
 
 		try:
 			datas = json.loads(res)
 		except json.decoder.JSONDecodeError:
-			pretty_print_error(lock, f"GCE {function_name}", "This API method requires billing to be enabled. Please enable billing by visiting https://console.developers.google.com/billing/enable then retry.")
+			pretty_print_error(lock, f"GCE {function_name}", "This API method requires billing to be enabled. Please enable billing by visiting https://console.developers.google.com/billing/enable then retry.", True, project, mitigation_name, severity)
 
 		for data in datas:
 			state = data["logConfig"]["enable"]
@@ -26,11 +26,14 @@ def gce_reduce(cmd_list, function_name, lock, project, mitigation_name, severity
 	else:
 		datas = exec_cmd(cmd_list[0]).split('\n')[1:-1]
 
-		if "permission for" in datas[0]:
-			pretty_print_error(lock, f"GCE {function_name}", "Missing permission")
+		if not datas:
+			return result
+
+		if "permission for" in datas[0] or "Would you like to enable and retry" in datas[0]:
+			pretty_print_error(lock, f"GCE {function_name}", "Missing permissions", True, project, mitigation_name, severity)
 
 		if "This API method requires billing to be enabled." in datas[0]:
-			pretty_print_error(lock, f"GCE {function_name}", "This API method requires billing to be enabled. Please enable billing by visiting https://console.developers.google.com/billing/enable then retry.")
+			pretty_print_error(lock, f"GCE {function_name}", "This API method requires billing to be enabled. Please enable billing by visiting https://console.developers.google.com/billing/enable then retry.", True, project, mitigation_name, severity)
 
 		if function_name in ["gce_disk_location"]:
 			if "ERROR:" in datas[0]:
@@ -46,7 +49,7 @@ def gce_reduce(cmd_list, function_name, lock, project, mitigation_name, severity
 
 			if function_name in ["gce_shielded_instances", "gce_network_name", "gce_ip_forwarding", "gce_instance_service_account"]:
 				result[name] = location
-			elif function_name in ["gce_instance_location", "gce_disk_location"]:
+			elif function_name in ["gce_instance_location", "gce_disk_location", "gce_router_nat_location"]:
 				if "europe" not in location:
 					result[name] = location
 			elif function_name in ["gce_instance_externalip"]:

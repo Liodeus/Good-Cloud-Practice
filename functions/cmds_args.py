@@ -4,6 +4,8 @@ from functions.gae_checks import *
 from functions.gce_checks import *
 from functions.bq_checks import *
 from functions.gcf_checks import *
+from functions.gcf_checks import *
+from functions.gcs_checks import *
 from functions.report.report import *
 
 
@@ -68,6 +70,9 @@ command_lines = {
 		"SHIELDED_ISNTANCES": [
 			"gcloud compute instances list",
 			"gcloud compute instances describe --zone="
+		],
+		"NAT_LOCATION": [
+			"gcloud compute routers list"
 		]
 	},
 	"GCF": {
@@ -102,6 +107,12 @@ command_lines = {
 		"MAINTENANCE": [
 			"gcloud sql instances list",
 			"gcloud sql instances describe "
+		],
+	},
+	"GCS": {
+		"LOCATION": [
+			"gsutil ls",
+			"gsutil ls -L -b"
 		],
 	}
 }
@@ -145,6 +156,8 @@ def launch(REPORT, projects_list=[]):
 				cloudsql_backup_location: (command_lines["CLOUDSQL"]["BACKUP_LOCATION"], REPORT, lock, project),
 				cloudsql_location: (command_lines["CLOUDSQL"]["LOCATION"], REPORT, lock, project),
 				cloudsql_maintenance: (command_lines["CLOUDSQL"]["MAINTENANCE"], REPORT, lock, project),
+				gce_router_nat_location: (command_lines["GCE"]["NAT_LOCATION"], REPORT, lock, project),
+				gcs_storage_location: (command_lines["GCS"]["LOCATION"], REPORT, lock, project),
 			}
 
 			for function, parameters in functions.items():

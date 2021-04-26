@@ -6,7 +6,7 @@ def gce_firewallrule_log(cmd_list, report, lock, project, severity="Medium", mit
 		Test if firewall rule are enable
 	"""
 	firewallrule_log = gce_reduce(cmd_list, "gce_firewallrule_log", lock, project, mitigation_name, severity)
-	report_print(project, "GCE firewallrule_log ", firewallrule_log, report, mitigation_name, severity, lock)
+	report_print(project, "GCE firewallrule log ", firewallrule_log, report, mitigation_name, severity, lock)
 
 
 def gce_disk_location(cmd_list, report, lock, project, severity="Major", mitigation_name="gce_disk_location.md"):
@@ -67,3 +67,11 @@ def gce_shielded_instances(cmd_list, report, lock, project, severity="Minor", mi
 	shielded_instances = gce_reduce(cmd_list, "gce_shielded_instances", lock, project, mitigation_name, severity)
 	shielded_instances_result = gce_reduce_two(shielded_instances, cmd_list, "gce_shielded_instances")
 	report_print(project, "GCE instance shielding", shielded_instances_result, report, mitigation_name, severity, lock)
+
+
+def gce_router_nat_location(cmd_list, report, lock, project, severity="Critical", mitigation_name="gce_router_nat_location.md"):
+	"""
+		Test for NAT router location compliance to GDPR
+	"""
+	router_nat_location = gce_reduce(cmd_list, "gce_router_nat_location", lock, project, mitigation_name, severity)
+	report_print(project, "GCE router NAT location", router_nat_location, report, mitigation_name, severity, lock)

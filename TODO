@@ -1,21 +1,8 @@
 In priority :
-	
-	add to readme images about the html format
+	update number of security 
+	add a new section to the report, warning which is something which must be review 
 	bug with fold/unfold, search how to resolve it
 	make an .exe ?
-	csv format of the results ?
-
-Need to do some research (easy) :
-	gce_target_https_proxy_ssl_policy -> https://cloud.google.com/load-balancing/docs/https/setting-up-https#console_1
-	gce_target_ssl_proxy_ssl_policy -> https://cloud.google.com/load-balancing/docs/https/setting-up-https#console_1
-
-
-Later, need some reasearch (hard) :
-	gae_uses_iap
-	gce_firewallrule_traffic -> use loadbalancer pas en frontal
-	gce_router_nat_log
-	cloudsql_networkacl
-	cloudsql_ssl
-
-
-git commit -m "if results folder doesn't exist create it, reate a function to crete all the folders"
+	csv format of the results (--csv) ?
+	store data in a database ? To make a graphical evolution of each scan ?
+	make a parameter, --speed fast, slow ? Which change the number of threads used to make the scans ? 
