@@ -75,3 +75,11 @@ def gce_router_nat_location(cmd_list, report, lock, project, severity="Critical"
 	"""
 	router_nat_location = gce_reduce(cmd_list, "gce_router_nat_location", lock, project, mitigation_name, severity)
 	report_print(project, "GCE router NAT location", router_nat_location, report, mitigation_name, severity, lock)
+
+
+def gce_firewallrule_traffic(cmd_list, report, lock, project, severity="Critical", mitigation_name="gce_firewallrule_traffic.md"):
+	"""
+		Test if firewall rule are enable
+	"""
+	firewallrule_traffic = gce_reduce(cmd_list, "gce_firewallrule_traffic", lock, project, mitigation_name, severity)
+	report_print(project, "GCE firewallrule traffic ", firewallrule_traffic, report, mitigation_name, severity, lock)

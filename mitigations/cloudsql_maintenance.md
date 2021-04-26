@@ -13,9 +13,7 @@ CloudSQL Instances must have a maintenance schedule.
 ## Fix
 
 ```shell
-gcloud sql instances patch instance-id
-            --maintenance-window-day=day
-            --maintenance-window-hour=hour
+gcloud sql instances patch instance-id --maintenance-window-day=day --maintenance-window-hour=hour
 ```
 
 ## References

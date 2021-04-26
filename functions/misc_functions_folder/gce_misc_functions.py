@@ -7,7 +7,7 @@ def gce_reduce(cmd_list, function_name, lock, project, mitigation_name, severity
 	"""
 	result = {}
 
-	if function_name in ["gce_firewallrule_log"]:
+	if function_name in ["gce_firewallrule_log", "gce_firewallrule_traffic"]:
 		res = exec_cmd(cmd_list[0])
 		if "ERROR:" in res:
 			pretty_print_error(lock, f"GCE {function_name}", "Missing permissions", True, project, mitigation_name, severity)
@@ -20,9 +20,14 @@ def gce_reduce(cmd_list, function_name, lock, project, mitigation_name, severity
 		for data in datas:
 			state = data["logConfig"]["enable"]
 			name = data["name"]
+			source_range = data["sourceRanges"]
 
-			if not state:
-				result[name] = state
+			if function_name == "gce_firewallrule_log":
+				if not state:
+					result[name] = state
+			else:
+				if "0.0.0.0/0" in source_range:
+					result[name] = "Allow source range 0.0.0.0/0"
 	else:
 		datas = exec_cmd(cmd_list[0]).split('\n')[1:-1]
 

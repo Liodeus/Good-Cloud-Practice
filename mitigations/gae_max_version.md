@@ -13,7 +13,7 @@ GAE applications' services should not have more than 2 versions.
 ```shell
 gcloud app versions list
 gcloud app services describe
-gcloud app services set-traffic --splits=
+gcloud app services set-traffic --splits=SPLITS
 gcloud app versions delete VERSIONS
 ```
 

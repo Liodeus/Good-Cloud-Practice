@@ -76,6 +76,9 @@ def gae_reduce(cmd_list, function_name, lock, project, mitigation_name, severity
 		except yaml.scanner.ScannerError:
 			pretty_print_error(lock, f"GAE {function_name}", "Missing permission", False, project, mitigation_name, severity)
 	
+		if "ERROR" in yaml_datas:
+			pretty_print_error(lock, f"GAE {function_name}", "The current Google Cloud project does not contain an App Engine application", True, project, mitigation_name, severity)
+
 		if "europe" not in yaml_datas["locationId"]:
 			result["location"] = yaml_datas["locationId"]
 

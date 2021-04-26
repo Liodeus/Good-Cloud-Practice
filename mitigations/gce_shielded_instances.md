@@ -14,9 +14,7 @@ Verify that the Operating System Image of your VM supports the shielded VM featu
 Then :
 ```shell
 gcloud compute instances stop VM_NAME
-gcloud compute instances update VM_NAME \
-    --shielded-vtpm \
-    --shielded-integrity-monitoring
+gcloud compute instances update VM_NAME --shielded-vtpm --shielded-integrity-monitoring
 gcloud compute instances stop VM_NAME
 ```
 If your VM does not support Shielded VM options, you should recreate it with another OS that supports it.

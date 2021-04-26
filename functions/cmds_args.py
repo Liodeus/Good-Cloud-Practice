@@ -73,6 +73,9 @@ command_lines = {
 		],
 		"NAT_LOCATION": [
 			"gcloud compute routers list"
+		],
+		"FIREWALLRULE_TRAFFIC": [
+			"gcloud compute firewall-rules list --format=json"
 		]
 	},
 	"GCF": {
@@ -158,6 +161,7 @@ def launch(REPORT, projects_list=[]):
 				cloudsql_maintenance: (command_lines["CLOUDSQL"]["MAINTENANCE"], REPORT, lock, project),
 				gce_router_nat_location: (command_lines["GCE"]["NAT_LOCATION"], REPORT, lock, project),
 				gcs_storage_location: (command_lines["GCS"]["LOCATION"], REPORT, lock, project),
+				gce_firewallrule_traffic: (command_lines["GCE"]["FIREWALLRULE_TRAFFIC"], REPORT, lock, project),
 			}
 
 			for function, parameters in functions.items():

@@ -30,7 +30,8 @@ mitigation_to_name = {
 	"cloudsql_location": "Cloud SQL location",
 	"cloudsql_maintenance": "Cloud SQL maintenance",
 	"gce_router_nat_location": "Google Compute Engine NAT router location",
-	"gcs_storage_location": "Google Cloud Storage lcoation"
+	"gcs_storage_location": "Google Cloud Storage lcoation",
+	"gce_firewallrule_traffic": "Google Compute Engine firewall rule traffic"
 }
 
 def markdown_to_report(project, mitigation_name, information, severity, compliant_or_not):

@@ -10,7 +10,7 @@ import json
 import sys
 import re
 
-NB_CRITICAL = 10
+NB_CRITICAL = 11
 NB_MAJOR = 12
 NB_MEDIUM = 1
 NB_MINOR = 2
