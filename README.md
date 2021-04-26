@@ -129,22 +129,28 @@ python3 Good_Cloud_Practice.py -u ACCOUNT
 
 ## HTML report
 
-The header, with the user who launch the scan and the date.
+### Header
+Print the user who launch the scan and the date of the scan.
 <img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/header.png" alt="Logo">
 
-A global section with a summary of all the non compliance.
+### Global section
+With a summary of all the non compliances.
 <img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/global.png" alt="Global">
 
-A section, whith the name of the project scan, the summary of non compliance found and the result behind.
+### Report section
+Print the name of the project scanned, the summary of non compliances found and the result underneath.
 <img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/section.png" alt="Section">
 
+### Results
 Once the "Results" are unfold, you have three sections.
 <img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/unfold_section.png" alt="Unfold section">
 
+### Section
 Here's what you can see one the "Non compliant" section is unfold.
 <img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/unfold_section_two.png" alt="Unfold section two">
 
-And finally the footer
+### Footer
+And finally the footer, with some links and at the right side a "Back to the top" button.
 <img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/footer.png" alt="Footer">
 
 ## Contributing
