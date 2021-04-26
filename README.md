@@ -134,7 +134,7 @@ Print the user who launch the scan and the date of the scan.
 <img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/header.png" alt="Logo">
 
 ### Global section
-With a summary of all the non compliances.
+With a summary of all the non compliances (only printed if there is more thant one project scan).
 <img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/global.png" alt="Global">
 
 ### Report section
