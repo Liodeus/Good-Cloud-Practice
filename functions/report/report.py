@@ -30,8 +30,11 @@ mitigation_to_name = {
 	"cloudsql_location": "Cloud SQL location",
 	"cloudsql_maintenance": "Cloud SQL maintenance",
 	"gce_router_nat_location": "Google Compute Engine NAT router location",
-	"gcs_storage_location": "Google Cloud Storage lcoation",
-	"gce_firewallrule_traffic": "Google Compute Engine firewall rule traffic"
+	"gcs_storage_location": "Google Cloud Storage location",
+	"gce_firewallrule_traffic": "Google Compute Engine firewall rule traffic",
+	"gce_router_nat_log": "Google Compute Engine NAT router log",
+	"gce_target_https_proxy_ssl_policy": "Google Compute Engine HTTPS proxy SSL policy",
+	"gce_target_ssl_proxy_ssl_policy": "Google Compute Engine SSL proxy SSL policy"
 }
 
 def markdown_to_report(project, mitigation_name, information, severity, compliant_or_not):
@@ -44,7 +47,7 @@ def markdown_to_report(project, mitigation_name, information, severity, complian
 		references = ref_to_href(mitigation.split('## Fix')[1].split('## References')[1].strip())
 
 		if not compliant_or_not:
-			if "API" in information or "Missing permission" in information or "Reauthentication" in information:
+			if "API" in information or "BiqQuery has not been enabled" in information or "Missing permission" in information or "Reauthentication" in information or "The current Google Cloud project" in information:
 				tmp = [severity, information]
 				try:
 					all_results[project]["errors"][mitigation_name] = tmp

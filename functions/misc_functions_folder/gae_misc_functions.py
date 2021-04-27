@@ -74,7 +74,7 @@ def gae_reduce(cmd_list, function_name, lock, project, mitigation_name, severity
 		try:
 			yaml_datas = yaml.load(exec_cmd(cmd_list[0]), Loader=yaml.FullLoader)
 		except yaml.scanner.ScannerError:
-			pretty_print_error(lock, f"GAE {function_name}", "Missing permission", False, project, mitigation_name, severity)
+			pretty_print_error(lock, f"GAE {function_name}", "Missing permission", True, project, mitigation_name, severity)
 	
 		if "ERROR" in yaml_datas:
 			pretty_print_error(lock, f"GAE {function_name}", "The current Google Cloud project does not contain an App Engine application", True, project, mitigation_name, severity)
@@ -86,7 +86,7 @@ def gae_reduce(cmd_list, function_name, lock, project, mitigation_name, severity
 		datas = exec_cmd(cmd_list[0])
 
 		if "ERROR:" in datas:
-			pretty_print_error(lock, f"GAE {function_name}", "Missing permission", False, project, mitigation_name, severity)
+			pretty_print_error(lock, f"GAE {function_name}", "Missing permission", True, project, mitigation_name, severity)
 
 		datas = datas.split('\n')[1:-1]
 

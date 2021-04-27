@@ -147,7 +147,7 @@ Once the "Results" are unfold, you have three sections.
 <img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/unfold_section.png" alt="Unfold section">
 
 ### Section
-Here's what you can see one the "Non compliant" section is unfold.
+Here's what you can see once the "Non compliant" section is unfold.
 <img src="https://github.com/Liodeus/Good-Cloud-Practice/blob/main/images/unfold_section_two.png" alt="Unfold section two">
 
 ### Footer

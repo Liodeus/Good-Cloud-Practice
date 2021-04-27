@@ -1,6 +1,5 @@
 In priority :
 	add a new section to the report, warning which is something which must be review 
-	pretty_print_error migth have a problem with True/False
 	bug with fold/unfold, search how to resolve it
 	make an .exe ?
 	csv format of the results (--csv) ?

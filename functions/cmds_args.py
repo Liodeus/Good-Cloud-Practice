@@ -76,6 +76,19 @@ command_lines = {
 		],
 		"FIREWALLRULE_TRAFFIC": [
 			"gcloud compute firewall-rules list --format=json"
+		],
+		"NAT_LOG": [
+			"gcloud compute routers list",
+			"gcloud compute routers nats list --router",
+			"gcloud compute routers nats describe"
+		],
+		"HTTPS_SSL_PROXY": [
+			"gcloud compute target-https-proxies list",
+			"gcloud compute target-https-proxies describe"
+		],
+		"SSL_SSL_PROXY": [
+			"gcloud compute target-ssl-proxies list",
+			"gcloud compute target-ssl-proxies describe"
 		]
 	},
 	"GCF": {
@@ -162,6 +175,9 @@ def launch(REPORT, projects_list=[]):
 				gce_router_nat_location: (command_lines["GCE"]["NAT_LOCATION"], REPORT, lock, project),
 				gcs_storage_location: (command_lines["GCS"]["LOCATION"], REPORT, lock, project),
 				gce_firewallrule_traffic: (command_lines["GCE"]["FIREWALLRULE_TRAFFIC"], REPORT, lock, project),
+				gce_router_nat_log: (command_lines["GCE"]["NAT_LOG"], REPORT, lock, project),
+				gce_target_https_proxy_ssl_policy: (command_lines["GCE"]["HTTPS_SSL_PROXY"], REPORT, lock, project),
+				gce_target_ssl_proxy_ssl_policy: (command_lines["GCE"]["SSL_SSL_PROXY"], REPORT, lock, project),
 			}
 
 			for function, parameters in functions.items():

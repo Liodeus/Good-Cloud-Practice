@@ -77,9 +77,36 @@ def gce_router_nat_location(cmd_list, report, lock, project, severity="Critical"
 	report_print(project, "GCE router NAT location", router_nat_location, report, mitigation_name, severity, lock)
 
 
+def gce_router_nat_log(cmd_list, report, lock, project, severity="Medium", mitigation_name="gce_router_nat_log.md"):
+	"""
+		Test for NAT router log should enable : Translation and errors
+	"""
+	router_nat_log = gce_reduce(cmd_list, "gce_router_nat_log", lock, project, mitigation_name, severity)
+	router_nat_log_result = gce_reduce_two(router_nat_log, cmd_list, "gce_router_nat_log")
+	report_print(project, "GCE router NAT log", router_nat_log_result, report, mitigation_name, severity, lock)
+
+
 def gce_firewallrule_traffic(cmd_list, report, lock, project, severity="Critical", mitigation_name="gce_firewallrule_traffic.md"):
 	"""
 		Test if firewall rule are enable
 	"""
 	firewallrule_traffic = gce_reduce(cmd_list, "gce_firewallrule_traffic", lock, project, mitigation_name, severity)
-	report_print(project, "GCE firewallrule traffic ", firewallrule_traffic, report, mitigation_name, severity, lock)
+	report_print(project, "GCE firewallrule traffic", firewallrule_traffic, report, mitigation_name, severity, lock)
+
+
+def gce_target_https_proxy_ssl_policy(cmd_list, report, lock, project, severity="Major", mitigation_name="gce_target_https_proxy_ssl_policy.md"):
+	"""
+		Test 
+	"""
+	target_https_proxy_ssl_policy = gce_reduce(cmd_list, "gce_target_https_proxy_ssl_policy", lock, project, mitigation_name, severity)
+	target_https_proxy_ssl_policy_result = gce_reduce_two(target_https_proxy_ssl_policy, cmd_list, "gce_target_https_proxy_ssl_policy")
+	report_print(project, "GCE target https proxy SSL policy", target_https_proxy_ssl_policy_result, report, mitigation_name, severity, lock)
+
+
+def gce_target_ssl_proxy_ssl_policy(cmd_list, report, lock, project, severity="Major", mitigation_name="gce_target_ssl_proxy_ssl_policy.md"):
+	"""
+		Test 
+	"""
+	target_ssl_proxy_ssl_policy = gce_reduce(cmd_list, "gce_target_ssl_proxy_ssl_policy", lock, project, mitigation_name, severity)
+	target_ssl_proxy_ssl_policy_result = gce_reduce_two(target_ssl_proxy_ssl_policy, cmd_list, "gce_target_ssl_proxy_ssl_policy")
+	report_print(project, "GCE target https proxy SSL policy", target_ssl_proxy_ssl_policy_result, report, mitigation_name, severity, lock)

@@ -3,7 +3,7 @@ from functions.misc_functions_folder.misc_functions import *
 
 def gcs_storage_location(cmd_list, report, lock, project, severity="Critical", mitigation_name="gcs_storage_location.md"):
 	"""
-		Test for BigQuery location compliance to GDPR
+		Test for Google Cloud Storage location compliance to GDPR
 	"""
 	datas = exec_cmd(cmd_list[0])
 

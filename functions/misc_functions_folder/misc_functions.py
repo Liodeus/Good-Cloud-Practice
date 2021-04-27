@@ -11,8 +11,8 @@ import sys
 import re
 
 NB_CRITICAL = 11
-NB_MAJOR = 12
-NB_MEDIUM = 1
+NB_MAJOR = 14
+NB_MEDIUM = 2
 NB_MINOR = 2
 NB_TOTAL = NB_CRITICAL + NB_MAJOR + NB_MEDIUM + NB_MINOR
 
@@ -262,9 +262,10 @@ def report_print(project, string_to_print, dict_result, report, mitigation_name,
 
 			for key, value in dict_result.items():
 				if string_to_print == "GCE instance shielding":
-					for config_name, state in value.items():
-						if not state:
-							print(f"\t\t{key} : {config_name} -> {state}")
+					for config_name, etat in value.items():
+						if not etat:
+							print(f"\t\t{key} : {config_name} -> {etat}")
+							str_to_print += f"\t\t{key} : {config_name} -> {etat}\n"
 				elif string_to_print in ["GAE env variable check", "GCF env secret check"]:
 					str_tmp = ""
 					print(f"\t\t{key} :")
@@ -285,7 +286,7 @@ def report_print(project, string_to_print, dict_result, report, mitigation_name,
 	else:
 		print(f"{string_to_print} : {Fore.GREEN}✓{Style.RESET_ALL}\n")
 		print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
-	
+
 	markdown_to_report(project, mitigation_name, str_to_print, severity, state)
 	lock.release()
 
