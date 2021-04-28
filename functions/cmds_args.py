@@ -6,6 +6,7 @@ from functions.bq_checks import *
 from functions.gcf_checks import *
 from functions.gcf_checks import *
 from functions.gcs_checks import *
+from functions.kms_checks import *
 from functions.report.report import *
 
 
@@ -130,6 +131,14 @@ command_lines = {
 			"gsutil ls",
 			"gsutil ls -L -b"
 		],
+	},
+	"KMS": {
+		"ROTATION_PERIOD": [
+			"gcloud kms locations list",
+			"gcloud kms keyrings list --location=",
+			"gcloud kms keys list --keyring",
+			"gcloud kms keys describe"
+		],
 	}
 }
 
@@ -149,6 +158,7 @@ def launch(REPORT, projects_list=[]):
 		lock = threading.Lock()
 		if change_project(project):
 			functions = {
+				kms_max_rotation_period: (command_lines["KMS"]["ROTATION_PERIOD"], REPORT, lock, project), # very long to run
 				gce_instance_externalip: (command_lines["GCE"]["INSTANCE_EXTERNALIP"], REPORT, lock, project),
 				gce_instance_location: (command_lines["GCE"]["INSTANCE_EXTERNALIP"], REPORT, lock, project),
 				gce_instance_service_account: (command_lines["GCE"]["INSTANCE_SERVICE"], REPORT, lock, project),

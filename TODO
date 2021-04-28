@@ -1,7 +1,9 @@
 In priority :
+	do the mitigations, whose missings parts
+	comment the functions missings one
 	add a new section to the report, warning which is something which must be review 
 	bug with fold/unfold, search how to resolve it
 	make an .exe ?
 	csv format of the results (--csv) ?
 	store data in a database ? To make a graphical evolution of each scan ?
-	make a parameter, --speed fast, slow ? Which change the number of threads used to make the scans ? 
+	find a new way to scan efficiently with threads (by defautlt slow) and if you use a parameter, --speed fast, slow ? Which change the number of threads used to make the scans ? 

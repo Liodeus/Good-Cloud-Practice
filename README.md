@@ -29,7 +29,7 @@ I made this tool to learn security on Google Cloud Platform.
 - BigQuery checks : 1
 - Cloud DNS checks : 2
 - Google AppEngine checks : 4
-- Google Compute Engine checks : 9
+- Google Compute Engine checks : 13
 - Google Cloud Function checks : 4
 - Cloud SQL checks : 4
 - Google Cloud Storage : 1

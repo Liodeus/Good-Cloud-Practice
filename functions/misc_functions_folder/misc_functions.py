@@ -257,6 +257,8 @@ def report_print(project, string_to_print, dict_result, report, mitigation_name,
 				non_compliance_summary["GCE"] += 1
 			elif str_start == "GCF": 
 				non_compliance_summary["GCF"] += 1
+			elif str_start == "KMS": 
+				non_compliance_summary["KMS"] += 1
 			elif "Cloud DNS" in string_to_print: 
 				non_compliance_summary["CLOUDDNS"] += 1
 
@@ -277,6 +279,15 @@ def report_print(project, string_to_print, dict_result, report, mitigation_name,
 				elif string_to_print == "GAE max version check":
 					print(f"\t\t{key}")
 					str_to_print += f"{key}\n"
+				elif string_to_print == "KMS max rotation period":
+					for x, y in value.items():
+						strg = ""
+						if y[2]:
+							strg = f"\t\t{key} -> {x} -> {y[0]} has a key rotation of {y[1]} days !"
+						else:
+							strg = f"\t\t{key} -> {x} -> {y[0]} has no key rotation !"
+						print(strg)
+					str_to_print += f"{strg}\n"
 				else:
 					str_to_print += f"{key} -> {value}\n"
 					print(f"\t\t{key} -> {value}")
@@ -311,6 +322,7 @@ non_compliance_summary = {
 	"GCE": 0,
 	"GCF": 0,
 	"CLOUDSQL": 0,
+	"KMS": 0
 }
 def print_non_compliance_summary():
 	"""
@@ -323,7 +335,7 @@ def print_non_compliance_summary():
 	total = crit + maj + med + mino
 
 	height_severity = [crit, maj, med, mino]
-	height_types = [non_compliance_summary['BQ'], non_compliance_summary['CLOUDDNS'], non_compliance_summary['GAE'], non_compliance_summary['GCE'], non_compliance_summary['GCF'], non_compliance_summary['CLOUDSQL'], non_compliance_summary['GCS']]
+	height_types = [non_compliance_summary['BQ'], non_compliance_summary['CLOUDDNS'], non_compliance_summary['GAE'], non_compliance_summary['GCE'], non_compliance_summary['GCF'], non_compliance_summary['CLOUDSQL'], non_compliance_summary['GCS'], non_compliance_summary['KMS']]
 
 	print("Non compliances summary :")
 	print(f"\t{Fore.RED}Critical -> {crit}/{NB_CRITICAL}{Style.RESET_ALL}")
@@ -339,7 +351,8 @@ def print_non_compliance_summary():
 	print(f"\tGoogle Compute Engine -> {non_compliance_summary['GCE']}")
 	print(f"\tGoogle Cloud Function -> {non_compliance_summary['GCF']}")
 	print(f"\tCloud SQL -> {non_compliance_summary['CLOUDSQL']}")
-	print(f"\tGoogle Cloud Storage -> {non_compliance_summary['GCS']}\n")
+	print(f"\tGoogle Cloud Storage -> {non_compliance_summary['GCS']}")
+	print(f"\tGoogle Cloud Key Management -> {non_compliance_summary['KMS']}\n")
 
 	print(f"{Fore.BLUE}****************************************************************************************************{Style.RESET_ALL}\n")
 	reset_count_non_compliance()
@@ -365,6 +378,7 @@ def reset_count_non_compliance():
 		"GCE": 0,
 		"GCF": 0,
 		"CLOUDSQL": 0,
+		"KMS": 0
 	}
 
 

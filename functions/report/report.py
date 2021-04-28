@@ -34,7 +34,8 @@ mitigation_to_name = {
 	"gce_firewallrule_traffic": "Google Compute Engine firewall rule traffic",
 	"gce_router_nat_log": "Google Compute Engine NAT router log",
 	"gce_target_https_proxy_ssl_policy": "Google Compute Engine HTTPS proxy SSL policy",
-	"gce_target_ssl_proxy_ssl_policy": "Google Compute Engine SSL proxy SSL policy"
+	"gce_target_ssl_proxy_ssl_policy": "Google Compute Engine SSL proxy SSL policy",
+	"kms_max_rotation_period": "Google Cloud Key Management Service max rotation period"
 }
 
 def markdown_to_report(project, mitigation_name, information, severity, compliant_or_not):
@@ -137,7 +138,7 @@ def genereta_graph_by_severity(height_severity, project, folder_name, state):
 
 
 def genereta_graph_by_types(height_types, project, folder_name, state):
-	bars = ("BQ", "DNS", "GAE", "GCE", "GCF", "SQL", "GCS")
+	bars = ("BQ", "DNS", "GAE", "GCE", "GCF", "SQL", "GCS", "KMS")
 	y_pos = np.arange(len(bars))
 	plt.bar(y_pos, height_types)
 	plt.xticks(y_pos, bars, )
