@@ -5,9 +5,25 @@ import time
 import sys
 
 
-def main(REPORT, project_id=None, path=None, user=None, key=None, lp=None, lu=None):
+def main(REPORT, project_id=None, path=None, user=None, key=None, lp=None, lu=None, threads=None, slow=None, fast=None):
 	t0 = time.time()
 	get_date()
+	speed = 0
+
+	if slow:
+		speed = 5
+	elif fast:
+		speed = 20
+	elif threads != None:
+		if threads > 30:
+			speed = 30
+		elif threads < 0:
+			print("Threads must be a number greater than 0 !")
+			sys.exit()
+		else:
+			speed = threads
+	else:
+		speed = 5
 
 	if key:
 		if os.path.isfile(key):
@@ -46,9 +62,9 @@ def main(REPORT, project_id=None, path=None, user=None, key=None, lp=None, lu=No
 		projects_list = get_project_list()
 
 		if project_id == None:
-			launch(REPORT, projects_list)
+			launch(REPORT, speed, projects_list)
 		elif project_id in projects_list:
-			launch(REPORT, [project_id])
+			launch(REPORT, speed, [project_id])
 		else:
 			print(f"You do not appear to have access to project [{project_id}] or it does not exist.")
 			sys.exit()
@@ -66,6 +82,9 @@ if __name__ == "__main__":
 	parser.add_argument("-l", "--list", required=False, help="Do the compliances checks on this list of project ID")
 	parser.add_argument("-u", "--user", required=False, help="Use this user acccount to do the compliances checks")
 	parser.add_argument("-k", "--key", required=False, help="Use this service acccount to do the compliances checks")
+	parser.add_argument("-t", "--threads", type=int,required=False, help="Define the numbers of threads")
+	parser.add_argument("-s", "--slow", action="store_true", required=False, help="Slower scan, less ressources used")
+	parser.add_argument("-f", "--fast", action="store_true", required=False, help="Faster scan, more ressources used")
 	args = parser.parse_args()
 
 	if args.key and args.user:
@@ -75,9 +94,15 @@ if __name__ == "__main__":
 	if args.list_projects and args.list_users:
 		print("Choose between --list_projects and --list_users not both")
 		sys.exit()
-	
+
+	# if args
+
+	if args.threads and args.slow or args.threads and args.fast or args.slow and args.fast or args.threads and args.slow and args.fast:
+		print("You must choose a speed, not multiple ones.")
+		sys.exit()
+
 	try:
-		main(args.report, args.project_id, args.list, args.user, args.key, args.list_projects, args.list_users)
+		main(args.report, args.project_id, args.list, args.user, args.key, args.list_projects, args.list_users, args.threads, args.slow, args.fast)
 	except KeyboardInterrupt:
 		print("CTRL+C")
 		sys.exit()

@@ -8,6 +8,7 @@ from functions.gcf_checks import *
 from functions.gcs_checks import *
 from functions.kms_checks import *
 from functions.report.report import *
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 command_lines = {
@@ -45,67 +46,90 @@ command_lines = {
 	},
 	"GCE": {
 		"DISK_LOCATION": [
+			# "gcloud compute disks list --format=\"value(name.basename(),LOCATION.basename())\""
 			"gcloud compute disks list",
 		],
 		"FIREWALLRULE_LOG": [
 			"gcloud compute firewall-rules list --format=json"
 		],
 		"INSTANCE_EXTERNALIP": [
+			# "gcloud compute instances list --format=\"value(name.basename(), ZONE.basename(), EXTERNAL_IP.basename())\""
 			"gcloud compute instances list"
 		],
 		"INSTANCE_LOCATION": [
+			# "gcloud compute instances list --format=\"value(name.basename(), ZONE.basename(), EXTERNAL_IP.basename())\""
 			"gcloud compute instances list"
 		],
 		"INSTANCE_SERVICE": [
+			# "gcloud compute instances list --format=\"value(name.basename(), ZONE.basename(), EXTERNAL_IP.basename())\""
 			"gcloud compute instances list",
 			"gcloud compute instances describe --zone="
 		],
 		"IP_FORWARDING": [
+			# "gcloud compute instances list --format=\"value(name.basename(), ZONE.basename(), EXTERNAL_IP.basename())\""
 			"gcloud compute instances list",
 			"gcloud compute instances describe --zone="
 		],
 		"NETWORK_NAME": [
+			# "gcloud compute instances list --format=\"value(name.basename(), ZONE.basename(), EXTERNAL_IP.basename())\""
 			"gcloud compute instances list",
 			"gcloud compute instances describe --zone="
 		],
 		"SHIELDED_ISNTANCES": [
+			# "gcloud compute instances list --format=\"value(name.basename(), ZONE.basename(), EXTERNAL_IP.basename())\""
 			"gcloud compute instances list",
 			"gcloud compute instances describe --zone="
 		],
 		"NAT_LOCATION": [
+			# "gcloud compute routers list --format=\"value(name.basename(), REGION.basename())\""
 			"gcloud compute routers list"
 		],
 		"FIREWALLRULE_TRAFFIC": [
+			# "gcloud compute firewall-rules list --format=\"value(name.basename(),logConfig.basename())\""
 			"gcloud compute firewall-rules list --format=json"
 		],
 		"NAT_LOG": [
+			# "gcloud compute routers list --format=\"value(name.basename(), REGION.basename())\""
 			"gcloud compute routers list",
+			# "gcloud compute routers nats list --router nat-router-web --region=us-central1 --format=\"value(name.basename())\""
 			"gcloud compute routers nats list --router",
+			# "gcloud compute routers nats describe nat-us-central-webservice --router nat-router-web --region=us-central1 --format=\"value(logConfig.basename())\""
 			"gcloud compute routers nats describe"
 		],
 		"HTTPS_SSL_PROXY": [
+			# "gcloud compute target-https-proxies list --format=\"value(name.basename())\""
 			"gcloud compute target-https-proxies list",
+			# "gcloud compute target-https-proxies describe webserver-https-lb-target-proxy-2 --format=\"value(sslPolicy.basename())\""
 			"gcloud compute target-https-proxies describe"
 		],
 		"SSL_SSL_PROXY": [
+			# "gcloud compute target-ssl-proxies list --format=\"value(name.basename())\""
 			"gcloud compute target-ssl-proxies list",
+			# "gcloud compute target-ssl-proxies describe webserver-https-lb-target-proxy-2 --format=\"value(sslPolicy.basename())\""
 			"gcloud compute target-ssl-proxies describe"
 		]
 	},
 	"GCF": {
 		"ENV_SECRET": [
+			# "gcloud functions list --format=\"value(name.basename(), REGION.basename())\""
 			"gcloud functions list",
+			# "gcloud functions describe --region=us-central1 function-1 --format=\"value(environmentVariables.basename())\""
 			"gcloud functions describe --region="
 		],
 		"LOCATION": [
+			# "gcloud functions list --format=\"value(name.basename(), REGION.basename())\""
 			"gcloud functions list",
 		],
 		"RUNTIME": [
+			# "gcloud functions list --format=\"value(name.basename(), REGION.basename())\""
 			"gcloud functions list",
+			# "gcloud functions describe --region=us-central1 function-1 --format=\"value(runtime.basename())\""
 			"gcloud functions describe --region="
 		],
 		"SERVICE_ACCOUNT": [
+			# "gcloud functions list --format=\"value(name.basename(), REGION.basename())\""
 			"gcloud functions list",
+			# "gcloud functions describe --region=us-central1 function-1 --format=\"value(serviceAccountEmail.basename())\""
 			"gcloud functions describe --region="
 		],
 	},
@@ -134,16 +158,20 @@ command_lines = {
 	},
 	"KMS": {
 		"ROTATION_PERIOD": [
+			# "gcloud kms locations list --format=\"value(location_id.basename())\""
 			"gcloud kms locations list",
+			# "gcloud kms keyrings list --location=asia-east1 --format=\"value(name.basename()\)""
 			"gcloud kms keyrings list --location=",
+			# "gcloud kms keys list --keyring=test --location=global --format=\"value(name)\""
 			"gcloud kms keys list --keyring",
+			# "gcloud kms keys describe projects/mystic-sun-309920/locations/asia-east1/keyRings/test2/cryptoKeys/test2 --format=\"value(rotationPeriod)\""
 			"gcloud kms keys describe"
 		],
 	}
 }
 
 
-def launch(REPORT, projects_list=[]):
+def launch(REPORT, speed, projects_list=[]):
 	thr_list = []
 	date_of_scan, report_folder_name = create_folders()
 
@@ -189,14 +217,11 @@ def launch(REPORT, projects_list=[]):
 				gce_target_https_proxy_ssl_policy: (command_lines["GCE"]["HTTPS_SSL_PROXY"], REPORT, lock, project),
 				gce_target_ssl_proxy_ssl_policy: (command_lines["GCE"]["SSL_SSL_PROXY"], REPORT, lock, project),
 			}
+			with ThreadPoolExecutor(max_workers=speed) as executor:
+				futures = {executor.submit(function, *parameters) for function, parameters in functions.items()}
 
-			for function, parameters in functions.items():
-				thr = threading.Thread(target=function, args=parameters)
-				thr_list.append(thr)
-				thr.start()
-
-			for index, thread in enumerate(thr_list):
-				thread.join()
+				# for f in as_completed(futures):
+				# 	f.result()
 
 			height_severity, height_types = print_non_compliance_summary()
 			global_heights["severity"].append(height_severity)

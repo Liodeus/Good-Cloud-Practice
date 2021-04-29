@@ -6,4 +6,4 @@ In priority :
 	make an .exe ?
 	csv format of the results (--csv) ?
 	store data in a database ? To make a graphical evolution of each scan ?
-	find a new way to scan efficiently with threads (by defautlt slow) and if you use a parameter, --speed fast, slow ? Which change the number of threads used to make the scans ? 
+	might be able to do thing easier with --format="value(name.basename(),logConfig.basename())"

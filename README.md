@@ -33,6 +33,7 @@ I made this tool to learn security on Google Cloud Platform.
 - Google Cloud Function checks : 4
 - Cloud SQL checks : 4
 - Google Cloud Storage : 1
+- Google Cloud Key Management : 1
 
 ## Requirements
 
